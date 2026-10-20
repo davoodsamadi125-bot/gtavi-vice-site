@@ -5,12 +5,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#090910">
-  <meta name="description" content="GTAVI_VICE؛ مرجع فارسی اخبار، تریلرها، تصاویر و تحلیل‌های GTA VI و Rockstar Games">
+
   <title>GTAVI_VICE | مرجع فارسی GTA VI</title>
+
+  <meta name="description" content="مرجع فارسی GTA VI و Rockstar Games؛ آخرین اخبار، تریلرها، تصاویر، تحلیل‌ها و جزئیات بازی GTA 6.">
+
+  <meta property="og:title" content="GTAVI_VICE | دنیای GTA VI">
+  <meta property="og:description" content="اخبار، تریلرها و جزئیات GTA VI را دنبال کن.">
+  <meta property="og:type" content="website">
+
   <style>
     :root {
       --bg: #090910;
       --panel: #12121d;
+      --panel-light: #191526;
       --purple: #a855f7;
       --pink: #f472b6;
       --text: #f5f3ff;
@@ -18,9 +26,14 @@
       --border: #292538;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 90px;
+    }
 
     body {
       margin: 0;
@@ -30,18 +43,25 @@
       line-height: 1.9;
     }
 
-    a { color: inherit; text-decoration: none; }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button, input {
+      font: inherit;
+    }
 
     .container {
       width: min(1120px, 92%);
-      margin: auto;
+      margin-inline: auto;
     }
 
     header {
       position: sticky;
       top: 0;
-      z-index: 10;
-      background: rgba(9,9,16,.94);
+      z-index: 100;
+      background: rgba(9, 9, 16, 0.96);
       border-bottom: 1px solid var(--border);
       backdrop-filter: blur(14px);
     }
@@ -55,28 +75,34 @@
     }
 
     .brand {
+      white-space: nowrap;
       font-size: 23px;
       font-weight: 900;
-      letter-spacing: -.8px;
+      letter-spacing: -1px;
     }
 
-    .brand span { color: var(--purple); }
+    .brand span {
+      color: var(--purple);
+    }
 
     .links {
       display: flex;
+      align-items: center;
       flex-wrap: wrap;
-      gap: 20px;
+      gap: 18px;
       font-size: 13px;
       color: var(--muted);
     }
 
-    .links a:hover { color: var(--pink); }
+    .links a:hover {
+      color: var(--pink);
+    }
 
     .hero {
-      padding: 76px 0 58px;
+      padding: 65px 0 45px;
       background:
-        radial-gradient(ellipse at 80% 10%, #54217a44, transparent 45%),
-        radial-gradient(ellipse at 10% 90%, #9d174d22, transparent 40%);
+        radial-gradient(ellipse at 85% 5%, #54217a40, transparent 45%),
+        radial-gradient(ellipse at 10% 90%, #9d174d20, transparent 40%);
     }
 
     .eyebrow {
@@ -90,8 +116,8 @@
 
     h1 {
       margin: 20px 0 12px;
-      font-size: clamp(34px, 6vw, 66px);
-      line-height: 1.4;
+      font-size: clamp(36px, 7vw, 68px);
+      line-height: 1.35;
       letter-spacing: -1.5px;
     }
 
@@ -99,8 +125,8 @@
       color: var(--pink);
     }
 
-    .hero p {
-      max-width: 620px;
+    .hero-description {
+      max-width: 650px;
       color: var(--muted);
       font-size: 15px;
     }
@@ -109,19 +135,25 @@
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
-      margin-top: 26px;
+      margin-top: 25px;
     }
 
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 11px 20px;
+      padding: 11px 19px;
       border-radius: 10px;
-      font-size: 13px;
-      font-weight: bold;
       background: linear-gradient(120deg, #9333ea, #c026d3);
       color: white;
+      font-size: 13px;
+      font-weight: bold;
+      transition: opacity .2s, transform .2s;
+    }
+
+    .btn:hover {
+      opacity: .88;
+      transform: translateY(-2px);
     }
 
     .btn.secondary {
@@ -129,7 +161,69 @@
       border: 1px solid var(--border);
     }
 
-    .section { padding: 38px 0; }
+    /* Countdown */
+
+    .countdown {
+      max-width: 650px;
+      margin-top: 32px;
+      padding: 22px;
+      border: 1px solid #a855f755;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #171224, #101019);
+    }
+
+    .countdown-title {
+      margin: 0 0 5px;
+      font-size: 19px;
+    }
+
+    .countdown-description {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .countdown-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .countdown-item {
+      min-width: 0;
+      padding: 12px 4px;
+      text-align: center;
+      border: 1px solid #ffffff0d;
+      border-radius: 10px;
+      background: #21152f;
+    }
+
+    .countdown-number {
+      display: block;
+      color: #e9b5ff;
+      font-size: clamp(23px, 4vw, 34px);
+      font-weight: bold;
+      line-height: 1.5;
+      direction: ltr;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .countdown-label {
+      color: #c4bdd3;
+      font-size: 11px;
+    }
+
+    .countdown-status {
+      margin: 15px 0 0;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    /* Sections */
+
+    .section {
+      padding: 38px 0;
+    }
 
     .section-head {
       display: flex;
@@ -144,7 +238,7 @@
       font-size: 23px;
     }
 
-    .section-head p {
+    .section-subtitle {
       margin: 4px 0 0;
       color: var(--muted);
       font-size: 12px;
@@ -157,6 +251,7 @@
     }
 
     .card {
+      min-width: 0;
       overflow: hidden;
       border: 1px solid var(--border);
       border-radius: 16px;
@@ -170,7 +265,7 @@
     }
 
     .art {
-      min-height: 155px;
+      min-height: 165px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -182,12 +277,14 @@
       border-bottom: 1px solid var(--border);
     }
 
-    .art .symbol {
+    .symbol {
       font-size: 45px;
       filter: drop-shadow(0 0 20px #a855f755);
     }
 
-    .card-body { padding: 18px; }
+    .card-body {
+      padding: 18px;
+    }
 
     .tag {
       color: #d8b4fe;
@@ -197,6 +294,7 @@
     .card h3 {
       margin: 8px 0;
       font-size: 17px;
+      line-height: 1.8;
     }
 
     .card p {
@@ -212,6 +310,12 @@
       font-size: 12px;
     }
 
+    .read:hover {
+      text-decoration: underline;
+    }
+
+    /* About */
+
     .feature {
       padding: 28px;
       border: 1px solid var(--border);
@@ -219,10 +323,17 @@
       background: linear-gradient(120deg, #171224, #101019);
     }
 
+    .feature h2 {
+      margin-top: 14px;
+    }
+
     .feature p {
+      margin-bottom: 0;
       color: var(--muted);
       font-size: 14px;
     }
+
+    /* Social networks */
 
     .social-grid {
       display: grid;
@@ -236,18 +347,32 @@
       border: 1px solid var(--border);
       border-radius: 14px;
       background: var(--panel);
+      transition: border-color .2s, transform .2s;
     }
 
-    .social strong { display: block; }
+    .social:hover {
+      border-color: var(--purple);
+      transform: translateY(-3px);
+    }
+
+    .social strong {
+      display: block;
+      font-size: 15px;
+    }
 
     .social span {
       color: var(--muted);
       font-size: 12px;
+      direction: ltr;
+      unicode-bidi: isolate;
+      display: inline-block;
     }
+
+    /* Footer */
 
     footer {
       margin-top: 35px;
-      padding: 30px 0;
+      padding: 28px 0;
       border-top: 1px solid var(--border);
       color: var(--muted);
       font-size: 12px;
@@ -257,144 +382,400 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
-      gap: 12px;
+      gap: 10px;
     }
 
     @media (max-width: 720px) {
-      .nav { align-items: flex-start; padding: 13px 0; }
-      .nav-inner { min-width: 0; }
-      .brand { font-size: 20px; }
-      .links { gap: 8px 14px; margin-top: 5px; }
-      .hero { padding: 52px 0 35px; }
-      .grid { grid-template-columns: 1fr; }
-      .art { min-height: 130px; }
-      .social-grid { grid-template-columns: 1fr; }
-      h2 { font-size: 20px; }
+      .nav {
+        align-items: flex-start;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+        padding: 12px 0;
+      }
+
+      .brand {
+        font-size: 21px;
+      }
+
+      .links {
+        gap: 5px 15px;
+        font-size: 12px;
+      }
+
+      .hero {
+        padding: 43px 0 30px;
+      }
+
+      .hero-description {
+        font-size: 14px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .art {
+        min-height: 130px;
+      }
+
+      .social-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .countdown {
+        padding: 15px;
+      }
+
+      .countdown-grid {
+        gap: 6px;
+      }
+
+      .countdown-number {
+        font-size: clamp(21px, 6vw, 30px);
+      }
+
+      .countdown-label {
+        font-size: 10px;
+      }
+
+      .feature {
+        padding: 21px;
+      }
+
+      h2 {
+        font-size: 20px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *, *::before, *::after {
+        transition-duration: 0.01ms !important;
+      }
     }
   </style>
 </head>
+
 <body>
 
 <header>
   <div class="container nav">
-    <div class="nav-inner">
-      <a class="brand" href="#">GTA<span>VI</span>_VICE</a>
-    </div>
+    <a class="brand" href="#home" aria-label="صفحه اصلی GTAVI_VICE">
+      GTA<span>VI</span>_VICE
+    </a>
+
     <nav class="links" aria-label="منوی اصلی">
       <a href="#home">خانه</a>
       <a href="#news">اخبار</a>
       <a href="#trailers">تریلرها</a>
       <a href="#about">درباره ما</a>
+      <a href="#social">شبکه‌های اجتماعی</a>
     </nav>
   </div>
 </header>
 
 <main>
+
+  <!-- Hero -->
+
   <section class="hero" id="home">
     <div class="container">
-      <span class="eyebrow">مرجع فارسی GTA VI و Rockstar Games</span>
-      <h1>به دنیای <span>Vice City</span><br>خوش آمدی.</h1>
-      <p>
-        آخرین اخبار، تریلرهای رسمی، تصاویر، جزئیات مخفی و
+
+      <span class="eyebrow">
+        مرجع فارسی GTA VI و Rockstar Games
+      </span>
+
+      <h1>
+        به دنیای<br>
+        <span>Vice City</span> خوش آمدی.
+      </h1>
+
+      <p class="hero-description">
+        آخرین اخبار، تریلرهای رسمی، تصاویر، جزئیات پنهان و
         تحلیل‌های GTA VI را در GTAVI_VICE دنبال کن.
+        همراه تو در مسیر ورود دوباره به دنیای Vice City.
       </p>
+
       <div class="actions">
-        <a class="btn" href="#news">مشاهده آخرین مطالب ←</a>
-        <a class="btn secondary" href="https://t.me/GTAVI_VICE" target="_blank" rel="noopener noreferrer">عضویت در تلگرام ↗</a>
+        <a class="btn" href="#news">
+          مشاهده مطالب
+        </a>
+
+        <a class="btn secondary"
+           href="https://t.me/GTAVI_VICE"
+           target="_blank"
+           rel="noopener noreferrer">
+          عضویت در تلگرام ↗
+        </a>
       </div>
+
+      <!-- Live countdown -->
+
+      <div class="countdown">
+        <h2 class="countdown-title">
+          ⏳ شمارش معکوس تا GTA VI
+        </h2>
+
+        <p class="countdown-description">
+          تا تاریخ اعلام‌شده انتشار بازی
+        </p>
+
+        <div class="countdown-grid" aria-label="زمان باقی‌مانده تا انتشار">
+
+          <div class="countdown-item">
+            <span class="countdown-number" id="days">--</span>
+            <span class="countdown-label">روز</span>
+          </div>
+
+          <div class="countdown-item">
+            <span class="countdown-number" id="hours">--</span>
+            <span class="countdown-label">ساعت</span>
+          </div>
+
+          <div class="countdown-item">
+            <span class="countdown-number" id="minutes">--</span>
+            <span class="countdown-label">دقیقه</span>
+          </div>
+
+          <div class="countdown-item">
+            <span class="countdown-number" id="seconds">--</span>
+            <span class="countdown-label">ثانیه</span>
+          </div>
+
+        </div>
+
+        <p class="countdown-status" id="countdown-status" aria-live="polite">
+          تاریخ اعلام‌شده: ۱۹ نوامبر ۲۰۲۶
+        </p>
+      </div>
+
     </div>
   </section>
 
+  <!-- News -->
+
   <section class="section" id="news">
     <div class="container">
+
       <div class="section-head">
         <div>
           <h2>دنیای اخبار GTA VI</h2>
-          <p>مطالب منتخب درباره بازی مورد انتظار راکستار</p>
+          <p class="section-subtitle">
+            نگاهی به موضوعات مهم دنیای راکستار
+          </p>
         </div>
       </div>
 
       <div class="grid">
+
         <article class="card">
-          <div class="art"><span class="symbol">🌴</span></div>
+          <div class="art" aria-hidden="true">
+            <span class="symbol">🌴</span>
+          </div>
+
           <div class="card-body">
-            <span class="tag">اخبار بازی</span>
-            <h3>به Vice City بازمی‌گردیم</h3>
-            <p>با دنیای مدرن و پرجزئیات ایالت خیالی Leonida بیشتر آشنا شو.</p>
-            <a class="read" href="https://www.rockstargames.com/VI" target="_blank" rel="noopener noreferrer">مشاهده صفحه رسمی ↗</a>
+            <span class="tag">دنیای بازی</span>
+
+            <h3>بازگشت به Vice City</h3>
+
+            <p>
+              با دنیای مدرن و پرجزئیات ایالت خیالی Leonida
+              در نسخه جدید GTA بیشتر آشنا شو.
+            </p>
+
+            <a class="read"
+               href="https://www.rockstargames.com/VI"
+               target="_blank"
+               rel="noopener noreferrer">
+              مشاهده منبع رسمی ↗
+            </a>
           </div>
         </article>
 
         <article class="card" id="trailers">
-          <div class="art"><span class="symbol">🎬</span></div>
+          <div class="art" aria-hidden="true">
+            <span class="symbol">🎬</span>
+          </div>
+
           <div class="card-body">
             <span class="tag">تریلرها</span>
-            <h3>تماشای تریلرهای GTA VI</h3>
-            <p>ویدیوهای رسمی و تصاویر منتشرشده از بازی را دنبال کن.</p>
-            <a class="read" href="https://www.youtube.com/@RockstarGames" target="_blank" rel="noopener noreferrer">تماشای ویدیوها ↗</a>
+
+            <h3>تماشای ویدیوهای رسمی</h3>
+
+            <p>
+              تریلرها و ویدیوهای منتشرشده از GTA VI
+              را از کانال رسمی Rockstar دنبال کن.
+            </p>
+
+            <a class="read"
+               href="https://www.youtube.com/@RockstarGames"
+               target="_blank"
+               rel="noopener noreferrer">
+              تماشای ویدیوها ↗
+            </a>
           </div>
         </article>
 
         <article class="card">
-          <div class="art"><span class="symbol">🔎</span></div>
+          <div class="art" aria-hidden="true">
+            <span class="symbol">🔎</span>
+          </div>
+
           <div class="card-body">
             <span class="tag">تحلیل و جزئیات</span>
+
             <h3>رازهای پنهان تریلرها</h3>
-            <p>سرنخ‌ها، جزئیات محیط و نکاتی که شاید در نگاه اول نبینی.</p>
-            <a class="read" href="https://www.rockstargames.com/VI" target="_blank" rel="noopener noreferrer">منبع رسمی ↗</a>
+
+            <p>
+              سرنخ‌ها، جزئیات محیط، شخصیت‌ها و نکاتی را
+              بررسی کن که شاید در نگاه اول متوجه آن‌ها نشوی.
+            </p>
+
+            <a class="read"
+               href="https://www.rockstargames.com/VI"
+               target="_blank"
+               rel="noopener noreferrer">
+              اطلاعات رسمی بازی ↗
+            </a>
           </div>
         </article>
+
       </div>
     </div>
   </section>
+
+  <!-- About -->
 
   <section class="section" id="about">
     <div class="container">
+
       <div class="feature">
         <span class="eyebrow">درباره GTAVI_VICE</span>
-        <h2 style="margin-top:14px">خانه طرفداران GTA در فارسی</h2>
+
+        <h2>خانه طرفداران GTA در فارسی</h2>
+
         <p>
-          هدف ما گردآوری اخبار، معرفی جزئیات، بررسی تریلرها و
-          پوشش دنیای بازی‌های Rockstar برای طرفداران فارسی‌زبان است.
-          این وب‌سایت مستقل و غیررسمی است و وابستگی رسمی به Rockstar Games ندارد.
+          GTAVI_VICE یک رسانه مستقل فارسی‌زبان برای پوشش
+          اخبار، معرفی جزئیات، بررسی تریلرها و دنیای بازی‌های
+          Rockstar است. هدف ما ارائه مطالب جذاب و قابل‌فهم
+          برای طرفداران GTA و ساخت یک مرجع اطلاعاتی جامع است.
+          این وب‌سایت وابستگی رسمی به Rockstar Games ندارد.
         </p>
       </div>
+
     </div>
   </section>
 
-  <section class="section">
+  <!-- Social networks -->
+
+  <section class="section" id="social">
     <div class="container">
+
       <div class="section-head">
         <div>
           <h2>ما را دنبال کن</h2>
-          <p>برای دسترسی به مطالب و ویدیوهای جدید</p>
+          <p class="section-subtitle">
+            اخبار و ویدیوهای جدید GTAVI_VICE
+          </p>
         </div>
       </div>
 
       <div class="social-grid">
-        <a class="social" href="https://t.me/GTAVI_VICE" target="_blank" rel="noopener noreferrer">
-          <strong>✈️ تلگرام</strong>
+
+        <a class="social"
+           href="https://t.me/GTAVI_VICE"
+           target="_blank"
+           rel="noopener noreferrer">
+          <strong>✈️ کانال تلگرام</strong>
           <span>@GTAVI_VICE</span>
         </a>
-        <a class="social" href="https://www.instagram.com/gtavi.vice/" target="_blank" rel="noopener noreferrer">
+
+        <a class="social"
+           href="https://www.instagram.com/GTAVI_VICE/"
+           target="_blank"
+           rel="noopener noreferrer">
           <strong>◎ اینستاگرام</strong>
-          <span>@gtavi.vice</span>
+          <span>@GTAVI_VICE</span>
         </a>
-        <a class="social" href="https://www.youtube.com/@GTAVI_VICE" target="_blank" rel="noopener noreferrer">
-          <strong>▶ یوتیوب</strong>
-          <span>GTAVI_VICE</span>
+
+        <a class="social"
+           href="https://www.youtube.com/@GTAVI_VICE"
+           target="_blank"
+           rel="noopener noreferrer">
+          <strong>▶ کانال یوتیوب</strong>
+          <span>@GTAVI_VICE</span>
         </a>
+
       </div>
     </div>
   </section>
+
 </main>
 
 <footer>
   <div class="container footer-row">
     <span>© 2026 GTAVI_VICE</span>
-    <span>ساخته‌شده برای طرفداران GTA و Rockstar</span>
+    <span>رسانه مستقل فارسی GTA و Rockstar</span>
   </div>
 </footer>
 
+<script>
+(function () {
+  "use strict";
+
+  /*
+    تاریخ هدف:
+    ۱۹ نوامبر ۲۰۲۶، ساعت ۰۰:۰۰ به وقت ایران.
+    در صورت تغییر تاریخ رسمی انتشار، این مقدار را اصلاح کن.
+  */
+
+  const launchDate = new Date(
+    "2026-11-19T00:00:00+03:30"
+  ).getTime();
+
+  const elements = {
+    days: document.getElementById("days"),
+    hours: document.getElementById("hours"),
+    minutes: document.getElementById("minutes"),
+    seconds: document.getElementById("seconds"),
+    status: document.getElementById("countdown-status")
+  };
+
+  function updateCountdown() {
+    const remaining = launchDate - Date.now();
+
+    if (remaining <= 0) {
+      elements.days.textContent = "00";
+      elements.hours.textContent = "00";
+      elements.minutes.textContent = "00";
+      elements.seconds.textContent = "00";
+
+      elements.status.textContent =
+        "تاریخ هدف فرا رسیده است؛ برای وضعیت انتشار، اخبار رسمی را بررسی کن.";
+
+      return;
+    }
+
+    const days = Math.floor(remaining / 86400000);
+    const hours = Math.floor((remaining % 86400000) / 3600000);
+    const minutes = Math.floor((remaining % 3600000) / 60000);
+    const seconds = Math.floor((remaining % 60000) / 1000);
+
+    elements.days.textContent = String(days);
+    elements.hours.textContent = String(hours).padStart(2, "0");
+    elements.minutes.textContent = String(minutes).padStart(2, "0");
+    elements.seconds.textContent = String(seconds).padStart(2, "0");
+  }
+
+  updateCountdown();
+  window.setInterval(updateCountdown, 1000);
+})();
+</script>
+
 </body>
-</html>
+  </html>
+  
