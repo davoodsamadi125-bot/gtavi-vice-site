@@ -460,6 +460,74 @@
   </style>
 </head>
 
+<section id="latest-news" class="news-section">
+  <h2>📰 آخرین اخبار GTA VI</h2>
+  <p class="news-intro">جدیدترین خبرها و اطلاعات بازی را دنبال کن.</p>
+  <div id="news-list" class="news-grid"></div>
+</section>
+
+<style>
+.news-section {
+  max-width: 1100px;
+  margin: 50px auto;
+  padding: 24px;
+  color: #fff;
+}
+.news-section h2 {
+  color: #c084fc;
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+.news-intro {
+  color: #c7c7d1;
+  margin-bottom: 24px;
+}
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 18px;
+}
+.news-card {
+  background: #171420;
+  border: 1px solid #49305f;
+  border-radius: 16px;
+  padding: 20px;
+}
+.news-card h3 {
+  color: #e9d5ff;
+  margin-top: 0;
+}
+.news-card p {
+  color: #d4d0dc;
+  line-height: 1.8;
+}
+.news-card time {
+  color: #bda4d9;
+  font-size: 13px;
+}
+.news-card a {
+  color: #d8b4fe;
+}
+</style>
+
+<script src="./news.js"></script>
+<script>
+  const newsContainer = document.getElementById("news-list");
+
+  if (Array.isArray(news)) {
+    newsContainer.innerHTML = news.map(item => `
+      <article class="news-card">
+        <time>${item.date || ""}</time>
+        <h3>${item.title || "خبر GTA VI"}</h3>
+        <p>${item.summary || ""}</p>
+        ${item.source
+          ? `<a href="${item.source}" target="_blank" rel="noopener noreferrer">مشاهده منبع خبر</a>`
+          : ""}
+      </article>
+    `).join("");
+  }
+</script>
+  
 <body>
 
 <header>
