@@ -1,0 +1,224 @@
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090910">
+  <title>خبر | GTAVI_VICE</title>
+  <meta name="description" content="جزئیات اخبار GTA VI در GTAVI_VICE">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090910;
+      --panel: #12121d;
+      --purple: #a855f7;
+      --pink: #f472b6;
+      --text: #f5f3ff;
+      --muted: #aaa7bd;
+      --border: #2b253b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Vazirmatn", Tahoma, sans-serif;
+      line-height: 1.95;
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(850px, 92%); margin: auto; }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      background: #090910f5;
+      border-bottom: 1px solid var(--border);
+      padding: 14px 0;
+      backdrop-filter: blur(12px);
+    }
+    .brand { font-size: 21px; font-weight: 900; }
+    .brand span { color: var(--purple); }
+    .back { color: #d8b4fe; font-size: 13px; }
+    main { padding: 25px 0 45px; }
+    .crumb { color: var(--muted); font-size: 12px; margin-bottom: 12px; }
+    .category {
+      display: inline-block;
+      padding: 4px 11px;
+      color: #e9d5ff;
+      background: #a855f71c;
+      border: 1px solid #a855f755;
+      border-radius: 30px;
+      font-size: 12px;
+    }
+    h1 { font-size: clamp(25px, 5vw, 38px); line-height: 1.65; margin: 12px 0; }
+    .date { color: var(--muted); font-size: 12px; }
+    .cover {
+      display: block;
+      width: 100%;
+      max-height: 480px;
+      object-fit: cover;
+      border-radius: 18px;
+      margin: 20px 0;
+      border: 1px solid var(--border);
+      background: var(--panel);
+    }
+    .article-content {
+      font-size: 16px;
+      overflow-wrap: anywhere;
+      white-space: pre-line;
+    }
+    .source {
+      display: inline-block;
+      margin-top: 15px;
+      color: var(--pink);
+      font-size: 13px;
+    }
+    .comments {
+      margin-top: 35px;
+      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: linear-gradient(145deg, #171222, #101019);
+    }
+    .comments h2 { font-size: 21px; margin: 0 0 5px; }
+    .comments p { color: var(--muted); font-size: 12px; margin-top: 0; }
+    #giscus-container { margin-top: 20px; min-height: 100px; }
+    .notice {
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 15px;
+      border-radius: 12px;
+    }
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 20px 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    @media (max-width: 480px) {
+      .comments { padding: 13px; }
+      .article-content { font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+      <a class="brand" href="./index.html">GTA<span>VI</span>_VICE</a>
+      <a class="back" href="./index.html#latest-news">← بازگشت به اخبار</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="crumb">خانه / اخبار / جزئیات خبر</div>
+    <article id="article">
+      <p class="notice">در حال بارگذاری خبر...</p>
+    </article>
+
+    <section class="comments" id="comments" hidden>
+      <h2>💬 نظرات کاربران</h2>
+      <p>نظر خودت را درباره همین خبر بنویس و با دیگر طرفداران گفت‌وگو کن.</p>
+      <div id="giscus-container"></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      © 2026 GTAVI_VICE · رسانه مستقل طرفداران GTA
+    </div>
+  </footer>
+
+  <script src="./news.js"></script>
+  <script>
+    (function () {
+      "use strict";
+
+      const article = document.getElementById("article");
+      const comments = document.getElementById("comments");
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get("id");
+
+      function escapeHTML(value) {
+        return String(value == null ? "" : value).replace(/[&<>"']/g, function (ch) {
+          return {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;"
+          }[ch];
+        });
+      }
+
+      if (typeof news === "undefined" || !Array.isArray(news)) {
+        article.innerHTML = '<p class="notice">فایل اخبار بارگذاری نشد. لطفاً بعداً دوباره تلاش کن.</p>';
+        return;
+      }
+
+      const item = news.find(function (entry) {
+        return String(entry.id) === String(id);
+      });
+
+      if (!item) {
+        document.title = "خبر پیدا نشد | GTAVI_VICE";
+        article.innerHTML =
+          '<p class="notice">این خبر پیدا نشد. ممکن است شناسه آن اشتباه باشد یا خبر حذف شده باشد.</p>' +
+          '<p><a class="back" href="./index.html#latest-news">← بازگشت به آخرین اخبار</a></p>';
+        return;
+      }
+
+      const title = escapeHTML(item.title || "خبر GTA VI");
+      const category = escapeHTML(item.category || "اخبار GTA VI");
+      const date = escapeHTML(item.date || "");
+      const content = escapeHTML(item.content || item.summary || "جزئیات این خبر به‌زودی تکمیل می‌شود.");
+      const image = escapeHTML(item.image || "");
+      const source = typeof item.source === "string" &&
+        /^https?:\/\//i.test(item.source) ? item.source : "";
+
+      document.title = (item.title || "خبر GTA VI") + " | GTAVI_VICE";
+      document.querySelector('meta[name="description"]').content =
+        String(item.summary || item.title || "اخبار GTA VI").slice(0, 155);
+
+      article.innerHTML =
+        '<span class="category">' + category + '</span>' +
+        '<h1>' + title + '</h1>' +
+        '<div class="date">' + (date ? "📅 " + date : "") + '</div>' +
+        (image
+          ? '<img class="cover" src="' + image + '" alt="' + title +
+            '" onerror="this.style.display=\'none\'">'
+          : '') +
+        '<div class="article-content">' + content + '</div>' +
+        (source
+          ? '<a class="source" href="' + escapeHTML(source) +
+            '" target="_blank" rel="noopener noreferrer">مشاهده منبع اصلی خبر ↗</a>'
+          : '');
+
+      comments.hidden = false;
+
+      // شناسه ثابت و مجزا برای گفت‌وگوی هر خبر
+      const giscus = document.createElement("script");
+      giscus.src = "https://giscus.app/client.js";
+      giscus.async = true;
+      giscus.crossOrigin = "anonymous";
+      giscus.setAttribute("data-repo", "davoodsamadi125-bot/gtavi-vice-site");
+      giscus.setAttribute("data-repo-id", "R_kgDOVRFNCg");
+      giscus.setAttribute("data-category", "General");
+      giscus.setAttribute("data-category-id", "DIC_kwDOVRFNCs4DJW7t");
+      giscus.setAttribute("data-mapping", "specific");
+      giscus.setAttribute("data-term", "gtavi-vice-news-" + String(item.id));
+      giscus.setAttribute("data-strict", "0");
+      giscus.setAttribute("data-reactions-enabled", "1");
+      giscus.setAttribute("data-emit-metadata", "0");
+      giscus.setAttribute("data-input-position", "bottom");
+      giscus.setAttribute("data-theme", "purple_dark");
+      giscus.setAttribute("data-lang", "fa");
+      giscus.setAttribute("data-loading", "lazy");
+
+      document.getElementById("giscus-container").appendChild(giscus);
+    })();
+  </script>
+</body>
+</html>
