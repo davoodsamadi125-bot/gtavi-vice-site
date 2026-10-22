@@ -14,6 +14,36 @@
   <meta property="og:description" content="اخبار، تریلرها و جزئیات GTA VI را دنبال کن.">
   <meta property="og:type" content="website">
 
+/* نوار افقی اخبار GTAVI_VICE */
+#news-list,
+.news-grid {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 14px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 12px 4px 18px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: #8b35ff #171321;
+}
+
+#news-list .news-card,
+.news-grid .news-card {
+  flex: 0 0 280px;
+  min-width: 0;
+  scroll-snap-align: start;
+}
+
+/* نمایش مناسب در گوشی */
+@media (max-width: 600px) {
+  #news-list .news-card,
+  .news-grid .news-card {
+    flex-basis: 82%;
+  }
+}
+  
   <style>
     :root {
       --bg: #090910;
