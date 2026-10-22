@@ -533,33 +533,42 @@ img{max-width:100%}
 
   if(newsContainer){
     if(typeof news !== "undefined" && Array.isArray(news) && news.length){
-      newsContainer.innerHTML = news.map(function(item){
-        const title = escapeHTML(item.title || "خبر GTA VI");
-        const category = escapeHTML(item.category || "اخبار GTA VI");
-        const date = escapeHTML(item.date || "");
-        const summary = escapeHTML(item.summary || "");
-        const image = escapeHTML(item.image || "");
-        const source = typeof item.source === "string" ? item.source : "";
-        let sourceLink = "";
+newsContainer.innerHTML = news.map(function(item) {
+  const title = escapeHTML(item.title || "خبر GTA VI");
+  const category = escapeHTML(item.category || "اخبار GTA VI");
+  const date = escapeHTML(item.date || "");
+  const summary = escapeHTML(item.summary || "");
+  const image = escapeHTML(item.image || "");
+  const id = encodeURIComponent(String(item.id));
 
-        if(source && /^https?:\/\//i.test(source)){
-          sourceLink = '<a class="news-source" href="' + escapeHTML(source) +
-            '" target="_blank" rel="noopener noreferrer">مشاهده منبع خبر ↗</a>';
-        }
+  const source = typeof item.source === "string" ? item.source : "";
+  let sourceLink = "";
 
-        const imageHTML = image
-          ? '<img class="news-image" src="' + image + '" alt="' + title +
-            '" loading="lazy" onerror="this.style.display=\'none\'">'
-          : "";
+  if (source && /^https?:\/\//i.test(source)) {
+    sourceLink =
+      '<a class="news-source" href="' + escapeHTML(source) +
+      '" target="_blank" rel="noopener noreferrer">مشاهده منبع خبر ↗</a>';
+  }
 
-                                         return '<article class="news-card">' + imageHTML +
-          '<div class="news-content">' +
-          '<span class="news-category">' + category + '</span>' +
-          '<time>' + date + '</time>' +
-          '<h3>' + title + '</h3>' +
-          '<p>' + summary + '</p>' + sourceLink +
-          '</div></article>';
-      }).join("");
+  const imageHTML = image
+    ? '<img class="news-image" src="' + image +
+      '" alt="' + title +
+      '" loading="lazy" onerror="this.style.display=\'none\'">'
+    : "";
+
+  return '<article class="news-card">' +
+    imageHTML +
+    '<div class="news-content">' +
+      '<span class="news-category">' + category + '</span>' +
+      '<time>' + date + '</time>' +
+      '<h3>' + title + '</h3>' +
+      '<p>' + summary + '</p>' +
+      '<a class="news-source" href="./news.html?id=' + id +
+      '">ادامه خبر و ثبت نظر ←</a>' +
+      sourceLink +
+    '</div>' +
+  '</article>';
+}).join("");
     }else if(typeof news !== "undefined" && Array.isArray(news)){
       newsContainer.innerHTML = '<p class="news-error">هنوز خبری در فایل news.js ثبت نشده است.</p>';
     }else{
