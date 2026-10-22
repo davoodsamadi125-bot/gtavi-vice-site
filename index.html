@@ -3,56 +3,15 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#090910">
-
   <title>GTAVI_VICE | مرجع فارسی GTA VI</title>
-
-  <meta name="description" content="مرجع فارسی GTA VI و Rockstar Games؛ آخرین اخبار، تریلرها، تصاویر، تحلیل‌ها و جزئیات بازی GTA 6.">
-
+  <meta name="description" content="مرجع فارسی GTA VI و Rockstar Games؛ اخبار، تریلرها، تصاویر، تحلیل‌ها و راهنماهای بازی.">
   <meta property="og:title" content="GTAVI_VICE | دنیای GTA VI">
-  <meta property="og:description" content="اخبار، تریلرها و جزئیات GTA VI را دنبال کن.">
+  <meta property="og:description" content="اخبار و جزئیات GTA VI را دنبال کن.">
   <meta property="og:type" content="website">
 
-<style>
-  
-/* نوار افقی اخبار GTAVI_VICE */
-#news-list {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  gap: 16px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding: 12px 4px 20px;
-  -webkit-overflow-scrolling: touch;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: thin;
-  scrollbar-color: #a855f7 #12121d;
-}
-
-#news-list .news-card {
-  flex: 0 0 280px;
-  width: 280px;
-  min-width: 0;
-  box-sizing: border-box;
-  scroll-snap-align: start;
-}
-
-#news-list .news-image {
-  display: block;
-  width: 100%;
-  height: 170px;
-  object-fit: cover;
-  border-radius: 12px 12px 0 0;
-}
-
-@media (max-width: 600px) {
-  #news-list .news-card {
-    flex: 0 0 82%;
-    width: 82%;
-  }
-}
+  <style>
     :root {
       --bg: #090910;
       --panel: #12121d;
@@ -64,9 +23,7 @@
       --border: #292538;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     html {
       scroll-behavior: smooth;
@@ -81,63 +38,100 @@
       line-height: 1.9;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    button, input {
-      font: inherit;
-    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; cursor: pointer; }
 
     .container {
       width: min(1120px, 92%);
       margin-inline: auto;
     }
 
-    header {
+    /* Header */
+    .site-header {
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(9, 9, 16, 0.96);
+      background: rgba(9,9,16,.97);
       border-bottom: 1px solid var(--border);
       backdrop-filter: blur(14px);
     }
 
-    .nav {
-      min-height: 72px;
+    .header-row {
+      min-height: 76px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .header-side {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 18px;
+      gap: 10px;
     }
+
+    .header-side.left { justify-content: flex-start; }
+    .header-side.right { justify-content: flex-end; }
 
     .brand {
       white-space: nowrap;
-      font-size: 23px;
+      font-size: clamp(19px, 4vw, 27px);
       font-weight: 900;
       letter-spacing: -1px;
+      text-align: center;
     }
 
-    .brand span {
-      color: var(--purple);
-    }
+    .brand span { color: var(--purple); }
 
-    .links {
-      display: flex;
+    .icon-button {
+      width: 42px;
+      height: 42px;
+      display: inline-flex;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 18px;
+      justify-content: center;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--panel);
+      color: var(--text);
+      font-size: 23px;
+    }
+
+    .join-button {
+      padding: 7px 13px;
+      border: 1px solid #a855f766;
+      border-radius: 10px;
+      background: #21152f;
+      color: #e9d5ff;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .menu-panel {
+      display: none;
+      padding: 10px 4%;
+      border-top: 1px solid var(--border);
+      background: #101019;
+    }
+
+    .menu-panel.open { display: block; }
+
+    .menu-links {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 8px;
+    }
+
+    .menu-links a {
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--panel);
       font-size: 13px;
-      color: var(--muted);
     }
 
-    .links a:hover {
-      color: var(--pink);
-    }
-
+    /* Hero */
     .hero {
-      padding: 65px 0 45px;
+      padding: 48px 0 34px;
       background:
         radial-gradient(ellipse at 85% 5%, #54217a40, transparent 45%),
         radial-gradient(ellipse at 10% 90%, #9d174d20, transparent 40%);
@@ -153,45 +147,36 @@
     }
 
     h1 {
-      margin: 20px 0 12px;
-      font-size: clamp(36px, 7vw, 68px);
-      line-height: 1.35;
-      letter-spacing: -1.5px;
+      margin: 18px 0 12px;
+      font-size: clamp(34px, 7vw, 64px);
+      line-height: 1.4;
     }
 
-    h1 span {
-      color: var(--pink);
-    }
+    h1 span { color: var(--pink); }
 
     .hero-description {
       max-width: 650px;
       color: var(--muted);
-      font-size: 15px;
+      font-size: 14px;
     }
 
     .actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 25px;
+      gap: 10px;
+      margin-top: 22px;
     }
 
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 11px 19px;
+      padding: 10px 17px;
       border-radius: 10px;
-      background: linear-gradient(120deg, #9333ea, #c026d3);
+      background: linear-gradient(120deg,#9333ea,#c026d3);
       color: white;
       font-size: 13px;
       font-weight: bold;
-      transition: opacity .2s, transform .2s;
-    }
-
-    .btn:hover {
-      opacity: .88;
-      transform: translateY(-2px);
     }
 
     .btn.secondary {
@@ -200,38 +185,30 @@
     }
 
     /* Countdown */
-
     .countdown {
       max-width: 650px;
-      margin-top: 32px;
-      padding: 22px;
+      margin-top: 28px;
+      padding: 20px;
       border: 1px solid #a855f755;
       border-radius: 16px;
-      background: linear-gradient(135deg, #171224, #101019);
+      background: linear-gradient(135deg,#171224,#101019);
     }
 
-    .countdown-title {
-      margin: 0 0 5px;
-      font-size: 19px;
-    }
-
-    .countdown-description {
-      margin: 0 0 18px;
+    .countdown-title { margin: 0; font-size: 19px; }
+    .countdown-description, .countdown-status {
       color: var(--muted);
       font-size: 12px;
     }
 
     .countdown-grid {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 10px;
+      grid-template-columns: repeat(4,minmax(0,1fr));
+      gap: 8px;
     }
 
     .countdown-item {
-      min-width: 0;
-      padding: 12px 4px;
+      padding: 10px 3px;
       text-align: center;
-      border: 1px solid #ffffff0d;
       border-radius: 10px;
       background: #21152f;
     }
@@ -239,178 +216,189 @@
     .countdown-number {
       display: block;
       color: #e9b5ff;
-      font-size: clamp(23px, 4vw, 34px);
+      font-size: clamp(21px,5vw,32px);
       font-weight: bold;
-      line-height: 1.5;
       direction: ltr;
-      font-variant-numeric: tabular-nums;
     }
 
-    .countdown-label {
-      color: #c4bdd3;
-      font-size: 11px;
-    }
+    .countdown-label { color: #c4bdd3; font-size: 11px; }
 
-    .countdown-status {
-      margin: 15px 0 0;
-      color: var(--muted);
-      font-size: 11px;
-    }
+    /* General sections */
+    .section { padding: 32px 0; }
 
-    /* Sections */
+    .section-head { margin-bottom: 18px; }
 
-    .section {
-      padding: 38px 0;
-    }
+    h2 { margin: 0; font-size: 22px; }
 
-    .section-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 22px;
-    }
-
-    h2 {
-      margin: 0;
-      font-size: 23px;
-    }
-
-    .section-subtitle {
+    .section-subtitle, .news-intro {
       margin: 4px 0 0;
       color: var(--muted);
       font-size: 12px;
     }
 
+    /* Horizontal news carousel */
+    .news-track {
+      display: flex;
+      flex-flow: row nowrap;
+      gap: 15px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 8px 2px 18px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: var(--purple) var(--panel);
+    }
+
+    .news-card {
+      flex: 0 0 290px;
+      min-width: 0;
+      overflow: hidden;
+      scroll-snap-align: start;
+      border: 1px solid #49305f;
+      border-radius: 15px;
+      background: var(--panel);
+    }
+
+    .news-image {
+      display: block;
+      width: 100%;
+      height: 165px;
+      object-fit: cover;
+      background: var(--panel-light);
+    }
+
+    .news-content {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 15px;
+    }
+
+    .news-category {
+      color: #d8b4fe;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    .news-card time {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .news-card h3 {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.8;
+    }
+
+    .news-card p {
+      margin: 0;
+      color: #d4d0dc;
+      font-size: 12px;
+      line-height: 1.9;
+    }
+
+    .news-card a {
+      margin-top: 5px;
+      color: var(--pink);
+      font-size: 12px;
+    }
+
+    .news-card:hover { border-color: var(--purple); }
+
+    /* Quick access */
+    .quick-track {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding: 5px 2px 15px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: var(--purple) var(--panel);
+    }
+
+    .quick-item {
+      flex: 0 0 112px;
+      min-height: 100px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      scroll-snap-align: start;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--panel);
+      text-align: center;
+      font-size: 12px;
+    }
+
+    .quick-item .symbol { font-size: 26px; }
+
+    /* Content cards */
     .grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
+      grid-template-columns: repeat(3,minmax(0,1fr));
+      gap: 16px;
     }
 
     .card {
       min-width: 0;
       overflow: hidden;
       border: 1px solid var(--border);
-      border-radius: 16px;
+      border-radius: 15px;
       background: var(--panel);
-      transition: transform .2s, border-color .2s;
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-      border-color: #a855f788;
     }
 
     .art {
-      min-height: 165px;
+      min-height: 125px;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 20px;
-      text-align: center;
       background:
-        radial-gradient(ellipse at 50% 110%, #c026d344, transparent 60%),
-        linear-gradient(135deg, #21152f, #11111c 70%);
-      border-bottom: 1px solid var(--border);
+        radial-gradient(ellipse at 50% 110%,#c026d344,transparent 60%),
+        linear-gradient(135deg,#21152f,#11111c 70%);
     }
 
-    .symbol {
-      font-size: 45px;
-      filter: drop-shadow(0 0 20px #a855f755);
-    }
+    .symbol-large { font-size: 40px; }
 
-    .card-body {
-      padding: 18px;
-    }
-
-    .tag {
-      color: #d8b4fe;
-      font-size: 11px;
-    }
-
-    .card h3 {
-      margin: 8px 0;
-      font-size: 17px;
-      line-height: 1.8;
-    }
-
-    .card p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .read {
-      display: inline-block;
-      margin-top: 15px;
-      color: var(--pink);
-      font-size: 12px;
-    }
-
-    .read:hover {
-      text-decoration: underline;
-    }
-
-    /* About */
+    .card-body { padding: 16px; }
+    .tag { color: #d8b4fe; font-size: 11px; }
+    .card h3 { margin: 8px 0; font-size: 16px; }
+    .card p { margin: 0; color: var(--muted); font-size: 12px; }
+    .read { display: inline-block; margin-top: 12px; color: var(--pink); font-size: 12px; }
 
     .feature {
-      padding: 28px;
+      padding: 24px;
       border: 1px solid var(--border);
-      border-radius: 18px;
-      background: linear-gradient(120deg, #171224, #101019);
+      border-radius: 16px;
+      background: linear-gradient(120deg,#171224,#101019);
     }
 
-    .feature h2 {
-      margin-top: 14px;
-    }
-
-    .feature p {
-      margin-bottom: 0;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    /* Social networks */
+    .feature h2 { margin-top: 12px; }
+    .feature p { color: var(--muted); font-size: 13px; }
 
     .social-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
+      grid-template-columns: repeat(3,minmax(0,1fr));
+      gap: 12px;
     }
 
     .social {
-      display: block;
-      padding: 20px;
+      padding: 16px;
       border: 1px solid var(--border);
-      border-radius: 14px;
+      border-radius: 13px;
       background: var(--panel);
-      transition: border-color .2s, transform .2s;
     }
 
-    .social:hover {
-      border-color: var(--purple);
-      transform: translateY(-3px);
-    }
-
-    .social strong {
-      display: block;
-      font-size: 15px;
-    }
-
-    .social span {
-      color: var(--muted);
-      font-size: 12px;
-      direction: ltr;
-      unicode-bidi: isolate;
-      display: inline-block;
-    }
-
-    /* Footer */
+    .social strong { display: block; font-size: 14px; }
+    .social span { color: var(--muted); font-size: 12px; }
 
     footer {
-      margin-top: 35px;
-      padding: 28px 0;
+      margin-top: 25px;
+      padding: 24px 0;
       border-top: 1px solid var(--border);
       color: var(--muted);
       font-size: 12px;
@@ -420,467 +408,227 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
-      gap: 10px;
+      gap: 8px;
     }
 
     @media (max-width: 720px) {
-      .nav {
-        align-items: flex-start;
-        flex-direction: column;
-        justify-content: center;
-        gap: 5px;
-        padding: 12px 0;
-      }
-
-      .brand {
-        font-size: 21px;
-      }
-
-      .links {
-        gap: 5px 15px;
-        font-size: 12px;
-      }
-
-      .hero {
-        padding: 43px 0 30px;
-      }
-
-      .hero-description {
-        font-size: 14px;
-      }
-
-      .grid {
-        grid-template-columns: 1fr;
-      }
-
-      .art {
-        min-height: 130px;
-      }
-
-      .social-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .countdown {
-        padding: 15px;
-      }
-
-      .countdown-grid {
-        gap: 6px;
-      }
-
-      .countdown-number {
-        font-size: clamp(21px, 6vw, 30px);
-      }
-
-      .countdown-label {
-        font-size: 10px;
-      }
-
-      .feature {
-        padding: 21px;
-      }
-
-      h2 {
-        font-size: 20px;
-      }
+      .header-row { min-height: 68px; }
+      .join-button { padding: 6px 8px; font-size: 11px; }
+      .icon-button { width: 38px; height: 38px; }
+      .hero { padding-top: 35px; }
+      .grid { grid-template-columns: 1fr; }
+      .social-grid { grid-template-columns: 1fr; }
+      .news-card { flex-basis: 82%; }
+      .feature { padding: 19px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      html {
-        scroll-behavior: auto;
-      }
-
-      *, *::before, *::after {
-        transition-duration: 0.01ms !important;
-      }
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition: none !important; }
     }
   </style>
 </head>
 
-<section id="latest-news" class="news-section">
-  <h2>📰 آخرین اخبار GTA VI</h2>
-  <p class="news-intro">جدیدترین خبرها و اطلاعات بازی را دنبال کن.</p>
-  <div id="news-list" class="news-grid"></div>
-</section>
-
-<style>
-.news-section {
-  max-width: 1100px;
-  margin: 50px auto;
-  padding: 24px;
-  color: #fff;
-}
-.news-section h2 {
-  color: #c084fc;
-  font-size: 28px;
-  margin-bottom: 10px;
-}
-.news-intro {
-  color: #c7c7d1;
-  margin-bottom: 24px;
-}
-.news-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 18px;
-}
-.news-card {
-  background: #171420;
-  border: 1px solid #49305f;
-  border-radius: 16px;
-  padding: 20px;
-}
-.news-card h3 {
-  color: #e9d5ff;
-  margin-top: 0;
-}
-.news-card p {
-  color: #d4d0dc;
-  line-height: 1.8;
-}
-.news-card time {
-  color: #bda4d9;
-  font-size: 13px;
-}
-.news-card a {
-  color: #d8b4fe;
-}
-  
-.news-image {
-  display: block;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-  border-radius: 14px;
-  margin-bottom: 14px;
-}
-
-.news-card {
-  overflow: hidden;
-  transition: transform 0.2s ease, border-color 0.2s ease;
-}
-
-.news-card:hover {
-  transform: translateY(-4px);
-  border-color: #a855f7;
-}
-
-.news-content {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.news-category {
-  color: #d8b4fe;
-  font-size: 12px;
-  font-weight: bold;
-}
-
-.news-card a {
-  text-decoration: none;
-  font-weight: bold;
-}
-  
-</style>
-
-<script src="./news.js"></script>
-<script>
-  const newsContainer = document.getElementById("news-list");
-
-  if (Array.isArray(news)) {
-    
-newsContainer.innerHTML = news.map(item => `
-  <article class="news-card">
-    ${item.image ? `
-      <img
-        class="news-image"
-        src="${item.image}"
-        alt="${item.title || 'GTA VI'}"
-        loading="lazy"
-      >
-    ` : ""}
-
-    <div class="news-content">
-      <span class="news-category">
-        ${item.category || "اخبار GTA VI"}
-      </span>
-
-      <time>${item.date || ""}</time>
-
-      <h3>${item.title || "خبر GTA VI"}</h3>
-
-      <p>${item.summary || ""}</p>
-
-      ${item.source ? `
-        <a href="${item.source}"
-           target="_blank"
-           rel="noopener noreferrer">
-          مشاهده منبع خبر ←
-        </a>
-      ` : ""}
-    </div>
-  </article>
-`).join("");
-    
-  }
-</script>
-  
 <body>
 
-<header>
-  <div class="container nav">
+<header class="site-header">
+  <div class="container header-row">
+    <div class="header-side right">
+      <button class="icon-button" id="menu-toggle"
+        type="button" aria-label="باز کردن منو"
+        aria-expanded="false" aria-controls="menu-panel">☰</button>
+    </div>
+
     <a class="brand" href="#home" aria-label="صفحه اصلی GTAVI_VICE">
       GTA<span>VI</span>_VICE
     </a>
 
-    <nav class="links" aria-label="منوی اصلی">
+    <div class="header-side left">
+      <a class="join-button" href="#membership">ورود / عضویت</a>
+    </div>
+  </div>
+
+  <nav class="menu-panel" id="menu-panel" aria-label="منوی اصلی">
+    <div class="container menu-links">
       <a href="#home">خانه</a>
-      <a href="#news">اخبار</a>
-      <a href="#trailers">تریلرها</a>
+      <a href="#latest-news">اخبار مهم</a>
+      <a href="#quick-access">دسترسی سریع</a>
+      <a href="#guides">راهنماها</a>
+      <a href="#community">جامعه گیمرها</a>
+      <a href="#store">فروشگاه</a>
       <a href="#about">درباره ما</a>
       <a href="#social">شبکه‌های اجتماعی</a>
-    </nav>
-  </div>
+    </div>
+  </nav>
 </header>
 
 <main>
-
-  <!-- Hero -->
-
   <section class="hero" id="home">
     <div class="container">
-
-      <span class="eyebrow">
-        مرجع فارسی GTA VI و Rockstar Games
-      </span>
-
-      <h1>
-        به دنیای<br>
-        <span>Vice City</span> خوش آمدی.
-      </h1>
-
+      <span class="eyebrow">مرجع فارسی GTA VI و Rockstar Games</span>
+      <h1>به دنیای<br><span>Vice City</span> خوش آمدی.</h1>
       <p class="hero-description">
-        آخرین اخبار، تریلرهای رسمی، تصاویر، جزئیات پنهان و
-        تحلیل‌های GTA VI را در GTAVI_VICE دنبال کن.
-        همراه تو در مسیر ورود دوباره به دنیای Vice City.
+        آخرین اخبار، تریلرهای رسمی، تصاویر، جزئیات پنهان و تحلیل‌های GTA VI را در GTAVI_VICE دنبال کن.
       </p>
 
       <div class="actions">
-        <a class="btn" href="#news">
-          مشاهده مطالب
-        </a>
-
-        <a class="btn secondary"
-           href="https://t.me/GTAVI_VICE"
-           target="_blank"
-           rel="noopener noreferrer">
-          عضویت در تلگرام ↗
-        </a>
+        <a class="btn" href="#latest-news">مشاهده اخبار</a>
+        <a class="btn secondary" href="https://t.me/GTAVI_VICE"
+          target="_blank" rel="noopener noreferrer">عضویت در تلگرام ↗</a>
       </div>
 
-      <!-- Live countdown -->
-
       <div class="countdown">
-        <h2 class="countdown-title">
-          ⏳ شمارش معکوس تا GTA VI
-        </h2>
+        <h2 class="countdown-title">⏳ شمارش معکوس تا GTA VI</h2>
+        <p class="countdown-description">تا تاریخ اعلام‌شده انتشار بازی</p>
 
-        <p class="countdown-description">
-          تا تاریخ اعلام‌شده انتشار بازی
-        </p>
-
-        <div class="countdown-grid" aria-label="زمان باقی‌مانده تا انتشار">
-
-          <div class="countdown-item">
-            <span class="countdown-number" id="days">--</span>
-            <span class="countdown-label">روز</span>
-          </div>
-
-          <div class="countdown-item">
-            <span class="countdown-number" id="hours">--</span>
-            <span class="countdown-label">ساعت</span>
-          </div>
-
-          <div class="countdown-item">
-            <span class="countdown-number" id="minutes">--</span>
-            <span class="countdown-label">دقیقه</span>
-          </div>
-
-          <div class="countdown-item">
-            <span class="countdown-number" id="seconds">--</span>
-            <span class="countdown-label">ثانیه</span>
-          </div>
-
+        <div class="countdown-grid">
+          <div class="countdown-item"><span class="countdown-number" id="days">--</span><span class="countdown-label">روز</span></div>
+          <div class="countdown-item"><span class="countdown-number" id="hours">--</span><span class="countdown-label">ساعت</span></div>
+          <div class="countdown-item"><span class="countdown-number" id="minutes">--</span><span class="countdown-label">دقیقه</span></div>
+          <div class="countdown-item"><span class="countdown-number" id="seconds">--</span><span class="countdown-label">ثانیه</span></div>
         </div>
 
         <p class="countdown-status" id="countdown-status" aria-live="polite">
-          تاریخ اعلام‌شده: ۱۹ نوامبر ۲۰۲۶
+          تاریخ هدف: ۱۹ نوامبر ۲۰۲۶
         </p>
       </div>
-
     </div>
   </section>
 
-  <!-- News -->
-
-  <section class="section" id="news">
+  <section class="section" id="latest-news">
     <div class="container">
-
       <div class="section-head">
-        <div>
-          <h2>دنیای اخبار GTA VI</h2>
-          <p class="section-subtitle">
-            نگاهی به موضوعات مهم دنیای راکستار
-          </p>
-        </div>
+        <h2>📰 اخبار مهم و مطالب جدید</h2>
+        <p class="section-subtitle">کارت‌ها را با انگشت به چپ و راست بکش.</p>
+      </div>
+      <div id="news-list" class="news-track">
+        <p class="section-subtitle">در حال بارگذاری اخبار...</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="quick-access">
+    <div class="container">
+      <div class="section-head">
+        <h2>⚡ دسترسی سریع</h2>
+        <p class="section-subtitle">به بخش موردنظرت برو.</p>
+      </div>
+
+      <div class="quick-track">
+        <a class="quick-item" href="#latest-news"><span class="symbol">📰</span><span>اخبار</span></a>
+        <a class="quick-item" href="#trailers"><span class="symbol">🎬</span><span>تریلرها</span></a>
+        <a class="quick-item" href="#guides"><span class="symbol">🗺️</span><span>راهنماها</span></a>
+        <a class="quick-item" href="#characters"><span class="symbol">🧍</span><span>شخصیت‌ها</span></a>
+        <a class="quick-item" href="#community"><span class="symbol">💬</span><span>جامعه گیمرها</span></a>
+        <a class="quick-item" href="#store"><span class="symbol">🛍️</span><span>فروشگاه</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="trailers">
+    <div class="container">
+      <div class="section-head">
+        <h2>🎬 تریلرها و اطلاعات رسمی</h2>
+        <p class="section-subtitle">برای اخبار و ویدیوهای رسمی به منابع اصلی مراجعه کن.</p>
       </div>
 
       <div class="grid">
-
-        <article class="card">
-          <div class="art" aria-hidden="true">
-            <span class="symbol">🌴</span>
-          </div>
-
+        <article class="card" id="characters">
+          <div class="art"><span class="symbol-large">🌴</span></div>
           <div class="card-body">
             <span class="tag">دنیای بازی</span>
-
             <h3>بازگشت به Vice City</h3>
-
-            <p>
-              با دنیای مدرن و پرجزئیات ایالت خیالی Leonida
-              در نسخه جدید GTA بیشتر آشنا شو.
-            </p>
-
-            <a class="read"
-               href="https://www.rockstargames.com/VI"
-               target="_blank"
-               rel="noopener noreferrer">
-              مشاهده منبع رسمی ↗
-            </a>
-          </div>
-        </article>
-
-        <article class="card" id="trailers">
-          <div class="art" aria-hidden="true">
-            <span class="symbol">🎬</span>
-          </div>
-
-          <div class="card-body">
-            <span class="tag">تریلرها</span>
-
-            <h3>تماشای ویدیوهای رسمی</h3>
-
-            <p>
-              تریلرها و ویدیوهای منتشرشده از GTA VI
-              را از کانال رسمی Rockstar دنبال کن.
-            </p>
-
-            <a class="read"
-               href="https://www.youtube.com/@RockstarGames"
-               target="_blank"
-               rel="noopener noreferrer">
-              تماشای ویدیوها ↗
-            </a>
+            <p>با دنیای مدرن و ایالت خیالی Leonida آشنا شو.</p>
+            <a class="read" href="https://www.rockstargames.com/VI" target="_blank" rel="noopener noreferrer">اطلاعات رسمی ↗</a>
           </div>
         </article>
 
         <article class="card">
-          <div class="art" aria-hidden="true">
-            <span class="symbol">🔎</span>
-          </div>
-
+          <div class="art"><span class="symbol-large">🎥</span></div>
           <div class="card-body">
-            <span class="tag">تحلیل و جزئیات</span>
-
-            <h3>رازهای پنهان تریلرها</h3>
-
-            <p>
-              سرنخ‌ها، جزئیات محیط، شخصیت‌ها و نکاتی را
-              بررسی کن که شاید در نگاه اول متوجه آن‌ها نشوی.
-            </p>
-
-            <a class="read"
-               href="https://www.rockstargames.com/VI"
-               target="_blank"
-               rel="noopener noreferrer">
-              اطلاعات رسمی بازی ↗
-            </a>
+            <span class="tag">ویدیوها</span>
+            <h3>تماشای تریلرها</h3>
+            <p>ویدیوهای منتشرشده را از کانال رسمی Rockstar دنبال کن.</p>
+            <a class="read" href="https://www.youtube.com/@RockstarGames" target="_blank" rel="noopener noreferrer">کانال رسمی ↗</a>
           </div>
         </article>
 
+        <article class="card" id="guides">
+          <div class="art"><span class="symbol-large">🔎</span></div>
+          <div class="card-body">
+            <span class="tag">راهنماها</span>
+            <h3>راهنمای بازی و جزئیات</h3>
+            <p>این بخش به‌تدریج با راهنماهای مأموریت‌ها و اطلاعات بازی تکمیل می‌شود.</p>
+            <span class="read">به‌زودی</span>
+          </div>
+        </article>
       </div>
     </div>
   </section>
 
-  <!-- About -->
+  <section class="section" id="community">
+    <div class="container">
+      <div class="feature">
+        <span class="eyebrow">جامعه GTAVI_VICE</span>
+        <h2>نظر تو چیست؟</h2>
+        <p>بخش نظرات، نظرسنجی‌ها و گفت‌وگوی گیمرها در مراحل بعدی اضافه خواهد شد.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="store">
+    <div class="container">
+      <div class="feature">
+        <span class="eyebrow">فروشگاه GTAVI_VICE</span>
+        <h2>فروشگاه گیمرها</h2>
+        <p>محصولات دیجیتال و فیزیکی و درگاه پرداخت ایرانی در مرحله بعدی راه‌اندازی می‌شوند.</p>
+      </div>
+    </div>
+  </section>
 
   <section class="section" id="about">
     <div class="container">
-
       <div class="feature">
         <span class="eyebrow">درباره GTAVI_VICE</span>
-
-        <h2>خانه طرفداران GTA در فارسی</h2>
-
+        <h2>خانه طرفداران GTA به زبان فارسی</h2>
         <p>
-          GTAVI_VICE یک رسانه مستقل فارسی‌زبان برای پوشش
-          اخبار، معرفی جزئیات، بررسی تریلرها و دنیای بازی‌های
-          Rockstar است. هدف ما ارائه مطالب جذاب و قابل‌فهم
-          برای طرفداران GTA و ساخت یک مرجع اطلاعاتی جامع است.
-          این وب‌سایت وابستگی رسمی به Rockstar Games ندارد.
+          GTAVI_VICE رسانه‌ای مستقل فارسی‌زبان برای پوشش اخبار،
+          بررسی تریلرها و دنیای بازی‌های Rockstar است و وابستگی رسمی
+          به Rockstar Games ندارد.
         </p>
       </div>
-
     </div>
   </section>
-
-  <!-- Social networks -->
 
   <section class="section" id="social">
     <div class="container">
-
       <div class="section-head">
-        <div>
-          <h2>ما را دنبال کن</h2>
-          <p class="section-subtitle">
-            اخبار و ویدیوهای جدید GTAVI_VICE
-          </p>
-        </div>
+        <h2>ما را دنبال کن</h2>
+        <p class="section-subtitle">اخبار و ویدیوهای جدید GTAVI_VICE</p>
       </div>
 
       <div class="social-grid">
-
-        <a class="social"
-           href="https://t.me/GTAVI_VICE"
-           target="_blank"
-           rel="noopener noreferrer">
-          <strong>✈️ کانال تلگرام</strong>
-          <span>@GTAVI_VICE</span>
+        <a class="social" href="https://t.me/GTAVI_VICE" target="_blank" rel="noopener noreferrer">
+          <strong>✈️ تلگرام</strong><span>@GTAVI_VICE</span>
         </a>
-
-        <a class="social"
-           href="https://www.instagram.com/GTAVI_VICE/"
-           target="_blank"
-           rel="noopener noreferrer">
-          <strong>◎ اینستاگرام</strong>
-          <span>@GTAVI_VICE</span>
+        <a class="social" href="https://www.instagram.com/GTAVI_VICE/" target="_blank" rel="noopener noreferrer">
+          <strong>◎ اینستاگرام</strong><span>@GTAVI_VICE</span>
         </a>
-
-        <a class="social"
-           href="https://www.youtube.com/@GTAVI_VICE"
-           target="_blank"
-           rel="noopener noreferrer">
-          <strong>▶ کانال یوتیوب</strong>
-          <span>@GTAVI_VICE</span>
+        <a class="social" href="https://www.youtube.com/@GTAVI_VICE" target="_blank" rel="noopener noreferrer">
+          <strong>▶ یوتیوب</strong><span>@GTAVI_VICE</span>
         </a>
-
       </div>
     </div>
   </section>
 
+  <section class="section" id="membership">
+    <div class="container">
+      <div class="feature">
+        <h2>ورود و عضویت</h2>
+        <p>سیستم حساب کاربری هنوز فعال نشده است. این بخش پس از راه‌اندازی امن ثبت‌نام تکمیل می‌شود.</p>
+      </div>
+    </div>
+  </section>
 </main>
 
 <footer>
@@ -890,59 +638,71 @@ newsContainer.innerHTML = news.map(item => `
   </div>
 </footer>
 
+<script src="./news.js"></script>
 <script>
-(function () {
-  "use strict";
+  // منوی موبایل
+  const menuToggle = document.getElementById("menu-toggle");
+  const menuPanel = document.getElementById("menu-panel");
 
-  /*
-    تاریخ هدف:
-    ۱۹ نوامبر ۲۰۲۶، ساعت ۰۰:۰۰ به وقت ایران.
-    در صورت تغییر تاریخ رسمی انتشار، این مقدار را اصلاح کن.
-  */
+  menuToggle.addEventListener("click", function () {
+    const isOpen = menuPanel.classList.toggle("open");
+    menuToggle.setAttribute("aria-expanded", String(isOpen));
+    menuToggle.setAttribute("aria-label", isOpen ? "بستن منو" : "باز کردن منو");
+    menuToggle.textContent = isOpen ? "✕" : "☰";
+  });
 
-  const launchDate = new Date(
-    "2026-11-19T00:00:00+03:30"
-  ).getTime();
+  menuPanel.querySelectorAll("a").forEach(function (link) {
+    link.addEventListener("click", function () {
+      menuPanel.classList.remove("open");
+      menuToggle.setAttribute("aria-expanded", "false");
+      menuToggle.setAttribute("aria-label", "باز کردن منو");
+      menuToggle.textContent = "☰";
+    });
+  });
 
-  const elements = {
-    days: document.getElementById("days"),
-    hours: document.getElementById("hours"),
-    minutes: document.getElementById("minutes"),
-    seconds: document.getElementById("seconds"),
-    status: document.getElementById("countdown-status")
-  };
+  // نمایش خبرها از فایل news.js
+  const newsContainer = document.getElementById("news-list");
 
-  function updateCountdown() {
-    const remaining = launchDate - Date.now();
+  if (typeof news !== "undefined" && Array.isArray(news) && newsContainer) {
+    if (news.length) {
+      newsContainer.innerHTML = news.map(function (item) {
+        return `
+          <article class="news-card">
+            ${item.image ? `
+              <img class="news-image"
+                   src="${item.image}"
+                   alt="${item.title || "GTA VI"}"
+                   loading="lazy">
+            ` : ""}
 
-    if (remaining <= 0) {
-      elements.days.textContent = "00";
-      elements.hours.textContent = "00";
-      elements.minutes.textContent = "00";
-      elements.seconds.textContent = "00";
-
-      elements.status.textContent =
-        "تاریخ هدف فرا رسیده است؛ برای وضعیت انتشار، اخبار رسمی را بررسی کن.";
-
-      return;
+            <div class="news-content">
+              <span class="news-category">${item.category || "اخبار GTA VI"}</span>
+              <time>${item.date || ""}</time>
+              <h3>${item.title || "خبر GTA VI"}</h3>
+              <p>${item.summary || ""}</p>
+              ${item.source ? `
+                <a href="${item.source}" target="_blank" rel="noopener noreferrer">
+                  مشاهده منبع خبر ↗
+                </a>
+              ` : ""}
+            </div>
+          </article>
+        `;
+      }).join("");
+    } else {
+      newsContainer.innerHTML = "<p>هنوز خبری منتشر نشده است.</p>";
     }
-
-    const days = Math.floor(remaining / 86400000);
-    const hours = Math.floor((remaining % 86400000) / 3600000);
-    const minutes = Math.floor((remaining % 3600000) / 60000);
-    const seconds = Math.floor((remaining % 60000) / 1000);
-
-    elements.days.textContent = String(days);
-    elements.hours.textContent = String(hours).padStart(2, "0");
-    elements.minutes.textContent = String(minutes).padStart(2, "0");
-    elements.seconds.textContent = String(seconds).padStart(2, "0");
+  } else if (newsContainer) {
+    newsContainer.innerHTML = "<p>فایل اخبار بارگذاری نشد. لطفاً اتصال news.js را بررسی کن.</p>";
   }
 
-  updateCountdown();
-  window.setInterval(updateCountdown, 1000);
-})();
-</script>
+  // شمارش معکوس
+  (function () {
+    const launchDate = new Date("2026-11-19T00:00:00+03:30").getTime();
+    const daysEl = document.getElementById("days");
+    const hoursEl = document.getElementById("hours");
+    const minutesEl = document.getElementById("minutes");
+    const secondsEl = document.getElementById("seconds");
+    const statusEl = document.getElementById("countdown-status");
 
-</body>
-  </html>
   
