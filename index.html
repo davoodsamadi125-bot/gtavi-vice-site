@@ -335,23 +335,30 @@ img{max-width:100%}
   </section>
 
     <section class="section" id="featured-news">
-    <div class="container">
-      <div class="section-head">
-        <div><h2>🔥 خبر شاخص</h2><p>مهم‌ترین مطلب برای شروع</p></div>
-        <a class="section-link" href="#latest-news">همه خبرها ←</a>
+    
+<section class="section" id="featured-news">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <h2>🔥 خبر شاخص</h2>
+        <p>مهم‌ترین خبر GTAVI_VICE</p>
       </div>
-      <article class="featured-news">
-        <div class="featured-image" role="img" aria-label="تصویر GTA VI"></div>
-        <div class="featured-body">
-          <span class="eyebrow">GTAVI_VICE · ویژه</span>
-          <h3>جدیدترین اخبار و اطلاعات GTA VI را دنبال کن</h3>
-          <p>خبرها، جزئیات تازه و تحلیل‌های دنیای Rockstar را در بخش آخرین اخبار بخوان.</p>
-          <a class="btn" href="#latest-news">رفتن به اخبار ←</a>
-        </div>
-      </article>
+      <a class="section-link" href="#latest-news">همه خبرها ←</a>
     </div>
-  </section>
 
+    <article class="featured-news" id="featured-news-card">
+      <div class="featured-image" id="featured-image"
+           role="img" aria-label="تصویر خبر شاخص"></div>
+      <div class="featured-body">
+        <span class="eyebrow" id="featured-category">GTAVI_VICE · ویژه</span>
+        <h3 id="featured-title">در حال بارگذاری خبر شاخص...</h3>
+        <p id="featured-summary">منتظر دریافت آخرین خبرها هستیم.</p>
+        <a class="btn" id="featured-link" href="#latest-news">ادامه خبر ←</a>
+      </div>
+    </article>
+  </div>
+</section>
+      
   <section class="section" id="latest-news">
     <div class="container">
       <div class="section-head">
@@ -525,6 +532,46 @@ img{max-width:100%}
     });
   }
 
+  // انتخاب خبر شاخص از میان خبرهای موجود
+  const featuredTitle = document.getElementById("featured-title");
+  const featuredSummary = document.getElementById("featured-summary");
+  const featuredCategory = document.getElementById("featured-category");
+  const featuredImage = document.getElementById("featured-image");
+  const featuredLink = document.getElementById("featured-link");
+
+  if (typeof news !== "undefined" && Array.isArray(news) && news.length) {
+    const featured = news.slice().sort(function(a, b) {
+      const dateA = Date.parse(a.date || "") || 0;
+      const dateB = Date.parse(b.date || "") || 0;
+      return dateB - dateA;
+    })[0];
+
+    if (featuredTitle) {
+      featuredTitle.textContent = featured.title || "خبر GTA VI";
+    }
+
+    if (featuredSummary) {
+      featuredSummary.textContent = featured.summary || "";
+    }
+
+    if (featuredCategory) {
+      featuredCategory.textContent =
+        "GTAVI_VICE · " + (featured.category || "خبر ویژه");
+    }
+
+    if (featuredImage && featured.image) {
+      featuredImage.style.backgroundImage =
+        'linear-gradient(0deg,#09091045,transparent), url("' +
+        String(featured.image).replace(/["\\]/g, "") +
+        '")';
+    }
+
+    if (featuredLink) {
+      featuredLink.href = "./news.html?id=" +
+        encodeURIComponent(String(featured.id));
+    }
+ }
+  
   // نمایش خبرها از news.js
   const newsContainer = document.getElementById("news-list");
 
