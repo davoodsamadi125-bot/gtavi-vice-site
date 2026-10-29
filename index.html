@@ -543,7 +543,7 @@ img{max-width:100%}
     const featured = news.slice().sort(function(a, b) {
       const dateA = Date.parse(a.date || "") || 0;
       const dateB = Date.parse(b.date || "") || 0;
-      return dateB - dateA;
+      return dateB - dateA || Number(b.id || 0) - Number(a.id || 0);
     })[0];
 
     if (featuredTitle) {
