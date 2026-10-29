@@ -177,6 +177,44 @@ img{max-width:100%}
 .news-card .news-source{margin-top:auto;padding-top:8px;color:var(--pink);font-size:11px}
 .news-card:hover{border-color:var(--purple)}
 .news-error{color:var(--muted);font-size:12px;padding:12px}
+
+/* News category filters */
+.news-filters{
+  display:flex;
+  flex-wrap:nowrap;
+  gap:8px;
+  overflow-x:auto;
+  padding:5px 2px 13px;
+  margin:0 0 8px;
+  scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+}
+.news-filters::-webkit-scrollbar{display:none}
+
+.news-filter{
+  flex:0 0 auto;
+  padding:7px 14px;
+  border:1px solid #332943;
+  border-radius:30px;
+  background:linear-gradient(145deg,#171421,#111019);
+  color:#c9c2d5;
+  font-size:11px;
+  font-weight:700;
+  white-space:nowrap;
+  transition:all .2s ease;
+}
+
+.news-filter:hover{
+  border-color:#a855f7;
+  color:#fff;
+}
+
+.news-filter.active{
+  color:#fff;
+  border-color:#a855f7;
+  background:linear-gradient(120deg,#7c3aed,#a855f7);
+  box-shadow:0 4px 14px #7c3aed35;
+}
   
 /* Quick access */
 .quick-item{
@@ -584,59 +622,85 @@ img{max-width:100%}
     }
  }
   
-  // نمایش خبرها از news.js
-  const newsContainer = document.getElementById("news-list");
+// نمایش و فیلتر خبرها از news.js
+const newsContainer = document.getElementById("news-list");
+const filterButtons = document.querySelectorAll(".news-filter");
 
-  function escapeHTML(value){
-    return String(value == null ? "" : value).replace(/[&<>"']/g,function(ch){
-      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch];
-    });
+function escapeHTML(value){
+  return String(value == null ? "" : value).replace(/[&<>"']/g,function(ch){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch];
+  });
+}
+
+function renderNews(selectedCategory){
+  if(!newsContainer) return;
+
+  if(typeof news === "undefined" || !Array.isArray(news)){
+    newsContainer.innerHTML =
+      '<p class="news-error">فایل اخبار بارگذاری نشد. فایل news.js را بررسی کن.</p>';
+    return;
   }
 
-  if(newsContainer){
-    if(typeof news !== "undefined" && Array.isArray(news) && news.length){
-newsContainer.innerHTML = news.map(function(item) {
-  const title = escapeHTML(item.title || "خبر GTA VI");
-  const category = escapeHTML(item.category || "اخبار GTA VI");
-  const date = escapeHTML(item.date || "");
-  const summary = escapeHTML(item.summary || "");
-  const image = escapeHTML(item.image || "");
-  const id = encodeURIComponent(String(item.id));
+  const filteredNews = selectedCategory === "all"
+    ? news
+    : news.filter(function(item){
+        return item.category === selectedCategory;
+      });
 
-  const source = typeof item.source === "string" ? item.source : "";
-  let sourceLink = "";
-
-  if (source && /^https?:\/\//i.test(source)) {
-    sourceLink =
-      '<a class="news-source" href="' + escapeHTML(source) +
-      '" target="_blank" rel="noopener noreferrer">مشاهده منبع خبر ↗</a>';
+  if(!filteredNews.length){
+    newsContainer.innerHTML =
+      '<p class="news-error">هنوز خبری در این دسته ثبت نشده است.</p>';
+    return;
   }
 
-  const imageHTML = image
-    ? '<img class="news-image" src="' + image +
-      '" alt="' + title +
-      '" loading="lazy" onerror="this.style.display=\'none\'">'
-    : "";
+  newsContainer.innerHTML = filteredNews.map(function(item){
+    const title = escapeHTML(item.title || "خبر GTA VI");
+    const category = escapeHTML(item.category || "اخبار GTA VI");
+    const date = escapeHTML(item.date || "");
+    const summary = escapeHTML(item.summary || "");
+    const image = escapeHTML(item.image || "");
+    const id = encodeURIComponent(String(item.id));
 
-  return '<article class="news-card">' +
-    imageHTML +
-    '<div class="news-content">' +
-      '<span class="news-category">' + category + '</span>' +
-      '<time>' + date + '</time>' +
-      '<h3>' + title + '</h3>' +
-      '<p>' + summary + '</p>' +
-      '<a class="news-source" href="./news.html?id=' + id +
-      '">ادامه خبر و ثبت نظر ←</a>' +
-      sourceLink +
-    '</div>' +
-  '</article>';
-}).join("");
-    }else if(typeof news !== "undefined" && Array.isArray(news)){
-      newsContainer.innerHTML = '<p class="news-error">هنوز خبری در فایل news.js ثبت نشده است.</p>';
-    }else{
-      newsContainer.innerHTML = '<p class="news-error">فایل اخبار بارگذاری نشد. بررسی کن news.js در کنار index.html باشد.</p>';
+    const imageHTML = image
+      ? '<img class="news-image" src="' + image +
+        '" alt="' + title +
+        '" loading="lazy" onerror="this.style.display=\'none\'">'
+      : "";
+
+    let sourceLink = "";
+    if(item.source && /^https?:\/\//i.test(item.source)){
+      sourceLink =
+        '<a class="news-source" href="' + escapeHTML(item.source) +
+        '" target="_blank" rel="noopener noreferrer">مشاهده منبع خبر ↗</a>';
     }
-  }
+
+    return '<article class="news-card">' +
+      imageHTML +
+      '<div class="news-content">' +
+        '<span class="news-category">' + category + '</span>' +
+        '<time>' + date + '</time>' +
+        '<h3>' + title + '</h3>' +
+        '<p>' + summary + '</p>' +
+        '<a class="news-source" href="./news.html?id=' + id +
+        '">ادامه خبر و ثبت نظر ←</a>' +
+        sourceLink +
+      '</div>' +
+    '</article>';
+  }).join("");
+}
+
+filterButtons.forEach(function(button){
+  button.addEventListener("click",function(){
+    filterButtons.forEach(function(item){
+      item.classList.remove("active");
+    });
+
+    button.classList.add("active");
+    renderNews(button.dataset.category);
+  });
+});
+
+renderNews("all");
 
   // شمارش معکوس تا نیمه‌شب آغاز ۱۹ نوامبر ۲۰۲۶ به وقت ایران
   const launchDate = new Date("2026-11-19T00:00:00+03:30").getTime();
