@@ -557,6 +557,41 @@ img{max-width:100%}
   opacity:1;
 }
   
+/* Show More News */
+.news-more-wrap{
+  display:flex;
+  justify-content:center;
+  margin:22px 0 8px;
+}
+
+.news-more-button{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  min-width:190px;
+  padding:12px 22px;
+  border:1px solid var(--purple);
+  border-radius:13px;
+  background:var(--panel2);
+  color:var(--text);
+  font-family:inherit;
+  font-size:13px;
+  font-weight:700;
+  cursor:pointer;
+  transition:background .2s,transform .2s,box-shadow .2s;
+}
+
+.news-more-button:hover{
+  background:var(--purple2);
+  color:#fff;
+  transform:translateY(-2px);
+  box-shadow:0 6px 20px rgba(168,85,247,.2);
+}
+
+.news-more-button[hidden]{
+  display:none;
+}
 </style>
 </head>
 
@@ -675,6 +710,12 @@ img{max-width:100%}
       
       <div id="news-list" class="news-track" aria-live="polite">
         <p class="news-error">در حال بارگذاری اخبار...</p>
+      </div>
+      <div class="news-more-wrap">
+  <button id="show-more-news" class="news-more-button" type="button" hidden>
+    نمایش خبرهای بیشتر
+    <span>↓</span>
+  </button>
       </div>
     </div>
   </section>
@@ -885,7 +926,10 @@ img{max-width:100%}
 const newsContainer = document.getElementById("news-list");
 const filterButtons = document.querySelectorAll(".news-filter");
 const searchInput = document.getElementById("news-search");
+const showMoreButton = document.getElementById("show-more-news");
 
+const NEWS_PER_PAGE = 6;
+let visibleNewsCount = NEWS_PER_PAGE;
 let selectedCategory = "all";
 
 function escapeHTML(value){
@@ -905,7 +949,13 @@ function normalizeText(value){
     .trim()
     .toLowerCase();
 }
-
+// نمایش ۶ خبر بعدی
+if(showMoreButton){
+  showMoreButton.addEventListener("click",function(){
+    visibleNewsCount += NEWS_PER_PAGE;
+    renderNews();
+  });
+}
 function renderNews(){
   if(!newsContainer) return;
 
@@ -934,14 +984,18 @@ function renderNews(){
 
     return categoryMatch && searchMatch;
   });
+const visibleNews = filteredNews.slice(0, visibleNewsCount);
 
+if(showMoreButton){
+  showMoreButton.hidden = filteredNews.length <= visibleNewsCount;
+}
   if(!filteredNews.length){
     newsContainer.innerHTML =
       '<p class="news-error">خبری با این عبارت یا در این دسته پیدا نشد.</p>';
     return;
   }
 
-  newsContainer.innerHTML = filteredNews.map(function(item){
+  newsContainer.innerHTML = visibleNews.map(function(item){
     const title = escapeHTML(item.title || "خبر GTA VI");
     const category = escapeHTML(item.category || "اخبار GTA VI");
     const date = escapeHTML(item.date || "");
@@ -988,6 +1042,8 @@ filterButtons.forEach(function(button){
     });
 
     button.classList.add("active");
+    
+    visibleNewsCount = NEWS_PER_PAGE;
     renderNews();
   });
 });
@@ -995,10 +1051,10 @@ filterButtons.forEach(function(button){
 // جست‌وجوی زنده هنگام تایپ
 if(searchInput){
   searchInput.addEventListener("input",function(){
+    visibleNewsCount = NEWS_PER_PAGE;
     renderNews();
   });
 }
-
 // نمایش اولیه خبرها
 renderNews();
   
