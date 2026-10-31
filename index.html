@@ -592,6 +592,48 @@ img{max-width:100%}
 .news-more-button[hidden]{
   display:none;
 }
+  
+/* Favorite News */
+.saved-news-control{
+  display:flex;
+  justify-content:flex-start;
+  margin:12px 0 18px;
+}
+
+#saved-news-toggle,
+.favorite-news-button{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  padding:9px 13px;
+  border:1px solid var(--border);
+  border-radius:11px;
+  background:var(--panel2);
+  color:var(--text);
+  font-family:inherit;
+  font-size:12px;
+  font-weight:700;
+  cursor:pointer;
+  transition:all .2s ease;
+}
+
+#saved-news-toggle:hover,
+.favorite-news-button:hover{
+  border-color:var(--purple);
+  transform:translateY(-2px);
+}
+
+#saved-news-toggle.active,
+.favorite-news-button.saved{
+  background:var(--purple2);
+  border-color:var(--purple);
+  color:#fff;
+}
+
+.favorite-news-button{
+  margin:5px 0 12px;
+}
 </style>
 </head>
 
@@ -707,7 +749,11 @@ img{max-width:100%}
   <button class="news-filter" type="button" data-category="شخصیت‌ها">👥 شخصیت‌ها</button>
   <button class="news-filter" type="button" data-category="دنیای بازی">🌴 دنیای بازی</button>
 </div>
-      
+      <div class="saved-news-control">
+  <button id="saved-news-toggle" type="button">
+    🔖 خبرهای ذخیره‌شده
+  </button>
+      </div>
       <div id="news-list" class="news-track" aria-live="polite">
         <p class="news-error">در حال بارگذاری اخبار...</p>
       </div>
@@ -920,17 +966,39 @@ img{max-width:100%}
         encodeURIComponent(String(featured.id));
     }
  }
-  
 
-// نمایش، جست‌وجو و فیلتر خبرها
+// نمایش، جست‌وجو، فیلتر و علاقه‌مندی خبرها
 const newsContainer = document.getElementById("news-list");
 const filterButtons = document.querySelectorAll(".news-filter");
 const searchInput = document.getElementById("news-search");
 const showMoreButton = document.getElementById("show-more-news");
+const savedNewsButton = document.getElementById("saved-news-toggle");
 
 const NEWS_PER_PAGE = 6;
+const FAVORITES_KEY = "gtavi-vice-favorite-news";
+
 let visibleNewsCount = NEWS_PER_PAGE;
 let selectedCategory = "all";
+let showingFavorites = false;
+
+// خواندن خبرهای ذخیره‌شده
+function getFavorites(){
+  try{
+    const saved = JSON.parse(localStorage.getItem(FAVORITES_KEY) || "[]");
+    return Array.isArray(saved) ? saved.map(String) : [];
+  }catch(error){
+    return [];
+  }
+}
+
+// ذخیره خبرهای موردعلاقه
+function saveFavorites(favorites){
+  try{
+    localStorage.setItem(FAVORITES_KEY,JSON.stringify(favorites));
+  }catch(error){
+    console.warn("ذخیره علاقه‌مندی‌ها امکان‌پذیر نیست.");
+  }
+}
 
 function escapeHTML(value){
   return String(value == null ? "" : value).replace(/[&<>"']/g,function(ch){
@@ -938,7 +1006,7 @@ function escapeHTML(value){
   });
 }
 
-// یکسان‌سازی حروف فارسی برای جست‌وجوی دقیق‌تر
+// یکسان‌سازی حروف فارسی
 function normalizeText(value){
   return String(value == null ? "" : value)
     .replace(/[يى]/g,"ی")
@@ -949,13 +1017,8 @@ function normalizeText(value){
     .trim()
     .toLowerCase();
 }
-// نمایش ۶ خبر بعدی
-if(showMoreButton){
-  showMoreButton.addEventListener("click",function(){
-    visibleNewsCount += NEWS_PER_PAGE;
-    renderNews();
-  });
-}
+
+// نمایش خبرها
 function renderNews(){
   if(!newsContainer) return;
 
@@ -965,6 +1028,7 @@ function renderNews(){
     return;
   }
 
+  const favorites = getFavorites();
   const searchTerm = normalizeText(searchInput ? searchInput.value : "");
 
   const filteredNews = news.filter(function(item){
@@ -982,16 +1046,22 @@ function renderNews(){
     const searchMatch =
       !searchTerm || searchableText.includes(searchTerm);
 
-    return categoryMatch && searchMatch;
-  });
-const visibleNews = filteredNews.slice(0, visibleNewsCount);
+    const favoriteMatch =
+      !showingFavorites || favorites.includes(String(item.id));
 
-if(showMoreButton){
-  showMoreButton.hidden = filteredNews.length <= visibleNewsCount;
-}
+    return categoryMatch && searchMatch && favoriteMatch;
+  });
+
+  const visibleNews = filteredNews.slice(0,visibleNewsCount);
+
+  if(showMoreButton){
+    showMoreButton.hidden = filteredNews.length <= visibleNewsCount;
+  }
+
   if(!filteredNews.length){
-    newsContainer.innerHTML =
-      '<p class="news-error">خبری با این عبارت یا در این دسته پیدا نشد.</p>';
+    newsContainer.innerHTML = showingFavorites
+      ? '<p class="news-error">هنوز خبری ذخیره نکرده‌ای یا خبری با این جست‌وجو پیدا نشد.</p>'
+      : '<p class="news-error">خبری با این عبارت یا در این دسته پیدا نشد.</p>';
     return;
   }
 
@@ -1002,6 +1072,7 @@ if(showMoreButton){
     const summary = escapeHTML(item.summary || "");
     const image = escapeHTML(item.image || "");
     const id = encodeURIComponent(String(item.id));
+    const isSaved = favorites.includes(String(item.id));
 
     const imageHTML = image
       ? '<img class="news-image" src="' + image +
@@ -1017,6 +1088,15 @@ if(showMoreButton){
         '" target="_blank" rel="noopener noreferrer">مشاهده منبع خبر ↗</a>';
     }
 
+    const favoriteButton =
+      '<button class="favorite-news-button' +
+      (isSaved ? ' saved' : '') +
+      '" type="button" data-favorite-id="' +
+      escapeHTML(item.id) +
+      '" aria-pressed="' + (isSaved ? "true" : "false") + '">' +
+      (isSaved ? "🔖 ذخیره‌شده" : "🔖 ذخیره خبر") +
+      '</button>';
+
     return '<article class="news-card">' +
       imageHTML +
       '<div class="news-content">' +
@@ -1024,6 +1104,7 @@ if(showMoreButton){
         '<time>' + date + '</time>' +
         '<h3>' + title + '</h3>' +
         '<p>' + summary + '</p>' +
+        favoriteButton +
         '<a class="news-source" href="./news.html?id=' + id +
         '">ادامه خبر و ثبت نظر ←</a>' +
         sourceLink +
@@ -1032,7 +1113,29 @@ if(showMoreButton){
   }).join("");
 }
 
-// کلیک روی دسته‌بندی‌ها
+// ذخیره یا حذف خبر با کلیک روی دکمه
+if(newsContainer){
+  newsContainer.addEventListener("click",function(event){
+    const button = event.target.closest("[data-favorite-id]");
+    if(!button) return;
+
+    const id = button.dataset.favoriteId;
+    let favorites = getFavorites();
+
+    if(favorites.includes(String(id))){
+      favorites = favorites.filter(function(savedId){
+        return savedId !== String(id);
+      });
+    }else{
+      favorites.push(String(id));
+    }
+
+    saveFavorites(favorites);
+    renderNews();
+  });
+}
+
+// فیلتر دسته‌بندی
 filterButtons.forEach(function(button){
   button.addEventListener("click",function(){
     selectedCategory = button.dataset.category || "all";
@@ -1042,23 +1145,47 @@ filterButtons.forEach(function(button){
     });
 
     button.classList.add("active");
-    
     visibleNewsCount = NEWS_PER_PAGE;
     renderNews();
   });
 });
 
-// جست‌وجوی زنده هنگام تایپ
+// جست‌وجوی زنده
 if(searchInput){
   searchInput.addEventListener("input",function(){
     visibleNewsCount = NEWS_PER_PAGE;
     renderNews();
   });
 }
-// نمایش اولیه خبرها
+
+// نمایش خبرهای بیشتر
+if(showMoreButton){
+  showMoreButton.addEventListener("click",function(){
+    visibleNewsCount += NEWS_PER_PAGE;
+    renderNews();
+  });
+}
+
+// نمایش یا بستن فهرست علاقه‌مندی‌ها
+if(savedNewsButton){
+  savedNewsButton.addEventListener("click",function(){
+    showingFavorites = !showingFavorites;
+    visibleNewsCount = NEWS_PER_PAGE;
+
+    savedNewsButton.classList.toggle("active",showingFavorites);
+
+    savedNewsButton.textContent = showingFavorites
+      ? "📰 بازگشت به همه خبرها"
+      : "🔖 خبرهای ذخیره‌شده";
+
+    renderNews();
+  });
+}
+
+// نمایش اولیه
 renderNews();
   
-
+  
   // شمارش معکوس تا نیمه‌شب آغاز ۱۹ نوامبر ۲۰۲۶ به وقت ایران
   const launchDate = new Date("2026-11-19T00:00:00+03:30").getTime();
   const daysEl = document.getElementById("days");
