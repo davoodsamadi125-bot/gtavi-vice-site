@@ -634,6 +634,56 @@ img{max-width:100%}
 .favorite-news-button{
   margin:5px 0 12px;
 }
+
+/* Jason vs Lucia community poll */
+.character-poll{
+  overflow:hidden;border:1px solid var(--border);border-radius:22px;
+  background:radial-gradient(circle at 50% 0%,#38204d 0,transparent 55%),var(--panel);
+  box-shadow:0 18px 50px #0003;
+}
+.poll-intro{padding:20px 18px 8px;text-align:center}
+.poll-kicker{color:#d8b4fe;font-size:11px;font-weight:900;letter-spacing:.08em}
+.poll-intro h2{font-size:clamp(20px,5vw,28px);margin:8px 0}
+.poll-intro p{font-size:12px;color:var(--muted);margin:0}
+.poll-contestants{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:16px 14px 6px}
+.poll-person{min-width:0;text-align:center}
+.poll-portrait{
+  width:100%;height:clamp(150px,36vw,245px);object-fit:cover;object-position:center 28%;
+  display:block;border-radius:15px;border:1px solid #ffffff24;background:var(--panel2)
+}
+.poll-person strong{display:block;margin-top:9px;font-size:16px;font-weight:900}
+.poll-person.jason strong{color:#79baff}
+.poll-person.lucia strong{color:#ff8ab9}
+.poll-score{display:flex;justify-content:space-between;gap:10px;padding:12px 16px 7px;font-size:12px;font-weight:900}
+.poll-score .jason-score{color:#79baff}
+.poll-score .lucia-score{color:#ff8ab9}
+.poll-bar{height:16px;margin:0 16px 12px;display:flex;overflow:hidden;border-radius:30px;background:#292333;border:1px solid #ffffff20}
+.poll-bar-jason{width:50%;background:linear-gradient(90deg,#1676d2,#6dbaff);transition:width .45s ease}
+.poll-bar-lucia{width:50%;background:linear-gradient(90deg,#ec5594,#ff9ac2);transition:width .45s ease}
+.poll-total{text-align:center;color:var(--muted);font-size:11px;padding:0 12px 14px}
+.poll-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 14px 14px}
+.poll-vote{
+  border:0;border-radius:13px;padding:13px 8px;color:#fff;font-weight:900;font-size:13px;
+  cursor:pointer;transition:transform .2s,opacity .2s
+}
+.poll-vote:active{transform:scale(.98)}
+.poll-vote:disabled{opacity:.55;cursor:not-allowed}
+.poll-vote.jason{background:linear-gradient(120deg,#1265b7,#3698ef)}
+.poll-vote.lucia{background:linear-gradient(120deg,#c52d70,#f36da5)}
+.poll-share-wrap{display:flex;justify-content:center;padding:0 14px 18px}
+.poll-share{
+  width:100%;max-width:320px;padding:11px 14px;border:1px solid var(--border);
+  border-radius:12px;background:var(--panel2);color:var(--text);font-weight:800;cursor:pointer
+}
+.poll-message{min-height:22px;text-align:center;padding:0 14px 13px;color:var(--muted);font-size:11px}
+.poll-message.error{color:#ff8b8b}
+.poll-footnote{text-align:center;color:var(--muted);font-size:10px;padding:0 16px 15px;line-height:1.8}
+@media(min-width:700px){
+ .poll-contestants{max-width:620px;margin:auto;gap:24px;padding-top:22px}
+ .poll-score,.poll-bar{max-width:620px;margin-left:auto;margin-right:auto}
+ .poll-actions{max-width:620px;margin:auto}
+}
+
 </style>
 </head>
 
@@ -702,9 +752,7 @@ img{max-width:100%}
     </div>
   </section>
 
-    <section class="section" id="featured-news">
-    
-<section class="section" id="featured-news">
+  <section class="section" id="featured-news">
   <div class="container">
     <div class="section-head">
       <div>
@@ -726,6 +774,7 @@ img{max-width:100%}
     </article>
   </div>
 </section>
+  <section class="section" id="latest-news">
     <div class="container">
 <div class="section-head">
   <div>
@@ -776,6 +825,7 @@ img{max-width:100%}
         <a class="quick-item" href="#trailers"><span class="quick-symbol">🎬</span><span>تریلرها</span></a>
         <a class="quick-item" href="#guides"><span class="quick-symbol">🗺️</span><span>راهنماها</span></a>
         <a class="quick-item" href="#characters"><span class="quick-symbol">🧍</span><span>شخصیت‌ها</span></a>
+        <a class="quick-item" href="#character-poll"><span class="quick-symbol">🗳️</span><span>نظرسنجی</span></a>
         <a class="quick-item" href="#community"><span class="quick-symbol">💬</span><span>جامعه گیمرها</span></a>
         <a class="quick-item" href="#store"><span class="quick-symbol">🛍️</span><span>فروشگاه</span></a>
       </div>
@@ -791,7 +841,7 @@ img{max-width:100%}
         <a class="big-card" href="#guides"><span class="card-arrow">↖</span><span class="big-icon">🗺️</span><h3>راهنمای مأموریت‌ها</h3><p>راهنماها و نکات کاربردی بازی</p></a>
         <a class="big-card" href="#characters"><span class="card-arrow">↖</span><span class="big-icon">👥</span><h3>شخصیت‌ها و داستان</h3><p>شخصیت‌ها و دنیای GTA</p></a>
         <a class="big-card" href="#trailers"><span class="card-arrow">↖</span><span class="big-icon">🎬</span><h3>تریلرها و تصاویر</h3><p>ویدیوها و محتوای تصویری</p></a>
-        <a class="big-card" href="#community"><span class="card-arrow">↖</span><span class="big-icon">🗳️</span><h3>نظرسنجی گیمرها</h3><p>در آینده با امکان رأی‌دادن</p></a>
+        <a class="big-card" href="#community"><span class="card-arrow">↖</span><span class="big-icon">🗳️</span><h3>نظرسنجی گیمرها</h3><p>در نظرسنجی زنده جیسون و لوسیا شرکت کن</p></a>
         <a class="big-card" href="#community"><span class="card-arrow">↖</span><span class="big-icon">💬</span><h3>گفت‌وگوی طرفداران</h3><p>فضایی برای مشارکت کاربران</p></a>
         <a class="big-card" href="#store"><span class="card-arrow">↖</span><span class="big-icon">🛍️</span><h3>فروشگاه گیمرها</h3><p>محصولات دیجیتال و فیزیکی</p></a>
       </div>
@@ -834,7 +884,59 @@ img{max-width:100%}
       </div>
     </div>
   </section>
-    <section class="section" id="community">
+  
+  <section class="section" id="character-poll">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <h2>🗳️ رقابت جیسون و لوسیا</h2>
+          <p>انتخاب تو کدام شخصیت را جلو می‌اندازد؟</p>
+        </div>
+        <span class="section-link">نظرسنجی زنده</span>
+      </div>
+
+      <div class="character-poll">
+        <div class="poll-intro">
+          <span class="poll-kicker">GTAVI_VICE COMMUNITY POLL</span>
+          <h2>به کدام شخصیت علاقه بیشتری داری؟</h2>
+          <p>رأی بده و ببین طرفداران کدام شخصیت را بیشتر انتخاب کرده‌اند.</p>
+        </div>
+
+        <div class="poll-contestants">
+          <div class="poll-person jason">
+            <img class="poll-portrait" src="./poll-jason.png" alt="جیسون در GTA VI" loading="lazy">
+            <strong>جیسون</strong>
+          </div>
+          <div class="poll-person lucia">
+            <img class="poll-portrait" src="./poll-lucia.png" alt="لوسیا در GTA VI" loading="lazy">
+            <strong>لوسیا</strong>
+          </div>
+        </div>
+
+        <div class="poll-score" aria-live="polite">
+          <span class="jason-score">جیسون <b id="jason-percent">--%</b></span>
+          <span class="lucia-score"><b id="lucia-percent">--%</b> لوسیا</span>
+        </div>
+        <div class="poll-bar" role="img" aria-label="نمودار درصد آرای جیسون و لوسیا">
+          <div class="poll-bar-jason" id="jason-bar"></div>
+          <div class="poll-bar-lucia" id="lucia-bar"></div>
+        </div>
+        <div class="poll-total" id="poll-total" aria-live="polite">در حال دریافت آمار رأی‌ها...</div>
+
+        <div class="poll-actions">
+          <button class="poll-vote jason" type="button" data-vote="jason">💙 رأی به جیسون</button>
+          <button class="poll-vote lucia" type="button" data-vote="lucia">💗 رأی به لوسیا</button>
+        </div>
+        <div class="poll-share-wrap">
+          <button class="poll-share" id="poll-share" type="button">↗️ اشتراک‌گذاری نظرسنجی</button>
+        </div>
+        <div class="poll-message" id="poll-message" role="status" aria-live="polite"></div>
+        <div class="poll-footnote">هر حساب ناشناس مرورگر یک رأی ثبت می‌کند. پاک‌کردن داده‌های مرورگر یا استفاده از دستگاه دیگر ممکن است امکان رأی مجدد ایجاد کند.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="community">
     <div class="container">
       <div class="feature-panel">
         <span class="eyebrow">💜 جامعه GTAVI_VICE</span>
@@ -1271,5 +1373,152 @@ renderNews();
   });
 })();
 </script>
+
+<!-- Supabase: live Jason vs Lucia poll -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function(){
+  "use strict";
+
+  const SUPABASE_URL = "https://catompmbsdnlnlfgvlpn.supabase.co";
+  const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_OgPjM0gGhoL3mApUIF_Unw_O9n1yHK-";
+
+  const messageEl = document.getElementById("poll-message");
+  const totalEl = document.getElementById("poll-total");
+  const jasonPercentEl = document.getElementById("jason-percent");
+  const luciaPercentEl = document.getElementById("lucia-percent");
+  const jasonBar = document.getElementById("jason-bar");
+  const luciaBar = document.getElementById("lucia-bar");
+  const voteButtons = document.querySelectorAll("[data-vote]");
+  const shareButton = document.getElementById("poll-share");
+
+  if(!messageEl || !window.supabase) return;
+
+  const client = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
+
+  let currentSessionReady = false;
+
+  function setMessage(text, isError){
+    messageEl.textContent = text || "";
+    messageEl.classList.toggle("error", Boolean(isError));
+  }
+
+  function formatNumber(value){
+    return new Intl.NumberFormat("fa-IR").format(value);
+  }
+
+  async function ensureAnonymousSession(){
+    const sessionResult = await client.auth.getSession();
+    if(sessionResult.error) throw sessionResult.error;
+
+    if(sessionResult.data.session){
+      currentSessionReady = true;
+      return;
+    }
+
+    const signInResult = await client.auth.signInAnonymously();
+    if(signInResult.error) throw signInResult.error;
+    currentSessionReady = true;
+  }
+
+  async function loadPollResults(){
+    const result = await client.rpc("get_character_poll_results");
+    if(result.error) throw result.error;
+
+    const row = Array.isArray(result.data) ? result.data[0] : result.data;
+    const jasonVotes = Number(row && row.jason_votes || 0);
+    const luciaVotes = Number(row && row.lucia_votes || 0);
+    const totalVotes = Number(row && row.total_votes || 0);
+
+    const jasonPercent = totalVotes ? Math.round(jasonVotes * 100 / totalVotes) : 50;
+    const luciaPercent = totalVotes ? 100 - jasonPercent : 50;
+
+    if(jasonPercentEl) jasonPercentEl.textContent = formatNumber(jasonPercent) + "٪";
+    if(luciaPercentEl) luciaPercentEl.textContent = formatNumber(luciaPercent) + "٪";
+    if(jasonBar) jasonBar.style.width = jasonPercent + "%";
+    if(luciaBar) luciaBar.style.width = luciaPercent + "%";
+    if(totalEl) totalEl.textContent = "مجموع رأی‌ها: " + formatNumber(totalVotes);
+  }
+
+  async function initializePoll(){
+    voteButtons.forEach(button => button.disabled = true);
+    try{
+      await ensureAnonymousSession();
+      await loadPollResults();
+      voteButtons.forEach(button => button.disabled = false);
+      setMessage("اتصال برقرار است؛ انتخابت را ثبت کن.");
+    }catch(error){
+      console.error("Poll initialization error:", error);
+      setMessage("اتصال به نظرسنجی برقرار نشد. چند لحظه بعد صفحه را تازه‌سازی کن.", true);
+    }
+  }
+
+  voteButtons.forEach(button => {
+    button.addEventListener("click", async function(){
+      if(!currentSessionReady) return;
+      voteButtons.forEach(item => item.disabled = true);
+      setMessage("در حال ثبت رأی...");
+
+      const choice = button.dataset.vote;
+      const voteResult = await client.rpc("cast_character_vote", {
+        p_choice: choice
+      });
+
+      if(voteResult.error){
+        console.error("Vote error:", voteResult.error);
+        const duplicate = voteResult.error.code === "23505" ||
+          /duplicate key|already exists/i.test(voteResult.error.message || "");
+        setMessage(
+          duplicate
+            ? "قبلاً با این حساب رأی داده‌ای؛ رأی ثبت‌شده قابل تغییر نیست."
+            : "ثبت رأی انجام نشد. اتصال را بررسی کن و دوباره تلاش کن.",
+          true
+        );
+      }else{
+        setMessage("رأی تو با موفقیت ثبت شد 💜");
+      }
+
+      try{
+        await loadPollResults();
+      }catch(error){
+        console.error("Poll refresh error:", error);
+      }
+      voteButtons.forEach(item => item.disabled = true);
+    });
+  });
+
+  if(shareButton){
+    shareButton.addEventListener("click", async function(){
+      const shareUrl = window.location.origin + window.location.pathname + "#character-poll";
+      const shareData = {
+        title: "نظرسنجی جیسون یا لوسیا | GTAVI_VICE",
+        text: "تو طرفدار جیسونی یا لوسیا؟ در نظرسنجی GTAVI_VICE رأی بده.",
+        url: shareUrl
+      };
+
+      try{
+        if(navigator.share){
+          await navigator.share(shareData);
+        }else if(navigator.clipboard && navigator.clipboard.writeText){
+          await navigator.clipboard.writeText(shareUrl);
+          setMessage("لینک نظرسنجی کپی شد؛ می‌توانی آن را ارسال کنی.");
+        }else{
+          window.prompt("لینک نظرسنجی را کپی کن:", shareUrl);
+        }
+      }catch(error){
+        if(error && error.name !== "AbortError"){
+          setMessage("اشتراک‌گذاری انجام نشد؛ لینک صفحه را کپی کن.", true);
+        }
+      }
+    });
+  }
+
+  initializePoll();
+})();
+</script>
+
 </body>
 </html>
