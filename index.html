@@ -1599,6 +1599,11 @@ renderNews();
   const client = window.gtaviSupabase;
   if(!client) return;
 
+  // Capture the recovery callback before Supabase cleans the URL parameters.
+  // Supabase may return either a PKCE ?code=... callback or an implicit
+  // #type=recovery&access_token=... callback.
+  const recoveryCallback = /(?:[?&#])type=recovery(?:[=&]|$)/i.test(window.location.href) || /[?&]code=/i.test(window.location.search);
+
   const modal = document.getElementById("auth-modal");
   const view = document.getElementById("auth-view");
   const statusBox = document.getElementById("auth-status");
@@ -1910,16 +1915,20 @@ renderNews();
   modal.addEventListener("click",function(event){if(event.target === modal) closeModal();});
   document.addEventListener("keydown",function(event){if(event.key === "Escape" && !modal.hidden) closeModal();});
 
+  function openRecoveryPasswordForm(){
+    modal.hidden = false;
+    document.body.style.overflow = "hidden";
+    renderSetPassword();
+    showStatus("پیوند بازیابی معتبر است. رمز عبور تازه خود را تعیین کن.","success");
+  }
+
   client.auth.onAuthStateChange(function(event,session){
     const user = session && session.user;
     if(user){
       activeUser = user;
       updateAccountStatus(user);
       if(event === "PASSWORD_RECOVERY"){
-        modal.hidden = false;
-        document.body.style.overflow = "hidden";
-        renderSetPassword();
-        showStatus("پیوند بازیابی معتبر است. رمز عبور تازه خود را تعیین کن.","success");
+        openRecoveryPasswordForm();
       }else if(event === "USER_UPDATED" && user.user_metadata && user.user_metadata.gtavi_membership_setup === "pending" && user.email_confirmed_at && !modal.hidden){
         renderSetPassword();
         showStatus("ایمیل تأیید شد. اکنون رمز عبور تعیین کن.","success");
@@ -1927,8 +1936,18 @@ renderNews();
     }
   });
 
-  // Update the account label after the poll has established its anonymous session.
-  client.auth.getSession().then(function(){return refreshUser();}).catch(function(error){
+  // Fallback for browsers where the PASSWORD_RECOVERY event fires before
+  // this module subscribes. The callback marker is captured before URL cleanup.
+  client.auth.getSession().then(async function(result){
+    const user = result && result.data && result.data.session && result.data.session.user;
+    if(recoveryCallback && user && !user.is_anonymous){
+      activeUser = user;
+      updateAccountStatus(user);
+      openRecoveryPasswordForm();
+      return;
+    }
+    await refreshUser();
+  }).catch(function(error){
     console.warn("Membership status could not be loaded:",error);
     if(accountStatus) accountStatus.textContent = "برای بررسی حساب، صفحه را تازه‌سازی کن.";
   });
