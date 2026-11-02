@@ -684,6 +684,48 @@ img{max-width:100%}
  .poll-actions{max-width:620px;margin:auto}
 }
 
+
+
+/* Membership and authentication modal */
+.join-button{font-family:inherit;cursor:pointer}
+.auth-backdrop[hidden]{display:none!important}
+.auth-backdrop{
+  position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;
+  padding:16px;background:rgba(4,3,10,.78);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)
+}
+.auth-dialog{
+  width:min(460px,100%);max-height:min(88vh,760px);overflow:auto;position:relative;
+  padding:22px;border:1px solid #6d4690;border-radius:20px;
+  background:linear-gradient(145deg,#1a1425,#101019);color:#f5f3ff;
+  box-shadow:0 24px 80px #0009
+}
+.auth-dialog-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+.auth-dialog-head h2{font-size:20px;margin:0}
+.auth-close{width:34px;height:34px;border:1px solid #3a304a;border-radius:10px;background:#211a2c;color:#fff;font-size:19px}
+.auth-description{font-size:12px;color:#c5bdd2;margin:8px 0 15px}
+.auth-status{padding:10px 12px;border:1px solid #4b3862;border-radius:11px;background:#21172d;color:#e9d5ff;font-size:12px;line-height:1.9;margin:10px 0}
+.auth-status.error{border-color:#8b414b;background:#321b24;color:#ffc2c8}
+.auth-status.success{border-color:#316d58;background:#142a24;color:#b8f3d7}
+.auth-field{display:block;margin:12px 0}
+.auth-field span{display:block;font-size:12px;margin-bottom:6px;color:#e7dff0}
+.auth-field input{width:100%;min-height:45px;padding:10px 12px;border:1px solid #40344f;border-radius:11px;background:#0e0c15;color:#fff;font:inherit;font-size:13px;direction:ltr;text-align:left}
+.auth-field input:focus{outline:2px solid #a855f7;outline-offset:1px}
+.auth-submit{width:100%;min-height:45px;margin-top:10px;border:0;border-radius:11px;background:linear-gradient(120deg,#7c3aed,#c026d3);color:#fff;font:inherit;font-weight:800;cursor:pointer}
+.auth-submit:disabled{opacity:.55;cursor:wait}
+.auth-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.auth-link{border:0;background:transparent;color:#d8b4fe;font:inherit;font-size:12px;text-decoration:underline;cursor:pointer;padding:5px}
+.auth-account-card{padding:14px;border:1px solid #40344f;border-radius:13px;background:#15111e;margin:12px 0}
+.auth-account-card strong{display:block;font-size:14px;direction:ltr;text-align:left;overflow-wrap:anywhere}
+.auth-account-card small{display:block;color:#aaa0b9;margin-top:6px;font-size:11px}
+.auth-logout{width:100%;margin-top:8px;padding:10px;border:1px solid #704052;border-radius:11px;background:#2a1722;color:#ffc6d3;font:inherit;font-weight:700;cursor:pointer}
+.auth-note{font-size:10px;color:#a9a0b5;line-height:1.9;margin:12px 0 0}
+:root[data-theme="light"] .auth-dialog{background:linear-gradient(145deg,#fff,#f4eaf8);color:#193d4a;border-color:#d4b2e8}
+:root[data-theme="light"] .auth-description,:root[data-theme="light"] .auth-field span{color:#4d6170}
+:root[data-theme="light"] .auth-field input{background:#fff;color:#193d4a;border-color:#c7d8df}
+:root[data-theme="light"] .auth-status{background:#f4eafa;color:#5a3473;border-color:#d9b8ed}
+:root[data-theme="light"] .auth-account-card{background:#f7fafd;border-color:#c7d8df}
+:root[data-theme="light"] .auth-account-card small,:root[data-theme="light"] .auth-note{color:#587783}
+
 </style>
 </head>
 
@@ -699,7 +741,7 @@ img{max-width:100%}
   <button class="theme-toggle" id="theme-toggle"
     type="button" aria-label="فعال‌کردن حالت روز"
     aria-pressed="false">☀️</button>
-  <a class="join-button" href="#membership">ورود / عضویت</a>
+  <button class="join-button" id="membership-open" type="button">ورود / عضویت</button>
 </div>
   </div>
   <nav class="menu-panel" id="menu-panel" aria-label="منوی اصلی">
@@ -970,12 +1012,28 @@ img{max-width:100%}
   <section class="section" id="membership">
     <div class="container">
       <div class="feature-panel">
-        <span class="eyebrow">حساب کاربری</span>
-        <h2>ورود و عضویت</h2>
-        <p>ثبت‌نام واقعی کاربران هنوز راه‌اندازی نشده است. برای جلوگیری از جمع‌آوری اطلاعات ناامن، این بخش فعلاً فقط معرفی قابلیت آینده است.</p>
+        <span class="eyebrow">💜 حساب کاربری GTAVI_VICE</span>
+        <h2>عضویت در جامعه طرفداران</h2>
+        <p id="membership-account-status">در حال بررسی وضعیت حساب کاربری...</p>
+        <button class="btn" id="membership-open-section" type="button">ورود / عضویت</button>
       </div>
     </div>
   </section>
+
+
+  <div class="auth-backdrop" id="auth-modal" hidden>
+    <section class="auth-dialog" role="dialog" aria-modal="true" aria-labelledby="auth-title" aria-describedby="auth-description">
+      <div class="auth-dialog-head">
+        <h2 id="auth-title">حساب کاربری GTAVI_VICE</h2>
+        <button class="auth-close" id="auth-close" type="button" aria-label="بستن پنجره">×</button>
+      </div>
+      <p class="auth-description" id="auth-description">با عضویت در GTAVI_VICE می‌توانی از امکانات آینده سایت استفاده کنی.</p>
+      <div id="auth-status" class="auth-status" role="status" aria-live="polite" hidden></div>
+      <div id="auth-view"></div>
+      <p class="auth-note">رمز عبور فقط توسط سرویس امن Supabase مدیریت می‌شود و در سایت ذخیره نمی‌شود. برای حفظ رأی قبلی، اگر این مرورگر حساب ناشناس دارد، از مسیر «ساخت حساب» استفاده کن.</p>
+    </section>
+  </div>
+
 </main>
 
 <footer class="site-footer" id="social">
@@ -1394,12 +1452,13 @@ renderNews();
 
   if(!messageEl || !window.supabase) return;
 
-  const client = window.supabase.createClient(
+  const client = window.gtaviSupabase || (window.gtaviSupabase = window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_PUBLISHABLE_KEY
-  );
+  ));
 
   let currentSessionReady = false;
+  let sessionPromise = null;
 
   function setMessage(text, isError){
     messageEl.textContent = text || "";
@@ -1411,18 +1470,29 @@ renderNews();
   }
 
   async function ensureAnonymousSession(){
-    const sessionResult = await client.auth.getSession();
-    if(sessionResult.error) throw sessionResult.error;
+    if(sessionPromise) return sessionPromise;
+    sessionPromise = (async function(){
+      const sessionResult = await client.auth.getSession();
+      if(sessionResult.error) throw sessionResult.error;
 
-    if(sessionResult.data.session){
+      if(sessionResult.data.session){
+        currentSessionReady = true;
+        return;
+      }
+
+      const signInResult = await client.auth.signInAnonymously();
+      if(signInResult.error) throw signInResult.error;
       currentSessionReady = true;
-      return;
+    })();
+    try{
+      await sessionPromise;
+    }finally{
+      sessionPromise = null;
     }
-
-    const signInResult = await client.auth.signInAnonymously();
-    if(signInResult.error) throw signInResult.error;
-    currentSessionReady = true;
   }
+
+  // The membership module reuses this exact session and client.
+  window.gtaviEnsureAnonymousSession = ensureAnonymousSession;
 
   async function loadPollResults(){
     const result = await client.rpc("get_character_poll_results");
@@ -1517,6 +1587,351 @@ renderNews();
   }
 
   initializePoll();
+})();
+</script>
+
+
+<!-- GTAVI_VICE membership: uses the same Supabase client/session as the poll -->
+<script>
+(function(){
+  "use strict";
+
+  const client = window.gtaviSupabase;
+  if(!client) return;
+
+  const modal = document.getElementById("auth-modal");
+  const view = document.getElementById("auth-view");
+  const statusBox = document.getElementById("auth-status");
+  const accountStatus = document.getElementById("membership-account-status");
+  const openButtons = [
+    document.getElementById("membership-open"),
+    document.getElementById("membership-open-section")
+  ].filter(Boolean);
+  const closeButton = document.getElementById("auth-close");
+  let activeUser = null;
+  let busy = false;
+
+  function showStatus(message, type){
+    statusBox.hidden = !message;
+    statusBox.textContent = message || "";
+    statusBox.className = "auth-status" + (type ? " " + type : "");
+  }
+
+  function setBusy(value){
+    busy = value;
+    const submit = view.querySelector("button[type='submit']");
+    if(submit){
+      submit.disabled = value;
+      submit.textContent = value ? "لطفاً صبر کن..." : (submit.dataset.label || submit.textContent);
+    }
+  }
+
+  function escapeText(value){
+    return String(value || "").replace(/[&<>"']/g,function(ch){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch];
+    });
+  }
+
+  async function refreshUser(){
+    const result = await client.auth.getUser();
+    if(result.error) throw result.error;
+    activeUser = result.data.user || null;
+    updateAccountStatus(activeUser);
+    return activeUser;
+  }
+
+  function updateAccountStatus(user){
+    if(!accountStatus) return;
+    if(!user){
+      accountStatus.textContent = "برای استفاده از امکانات حساب کاربری وارد شو یا عضو شو.";
+    }else if(user.is_anonymous){
+      accountStatus.textContent = "وضعیت فعلی: حساب مهمان؛ برای ساخت حساب دائمی و حفظ رأی قبلی، عضویت را تکمیل کن.";
+    }else if(user.user_metadata && user.user_metadata.gtavi_membership_setup === "pending"){
+      accountStatus.textContent = "ایمیل ثبت شده؛ برای تکمیل عضویت باید رمز عبور تعیین کنی.";
+    }else{
+      accountStatus.textContent = "وضعیت فعلی: عضو GTAVI_VICE با ایمیل " + user.email;
+    }
+  }
+
+  function openModal(){
+    modal.hidden = false;
+    document.body.style.overflow = "hidden";
+    refreshUser().then(function(user){
+      if(user && user.user_metadata && user.user_metadata.gtavi_membership_setup === "pending"){
+        if(user.email_confirmed_at) renderSetPassword();
+        else renderVerifyEmail(user.email || "ایمیل ثبت‌شده");
+      }else if(user && !user.is_anonymous){
+        renderAccount(user);
+      }else{
+        renderSignup();
+      }
+    }).catch(function(error){
+      showStatus("وضعیت حساب دریافت نشد: " + error.message,"error");
+      renderSignup();
+    });
+  }
+
+  function closeModal(){
+    modal.hidden = true;
+    document.body.style.overflow = "";
+    showStatus("","");
+  }
+
+  function renderSignup(){
+    document.getElementById("auth-title").textContent = "ساخت حساب دائمی";
+    document.getElementById("auth-description").textContent = "ایمیل خود را وارد کن. حساب مهمان فعلی به حساب دائمی تبدیل می‌شود و شناسه آن برای حفظ رأی قبلی تغییر نمی‌کند.";
+    view.innerHTML = `
+      <form id="auth-signup-form" novalidate>
+        <label class="auth-field"><span>آدرس ایمیل</span><input id="signup-email" type="email" autocomplete="email" placeholder="name@example.com" required></label>
+        <button class="auth-submit" type="submit" data-label="ادامه و ثبت ایمیل">ادامه و ثبت ایمیل</button>
+      </form>
+      <div class="auth-actions">
+        <button class="auth-link" id="show-login" type="button">قبلاً حساب ساخته‌ام؛ ورود</button>
+        <button class="auth-link" id="show-recover" type="button">بازیابی رمز عبور</button>
+      </div>
+      <p class="auth-note">در صورت نیاز، Supabase یک ایمیل تأیید برایت ارسال می‌کند. پس از تأیید ایمیل، به همین سایت برگرد و رمز عبور تعیین کن.</p>`;
+    document.getElementById("auth-signup-form").addEventListener("submit",submitSignup);
+    document.getElementById("show-login").addEventListener("click",renderLogin);
+    document.getElementById("show-recover").addEventListener("click",renderRecover);
+    showStatus("حساب مهمان این مرورگر به حساب دائمی تبدیل خواهد شد؛ از دستگاه یا مرورگر دیگری برای این مرحله استفاده نکن.","");
+  }
+
+  function renderVerifyEmail(email){
+    document.getElementById("auth-title").textContent = "تأیید ایمیل";
+    document.getElementById("auth-description").textContent = "برای ادامه، ایمیل خود را بررسی کن و پیوند تأیید Supabase را باز کن.";
+    view.innerHTML = `
+      <div class="auth-account-card"><strong>${escapeText(email)}</strong><small>پس از تأیید ایمیل، دوباره همین سایت را باز کن و گزینه ورود / عضویت را بزن.</small></div>
+      <button class="auth-submit" id="check-email-verified" type="button">ایمیل را تأیید کرده‌ام</button>
+      <div class="auth-actions"><button class="auth-link" id="back-signup" type="button">بازگشت</button></div>`;
+    document.getElementById("check-email-verified").addEventListener("click",async function(){
+      try{
+        const user = await refreshUser();
+        if(user && user.email_confirmed_at && user.user_metadata && user.user_metadata.gtavi_membership_setup === "pending"){
+          renderSetPassword();
+          showStatus("ایمیل تأیید شد. اکنون یک رمز عبور مطمئن انتخاب کن.","success");
+        }else{
+          showStatus("هنوز تأیید ایمیل در حساب ثبت نشده است. پیوند داخل ایمیل را باز کن و سپس دوباره بررسی کن.","error");
+        }
+      }catch(error){showStatus("بررسی ایمیل انجام نشد: " + error.message,"error");}
+    });
+    document.getElementById("back-signup").addEventListener("click",renderSignup);
+    showStatus("پیوند تأیید ممکن است چند دقیقه طول بکشد. پوشه هرزنامه را هم بررسی کن.","");
+  }
+
+  function renderSetPassword(){
+    document.getElementById("auth-title").textContent = "تعیین رمز عبور";
+    document.getElementById("auth-description").textContent = "ایمیل تأیید شده است. برای تکمیل عضویت، رمز عبور حساب خود را بساز.";
+    view.innerHTML = `
+      <form id="auth-password-form" novalidate>
+        <label class="auth-field"><span>رمز عبور جدید (حداقل ۸ نویسه)</span><input id="new-password" type="password" autocomplete="new-password" minlength="8" required></label>
+        <label class="auth-field"><span>تکرار رمز عبور</span><input id="new-password-repeat" type="password" autocomplete="new-password" minlength="8" required></label>
+        <button class="auth-submit" type="submit" data-label="تکمیل عضویت">تکمیل عضویت</button>
+      </form>`;
+    document.getElementById("auth-password-form").addEventListener("submit",submitPassword);
+    showStatus("رمز عبور را در جای امن نگه دار و با دیگران به اشتراک نگذار.","");
+  }
+
+  function renderLogin(){
+    document.getElementById("auth-title").textContent = "ورود به حساب";
+    document.getElementById("auth-description").textContent = "با ایمیل و رمز عبوری که قبلاً ثبت کرده‌ای وارد شو.";
+    view.innerHTML = `
+      <form id="auth-login-form" novalidate>
+        <label class="auth-field"><span>آدرس ایمیل</span><input id="login-email" type="email" autocomplete="email" required></label>
+        <label class="auth-field"><span>رمز عبور</span><input id="login-password" type="password" autocomplete="current-password" required></label>
+        <button class="auth-submit" type="submit" data-label="ورود">ورود</button>
+      </form>
+      <div class="auth-actions">
+        <button class="auth-link" id="show-signup" type="button">ساخت حساب جدید</button>
+        <button class="auth-link" id="show-recover" type="button">رمز عبور را فراموش کرده‌ام</button>
+      </div>`;
+    document.getElementById("auth-login-form").addEventListener("submit",submitLogin);
+    document.getElementById("show-signup").addEventListener("click",renderSignup);
+    document.getElementById("show-recover").addEventListener("click",renderRecover);
+    showStatus("اگر در این مرورگر رأی ناشناس ثبت کرده‌ای، ورود به یک حساب موجود رأی قبلی را به آن حساب منتقل نمی‌کند. برای حفظ همان شناسه، حساب مهمان را از مسیر ساخت حساب تکمیل کن.","");
+  }
+
+  function renderRecover(){
+    document.getElementById("auth-title").textContent = "بازیابی رمز عبور";
+    document.getElementById("auth-description").textContent = "ایمیل حساب خود را وارد کن تا پیوند بازیابی برایت ارسال شود.";
+    view.innerHTML = `
+      <form id="auth-recover-form" novalidate>
+        <label class="auth-field"><span>آدرس ایمیل</span><input id="recover-email" type="email" autocomplete="email" required></label>
+        <button class="auth-submit" type="submit" data-label="ارسال پیوند بازیابی">ارسال پیوند بازیابی</button>
+      </form>
+      <div class="auth-actions"><button class="auth-link" id="back-login" type="button">بازگشت به ورود</button></div>`;
+    document.getElementById("auth-recover-form").addEventListener("submit",submitRecover);
+    document.getElementById("back-login").addEventListener("click",renderLogin);
+    showStatus("پیوند بازیابی به همین آدرس سایت بازمی‌گردد. اگر ایمیل را ندیدی، پوشه هرزنامه را بررسی کن.","");
+  }
+
+  function renderAccount(user){
+    document.getElementById("auth-title").textContent = "حساب کاربری";
+    document.getElementById("auth-description").textContent = "وضعیت عضویت تو در GTAVI_VICE";
+    view.innerHTML = `
+      <div class="auth-account-card"><strong>${escapeText(user.email || "ایمیل ثبت نشده")}</strong><small>حساب دائمی فعال است.</small></div>
+      <button class="auth-logout" id="auth-logout" type="button">خروج از حساب</button>`;
+    document.getElementById("auth-logout").addEventListener("click",logout);
+    showStatus("وارد حساب خود شده‌ای.","success");
+  }
+
+  async function submitSignup(event){
+    event.preventDefault();
+    if(busy) return;
+    const email = document.getElementById("signup-email").value.trim();
+    if(!email){showStatus("آدرس ایمیل را وارد کن.","error");return;}
+    setBusy(true);
+    try{
+      await window.gtaviEnsureAnonymousSession();
+      const user = await refreshUser();
+      if(!user || !user.is_anonymous){
+        if(user && user.user_metadata && user.user_metadata.gtavi_membership_setup === "pending"){
+          user.email_confirmed_at ? renderSetPassword() : renderVerifyEmail(user.email || email);
+          return;
+        }
+        renderAccount(user);
+        showStatus("این مرورگر هم‌اکنون به یک حساب دائمی متصل است.","success");
+        return;
+      }
+      const result = await client.auth.updateUser({
+        email: email,
+        data: { gtavi_membership_setup: "pending" }
+      });
+      if(result.error) throw result.error;
+      const updatedUser = result.data.user;
+      activeUser = updatedUser;
+      updateAccountStatus(updatedUser);
+      if(updatedUser && updatedUser.email_confirmed_at){
+        renderSetPassword();
+        showStatus("ایمیل ثبت شد. اکنون رمز عبور تعیین کن.","success");
+      }else{
+        renderVerifyEmail(email);
+        showStatus("درخواست ثبت ایمیل ارسال شد. ایمیل خود را برای تأیید بررسی کن.","success");
+      }
+    }catch(error){
+      showStatus(authErrorMessage(error),"error");
+    }finally{setBusy(false);}
+  }
+
+  async function submitPassword(event){
+    event.preventDefault();
+    if(busy) return;
+    const password = document.getElementById("new-password").value;
+    const repeat = document.getElementById("new-password-repeat").value;
+    if(password.length < 8){showStatus("رمز عبور باید حداقل ۸ نویسه داشته باشد.","error");return;}
+    if(password !== repeat){showStatus("تکرار رمز عبور با رمز اصلی یکسان نیست.","error");return;}
+    setBusy(true);
+    try{
+      const user = await refreshUser();
+      if(!user || !user.email_confirmed_at){
+        renderVerifyEmail(user && user.email ? user.email : "ایمیل ثبت‌شده");
+        showStatus("ابتدا باید ایمیل حساب تأیید شود.","error");
+        return;
+      }
+      const passwordResult = await client.auth.updateUser({password:password});
+      if(passwordResult.error) throw passwordResult.error;
+      const metadataResult = await client.auth.updateUser({data:{gtavi_membership_setup:"complete"}});
+      if(metadataResult.error) throw metadataResult.error;
+      const finalUser = await refreshUser();
+      renderAccount(finalUser);
+      showStatus("عضویت با موفقیت تکمیل شد. شناسه حساب قبلی حفظ شده است. 💜","success");
+    }catch(error){showStatus(authErrorMessage(error),"error");}
+    finally{setBusy(false);}
+  }
+
+  async function submitLogin(event){
+    event.preventDefault();
+    if(busy) return;
+    const email = document.getElementById("login-email").value.trim();
+    const password = document.getElementById("login-password").value;
+    if(!email || !password){showStatus("ایمیل و رمز عبور را وارد کن.","error");return;}
+    try{
+      const user = await refreshUser();
+      if(user && user.is_anonymous){
+        const proceed = window.confirm("این مرورگر اکنون یک حساب مهمان دارد. ورود به حساب ایمیلی موجود، شناسه فعلی را جایگزین می‌کند و رأی قبلی مهمان به حساب ایمیلی منتقل نمی‌شود. ادامه می‌دهی؟");
+        if(!proceed) return;
+      }
+      setBusy(true);
+      const result = await client.auth.signInWithPassword({email:email,password:password});
+      if(result.error) throw result.error;
+      const signedUser = result.data.user;
+      updateAccountStatus(signedUser);
+      renderAccount(signedUser);
+      showStatus("ورود با موفقیت انجام شد.","success");
+    }catch(error){showStatus(authErrorMessage(error),"error");}
+    finally{setBusy(false);}
+  }
+
+  async function submitRecover(event){
+    event.preventDefault();
+    if(busy) return;
+    const email = document.getElementById("recover-email").value.trim();
+    if(!email){showStatus("آدرس ایمیل را وارد کن.","error");return;}
+    setBusy(true);
+    try{
+      const redirectTo = window.location.origin + window.location.pathname + "#membership";
+      const result = await client.auth.resetPasswordForEmail(email,{redirectTo:redirectTo});
+      if(result.error) throw result.error;
+      showStatus("اگر این ایمیل حساب فعالی داشته باشد، پیوند بازیابی برای آن ارسال می‌شود. پس از بازکردن پیوند، رمز تازه را تعیین کن.","success");
+    }catch(error){showStatus(authErrorMessage(error),"error");}
+    finally{setBusy(false);}
+  }
+
+  async function logout(){
+    if(busy) return;
+    const proceed = window.confirm("از حساب کاربری خارج می‌شوی. ادامه می‌دهی؟");
+    if(!proceed) return;
+    try{
+      const result = await client.auth.signOut();
+      if(result.error) throw result.error;
+      await window.gtaviEnsureAnonymousSession();
+      const user = await refreshUser();
+      renderSignup();
+      updateAccountStatus(user);
+      showStatus("از حساب خارج شدی. سایت برای ادامه کار نظرسنجی یک حساب مهمان تازه ساخته است.","success");
+    }catch(error){showStatus(authErrorMessage(error),"error");}
+  }
+
+  function authErrorMessage(error){
+    const message = String(error && error.message || "");
+    if(/already registered|already exists|user already registered|email.*exists/i.test(message)){
+      return "این ایمیل قبلاً برای یک حساب دیگر ثبت شده است. اگر حساب داری، از بخش ورود استفاده کن. توجه کن رأی حساب مهمان به حساب موجود منتقل نمی‌شود.";
+    }
+    if(/password should be at least|password.*short|weak password/i.test(message)){
+      return "رمز عبور انتخابی کافی نیست؛ یک رمز طولانی‌تر انتخاب کن.";
+    }
+    if(/redirect.*not allowed|redirect_to.*not allowed/i.test(message)){
+      return "آدرس بازگشت سایت در فهرست مجاز Supabase نیست. آدرس فعلی سایت باید در Redirect URLs ثبت شود.";
+    }
+    return message || "عملیات انجام نشد. دوباره تلاش کن.";
+  }
+
+  openButtons.forEach(function(button){button.addEventListener("click",openModal);});
+  closeButton.addEventListener("click",closeModal);
+  modal.addEventListener("click",function(event){if(event.target === modal) closeModal();});
+  document.addEventListener("keydown",function(event){if(event.key === "Escape" && !modal.hidden) closeModal();});
+
+  client.auth.onAuthStateChange(function(event,session){
+    const user = session && session.user;
+    if(user){
+      activeUser = user;
+      updateAccountStatus(user);
+      if(event === "PASSWORD_RECOVERY"){
+        modal.hidden = false;
+        document.body.style.overflow = "hidden";
+        renderSetPassword();
+        showStatus("پیوند بازیابی معتبر است. رمز عبور تازه خود را تعیین کن.","success");
+      }else if(event === "USER_UPDATED" && user.user_metadata && user.user_metadata.gtavi_membership_setup === "pending" && user.email_confirmed_at && !modal.hidden){
+        renderSetPassword();
+        showStatus("ایمیل تأیید شد. اکنون رمز عبور تعیین کن.","success");
+      }
+    }
+  });
+
+  // Update the account label after the poll has established its anonymous session.
+  client.auth.getSession().then(function(){return refreshUser();}).catch(function(error){
+    console.warn("Membership status could not be loaded:",error);
+    if(accountStatus) accountStatus.textContent = "برای بررسی حساب، صفحه را تازه‌سازی کن.";
+  });
 })();
 </script>
 
