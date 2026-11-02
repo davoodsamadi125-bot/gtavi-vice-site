@@ -1452,6 +1452,25 @@ renderNews();
 
   if(!messageEl || !window.supabase) return;
 
+  // Capture the original auth callback URL BEFORE createClient can process
+  // and clean callback parameters from the address bar. The membership
+  // module runs later and relies on this marker to recover missed events.
+  try{
+    const callbackUrl = new URL(window.location.href);
+    const callbackHash = new URLSearchParams(callbackUrl.hash.replace(/^#/, ""));
+    window.__gtaviAuthCallback = {
+      recovery: callbackUrl.searchParams.has("code") ||
+        callbackUrl.searchParams.get("type") === "recovery" ||
+        callbackHash.get("type") === "recovery" ||
+        callbackHash.has("access_token"),
+      error: callbackUrl.searchParams.get("error") || callbackHash.get("error") || "",
+      errorCode: callbackUrl.searchParams.get("error_code") || callbackHash.get("error_code") || "",
+      errorDescription: callbackUrl.searchParams.get("error_description") || callbackHash.get("error_description") || ""
+    };
+  }catch(callbackParseError){
+    window.__gtaviAuthCallback = {recovery:false,error:"",errorCode:"",errorDescription:""};
+  }
+
   const client = window.gtaviSupabase || (window.gtaviSupabase = window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_PUBLISHABLE_KEY
@@ -1599,10 +1618,12 @@ renderNews();
   const client = window.gtaviSupabase;
   if(!client) return;
 
-  // Capture the recovery callback before Supabase cleans the URL parameters.
-  // Supabase may return either a PKCE ?code=... callback or an implicit
-  // #type=recovery&access_token=... callback.
-  const recoveryCallback = /(?:[?&#])type=recovery(?:[=&]|$)/i.test(window.location.href) || /[?&]code=/i.test(window.location.search);
+  // The poll script captures this marker before createClient processes the URL.
+  // Keep URL checks here as a fallback for nonstandard callback timing.
+  const callbackInfo = window.__gtaviAuthCallback || {};
+  const recoveryCallback = Boolean(callbackInfo.recovery) ||
+    /(?:[?&#])type=recovery(?:[=&]|$)/i.test(window.location.href) ||
+    /[?&]code=/i.test(window.location.search);
 
   const modal = document.getElementById("auth-modal");
   const view = document.getElementById("auth-view");
@@ -1757,7 +1778,7 @@ renderNews();
 
   function renderRecover(){
     document.getElementById("auth-title").textContent = "بازیابی رمز عبور";
-    document.getElementById("auth-description").textContent = "ایمیل حساب خود را وارد کن تا پیوند بازیابی برایت ارسال شود.";
+    document.getElementById("auth-description").textContent = "ایمیل حساب خود را وارد کن تا پیوند بازیابی تازه برایت ارسال شود.";
     view.innerHTML = `
       <form id="auth-recover-form" novalidate>
         <label class="auth-field"><span>آدرس ایمیل</span><input id="recover-email" type="email" autocomplete="email" required></label>
@@ -1940,6 +1961,21 @@ renderNews();
   // this module subscribes. The callback marker is captured before URL cleanup.
   client.auth.getSession().then(async function(result){
     const user = result && result.data && result.data.session && result.data.session.user;
+
+    // A failed recovery callback must be explained instead of silently
+    // leaving the visitor on the homepage. Do not treat an error as a session.
+    if(callbackInfo.error){
+      modal.hidden = false;
+      document.body.style.overflow = "hidden";
+      renderRecover();
+      if(callbackInfo.errorCode === "otp_expired"){
+        showStatus("پیوند بازیابی رمز معتبر نیست؛ ممکن است منقضی شده یا قبلاً استفاده شده باشد. دوباره درخواست بازیابی بده و لینک تازه را فقط یک‌بار باز کن.","error");
+      }else{
+        showStatus("بازگشت از پیوند بازیابی با خطا روبه‌رو شد. دوباره درخواست بازیابی بده. کد خطا: " + (callbackInfo.errorCode || callbackInfo.error || "نامشخص"),"error");
+      }
+      return;
+    }
+
     if(recoveryCallback && user && !user.is_anonymous){
       activeUser = user;
       updateAccountStatus(user);
