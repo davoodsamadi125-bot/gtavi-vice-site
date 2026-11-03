@@ -1765,8 +1765,9 @@ renderNews();
       const expired = item.closesAt && new Date(item.closesAt).getTime() <= Date.now();
       const closed = item.status !== "open" || expired;
       const voted = Boolean(chosenId);
-      const canVote = !closed && !voted;
-      const statusText = closed ? "پیش‌بینی بسته شده" : (voted ? "انتخاب تو ثبت شده" : "پیش‌بینی فعال");
+      // رأی‌دهنده تا پیش از بسته‌شدن پیش‌بینی می‌تواند انتخاب خود را تغییر دهد.
+      const canVote = !closed;
+      const statusText = closed ? "پیش‌بینی بسته شده" : (voted ? "رأی تو ثبت شده؛ برای تغییر، گزینه دیگری را انتخاب کن" : "پیش‌بینی فعال");
       const optionsHTML = item.options.map(function(option){
         const percent = item.totalVotes ? Math.round(option.votes * 100 / item.totalVotes) : 0;
         const selected = chosenId && chosenId === String(option.id);
@@ -1774,7 +1775,7 @@ renderNews();
           '<span class="prediction-option-top"><span>' + escapeHTML(option.label) + (selected ? ' <span aria-label="انتخاب تو">✓</span>' : '') +
           '</span><span class="prediction-option-meta">' + formatNumber(percent) + '٪ · ' + formatNumber(option.votes) + ' رأی</span></span>';
         if(canVote){
-          return '<button class="prediction-option" type="button" data-prediction-vote="' + escapeHTML(item.id) + '" data-option-id="' + escapeHTML(option.id) + '">' + content + '</button>';
+          return '<button class="prediction-option' + (selected ? ' selected' : '') + '" type="button" data-prediction-vote="' + escapeHTML(item.id) + '" data-option-id="' + escapeHTML(option.id) + '" aria-pressed="' + (selected ? 'true' : 'false') + '">' + content + '</button>';
         }
         return '<div class="prediction-option' + (selected ? ' selected' : '') + '" aria-label="' + escapeHTML(option.label) + '">' + content + '</div>';
       }).join("");
@@ -1826,10 +1827,14 @@ renderNews();
       });
       if(result.error) throw result.error;
       const response = String(result.data == null ? "" : result.data).toLowerCase();
-      if(response.includes("already_voted")){
-        setMessage("قبلاً برای این پیش‌بینی انتخابت را ثبت کرده‌ای.");
+      if(response.includes("already_selected")){
+        setMessage("این گزینه از قبل انتخاب تو بوده است.");
+      }else if(response.includes("updated")){
+        setMessage("رأی تو با موفقیت تغییر کرد 💜");
       }else if(response.includes("closed") || response.includes("expired")){
         setMessage("مهلت این پیش‌بینی به پایان رسیده است.",true);
+      }else if(response.includes("invalid_option") || response.includes("not_found")){
+        setMessage("این گزینه یا پیش‌بینی معتبر نیست.",true);
       }else{
         setMessage("انتخاب تو با موفقیت ثبت شد 💜");
       }
