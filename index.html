@@ -686,6 +686,52 @@ img{max-width:100%}
 
 
 
+/* GTAVI_VICE prediction system */
+.prediction-list{display:grid;gap:16px}
+.prediction-card{
+  overflow:hidden;border:1px solid var(--border);border-radius:20px;
+  background:radial-gradient(circle at 90% 0%,#7c3aed22,transparent 48%),var(--panel);
+  box-shadow:0 14px 38px #0002
+}
+.prediction-card-head{padding:18px 18px 10px}
+.prediction-status{
+  display:inline-flex;align-items:center;gap:6px;padding:4px 10px;
+  border:1px solid #a855f755;border-radius:30px;background:#a855f711;
+  color:#d8b4fe;font-size:10px;font-weight:800
+}
+.prediction-status.closed{border-color:#7772;background:#7771;color:var(--muted)}
+.prediction-card h3{font-size:17px;line-height:1.8;margin:10px 0 5px}
+.prediction-description{font-size:11px;color:var(--muted);line-height:1.9;margin:0}
+.prediction-options{display:grid;gap:9px;padding:8px 14px 12px}
+.prediction-option{
+  position:relative;overflow:hidden;width:100%;min-height:48px;padding:10px 13px;
+  border:1px solid var(--border);border-radius:12px;background:var(--panel2);
+  color:var(--text);font:inherit;text-align:right;cursor:pointer;
+  transition:border-color .2s,transform .2s,background .2s
+}
+.prediction-option:hover:not(:disabled){border-color:var(--purple);transform:translateY(-1px)}
+.prediction-option:disabled{cursor:default;opacity:1}
+.prediction-option.selected{border-color:var(--purple);background:#7c3aed22}
+.prediction-option-top{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12px;font-weight:800}
+.prediction-option-meta{color:var(--muted);font-size:10px;white-space:nowrap}
+.prediction-option-track{position:absolute;inset:0 auto 0 0;width:0;background:linear-gradient(90deg,#7c3aed20,#c026d320);transition:width .35s ease}
+.prediction-option.selected .prediction-option-track{background:linear-gradient(90deg,#7c3aed30,#c026d330)}
+.prediction-card-footer{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;padding:0 17px 15px;color:var(--muted);font-size:10px}
+.prediction-participants{font-weight:700}
+.prediction-message{min-height:22px;padding:0 14px 12px;text-align:center;color:var(--muted);font-size:11px}
+.prediction-message.error{color:#ff8b8b}
+.prediction-loading,.prediction-empty{
+  padding:18px;border:1px dashed var(--border);border-radius:15px;
+  color:var(--muted);background:var(--panel);text-align:center;font-size:12px
+}
+.prediction-footnote{margin:12px 4px 0;color:var(--muted);font-size:10px;line-height:1.9}
+:root[data-theme="light"] .prediction-card{background:radial-gradient(circle at 90% 0%,#e65d9e18,transparent 48%),var(--panel)}
+:root[data-theme="light"] .prediction-status{color:#a52f72;border-color:#e65d9e66;background:#e65d9e11}
+:root[data-theme="light"] .prediction-option{background:#f5f9fa;border-color:#c7e2e8;color:#193d4a}
+:root[data-theme="light"] .prediction-option.selected{background:#e65d9e12;border-color:#c83d87}
+:root[data-theme="light"] .prediction-option-track{background:linear-gradient(90deg,#e65d9e18,#c83d8718)}
+:root[data-theme="light"] .prediction-option.selected .prediction-option-track{background:linear-gradient(90deg,#e65d9e2a,#c83d872a)}
+
 /* Membership and authentication modal */
 .join-button{font-family:inherit;cursor:pointer}
 .auth-backdrop[hidden]{display:none!important}
@@ -751,6 +797,8 @@ img{max-width:100%}
       <a href="#latest-news">📰 آخرین اخبار</a>
       <a href="#quick-access">⚡ دسترسی سریع</a>
       <a href="#guides">🗺️ راهنماها</a>
+      <a href="#character-poll">🗳️ نظرسنجی جیسون و لوسیا</a>
+      <a href="#predictions">🎯 پیش‌بینی‌ها</a>
       <a href="#community">💬 جامعه گیمرها</a>
       <a href="#store">🛍️ فروشگاه</a>
       <a href="#social">شبکه‌های اجتماعی</a>
@@ -868,6 +916,7 @@ img{max-width:100%}
         <a class="quick-item" href="#guides"><span class="quick-symbol">🗺️</span><span>راهنماها</span></a>
         <a class="quick-item" href="#characters"><span class="quick-symbol">🧍</span><span>شخصیت‌ها</span></a>
         <a class="quick-item" href="#character-poll"><span class="quick-symbol">🗳️</span><span>نظرسنجی</span></a>
+        <a class="quick-item" href="#predictions"><span class="quick-symbol">🎯</span><span>پیش‌بینی‌ها</span></a>
         <a class="quick-item" href="#community"><span class="quick-symbol">💬</span><span>جامعه گیمرها</span></a>
         <a class="quick-item" href="#store"><span class="quick-symbol">🛍️</span><span>فروشگاه</span></a>
       </div>
@@ -975,6 +1024,23 @@ img{max-width:100%}
         <div class="poll-message" id="poll-message" role="status" aria-live="polite"></div>
         <div class="poll-footnote">هر حساب ناشناس مرورگر یک رأی ثبت می‌کند. پاک‌کردن داده‌های مرورگر یا استفاده از دستگاه دیگر ممکن است امکان رأی مجدد ایجاد کند.</div>
       </div>
+    </div>
+  </section>
+
+  <section class="section" id="predictions">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <h2>🎯 پیش‌بینی‌های GTAVI_VICE</h2>
+          <p>حدس بزن، رأی ثبت کن و نتیجه انتخاب طرفداران را ببین.</p>
+        </div>
+        <span class="section-link">مشارکت کاربران</span>
+      </div>
+      <div id="prediction-list" class="prediction-list" aria-live="polite">
+        <div class="prediction-loading">در حال دریافت پیش‌بینی‌ها...</div>
+      </div>
+      <div id="prediction-message" class="prediction-message" role="status" aria-live="polite"></div>
+      <p class="prediction-footnote">برای هر پیش‌بینی فقط یک انتخاب از هر حساب کاربری پذیرفته می‌شود. برای ثبت رأی، حساب مهمان خودکار سایت استفاده می‌شود؛ عضویت با ایمیل برای شرکت در پیش‌بینی الزامی نیست.</p>
     </div>
   </section>
 
@@ -1606,6 +1672,179 @@ renderNews();
   }
 
   initializePoll();
+})();
+</script>
+
+
+<!-- GTAVI_VICE predictions: shares the existing anonymous/member Supabase session -->
+<script>
+(function(){
+  "use strict";
+
+  const list = document.getElementById("prediction-list");
+  const message = document.getElementById("prediction-message");
+  const client = window.gtaviSupabase;
+  if(!list || !client || typeof window.gtaviEnsureAnonymousSession !== "function") return;
+
+  let loading = false;
+  const submitting = new Set();
+
+  function escapeHTML(value){
+    return String(value == null ? "" : value).replace(/[&<>"']/g,function(ch){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch];
+    });
+  }
+
+  function formatNumber(value){
+    return new Intl.NumberFormat("fa-IR").format(Number(value) || 0);
+  }
+
+  function setMessage(text,isError){
+    message.textContent = text || "";
+    message.classList.toggle("error",Boolean(isError));
+  }
+
+  function field(row,names,fallback){
+    for(const name of names){
+      if(row[name] !== undefined && row[name] !== null) return row[name];
+    }
+    return fallback;
+  }
+
+  function groupPredictions(rows){
+    const grouped = new Map();
+    rows.forEach(function(row){
+      const id = field(row,["prediction_id","id"],null);
+      if(id == null) return;
+      const key = String(id);
+      if(!grouped.has(key)){
+        grouped.set(key,{
+          id:id,
+          title:field(row,["title"],"پیش‌بینی GTA VI"),
+          description:field(row,["description"],""),
+          status:field(row,["status"],"open"),
+          closesAt:field(row,["closes_at"],null),
+          sortOrder:Number(field(row,["prediction_sort_order","sort_order"],0)) || 0,
+          myOptionId:field(row,["my_option_id"],null),
+          totalVotes:field(row,["total_votes"],null),
+          options:[]
+        });
+      }
+      const item = grouped.get(key);
+      if(item.myOptionId == null) item.myOptionId = field(row,["my_option_id"],null);
+      if(item.totalVotes == null) item.totalVotes = field(row,["total_votes"],null);
+      const optionId = field(row,["option_id"],null);
+      if(optionId != null){
+        item.options.push({
+          id:optionId,
+          label:field(row,["option_label","label"],"گزینه"),
+          sortOrder:Number(field(row,["option_sort_order","option_order","sort_order"],0)) || 0,
+          votes:Number(field(row,["vote_count","votes","option_votes"],0)) || 0
+        });
+      }
+    });
+    return Array.from(grouped.values()).sort((a,b)=>a.sortOrder-b.sortOrder).map(function(item){
+      item.options.sort((a,b)=>a.sortOrder-b.sortOrder);
+      if(item.totalVotes == null){
+        item.totalVotes = item.options.reduce((sum,option)=>sum+option.votes,0);
+      }else{
+        item.totalVotes = Number(item.totalVotes) || 0;
+      }
+      return item;
+    });
+  }
+
+  function renderPredictions(items){
+    if(!items.length){
+      list.innerHTML = '<div class="prediction-empty">در حال حاضر پیش‌بینی‌ای برای نمایش وجود ندارد.</div>';
+      return;
+    }
+
+    list.innerHTML = items.map(function(item){
+      const chosenId = item.myOptionId == null ? "" : String(item.myOptionId);
+      const expired = item.closesAt && new Date(item.closesAt).getTime() <= Date.now();
+      const closed = item.status !== "open" || expired;
+      const voted = Boolean(chosenId);
+      const canVote = !closed && !voted;
+      const statusText = closed ? "پیش‌بینی بسته شده" : (voted ? "انتخاب تو ثبت شده" : "پیش‌بینی فعال");
+      const optionsHTML = item.options.map(function(option){
+        const percent = item.totalVotes ? Math.round(option.votes * 100 / item.totalVotes) : 0;
+        const selected = chosenId && chosenId === String(option.id);
+        const content = '<span class="prediction-option-track" style="width:' + percent + '%"></span>' +
+          '<span class="prediction-option-top"><span>' + escapeHTML(option.label) + (selected ? ' <span aria-label="انتخاب تو">✓</span>' : '') +
+          '</span><span class="prediction-option-meta">' + formatNumber(percent) + '٪ · ' + formatNumber(option.votes) + ' رأی</span></span>';
+        if(canVote){
+          return '<button class="prediction-option" type="button" data-prediction-vote="' + escapeHTML(item.id) + '" data-option-id="' + escapeHTML(option.id) + '">' + content + '</button>';
+        }
+        return '<div class="prediction-option' + (selected ? ' selected' : '') + '" aria-label="' + escapeHTML(option.label) + '">' + content + '</div>';
+      }).join("");
+
+      return '<article class="prediction-card" data-prediction-card="' + escapeHTML(item.id) + '">' +
+        '<div class="prediction-card-head"><span class="prediction-status' + (closed ? ' closed' : '') + '">● ' + statusText + '</span>' +
+        '<h3>' + escapeHTML(item.title) + '</h3>' +
+        (item.description ? '<p class="prediction-description">' + escapeHTML(item.description) + '</p>' : '') +
+        '</div><div class="prediction-options">' + optionsHTML + '</div>' +
+        '<div class="prediction-card-footer"><span class="prediction-participants">👥 ' + formatNumber(item.totalVotes) + ' شرکت‌کننده</span>' +
+        (item.closesAt ? '<span>پایان: ' + escapeHTML(new Date(item.closesAt).toLocaleDateString("fa-IR")) + '</span>' : '') +
+        '</div></article>';
+    }).join("");
+  }
+
+  async function loadPredictions(){
+    if(loading) return;
+    loading = true;
+    try{
+      await window.gtaviEnsureAnonymousSession();
+      const result = await client.rpc("get_gta_predictions");
+      if(result.error) throw result.error;
+      const items = groupPredictions(Array.isArray(result.data) ? result.data : []);
+      renderPredictions(items);
+    }catch(error){
+      console.error("GTAVI_VICE predictions load error:",error);
+      list.innerHTML = '<div class="prediction-empty">دریافت پیش‌بینی‌ها با مشکل روبه‌رو شد. لطفاً صفحه را تازه‌سازی کن.</div>';
+    }finally{
+      loading = false;
+    }
+  }
+
+  list.addEventListener("click",async function(event){
+    const button = event.target.closest("button[data-prediction-vote]");
+    if(!button) return;
+    const predictionId = button.dataset.predictionVote;
+    const optionId = button.dataset.optionId;
+    if(!predictionId || !optionId || submitting.has(predictionId)) return;
+
+    submitting.add(predictionId);
+    Array.from(list.querySelectorAll("button[data-prediction-vote]")).filter(function(item){return item.dataset.predictionVote === predictionId;}).forEach(function(item){item.disabled = true;});
+    setMessage("در حال ثبت انتخاب تو...");
+
+    try{
+      await window.gtaviEnsureAnonymousSession();
+      const result = await client.rpc("cast_gta_prediction_vote",{
+        p_prediction_id:predictionId,
+        p_option_id:optionId
+      });
+      if(result.error) throw result.error;
+      const response = String(result.data == null ? "" : result.data).toLowerCase();
+      if(response.includes("already_voted")){
+        setMessage("قبلاً برای این پیش‌بینی انتخابت را ثبت کرده‌ای.");
+      }else if(response.includes("closed") || response.includes("expired")){
+        setMessage("مهلت این پیش‌بینی به پایان رسیده است.",true);
+      }else{
+        setMessage("انتخاب تو با موفقیت ثبت شد 💜");
+      }
+      await loadPredictions();
+    }catch(error){
+      console.error("GTAVI_VICE prediction vote error:",error);
+      const duplicate = error && (error.code === "23505" || /already.?voted|duplicate key/i.test(error.message || ""));
+      setMessage(duplicate ? "قبلاً برای این پیش‌بینی رأی داده‌ای." : "ثبت انتخاب انجام نشد. لطفاً اتصال را بررسی و دوباره تلاش کن.",true);
+      await loadPredictions();
+    }finally{
+      submitting.delete(predictionId);
+    }
+  });
+
+  loadPredictions();
 })();
 </script>
 
