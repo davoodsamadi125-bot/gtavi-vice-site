@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090910">
+<title>مدیریت GTAVI_VICE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bg:#090910;--panel:#12121d;--panel2:#191526;--purple:#a855f7;--pink:#f472b6;--text:#f5f3ff;--muted:#aaa7bd;--border:#2b253b;--green:#4ade80;--red:#fb7185}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at 80% 0%,#32134a55,transparent 42%),var(--bg);color:var(--text);font-family:"Vazirmatn",Tahoma,sans-serif;line-height:1.8}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+a{color:inherit;text-decoration:none}
+.wrap{width:min(1100px,93%);margin:auto}
+.top{padding:22px 0;border-bottom:1px solid var(--border);background:#090910dd;position:sticky;top:0;z-index:5;backdrop-filter:blur(14px)}
+.toprow{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.brand{font-size:21px;font-weight:900;letter-spacing:.3px}.brand span{color:#c084fc}
+.topmeta{color:var(--muted);font-size:12px}
+.btn{border:0;border-radius:11px;padding:10px 15px;color:white;font-weight:700;background:linear-gradient(120deg,#7c3aed,#c026d3)}
+.btn.secondary{background:#211a30;border:1px solid var(--border)}
+.btn.danger{background:#51202c;border:1px solid #873747}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+main{padding:28px 0 60px}
+.hero{padding:24px;border:1px solid #663b8b88;border-radius:20px;background:linear-gradient(120deg,#241333,#12121d 70%);margin-bottom:22px}
+.eyebrow{color:#d8b4fe;font-size:12px;font-weight:700}
+h1{font-size:clamp(23px,4vw,34px);margin:5px 0 8px}
+p{margin:5px 0;color:var(--muted)}
+.status{padding:14px 16px;border-radius:12px;background:#171421;border:1px solid var(--border);margin:14px 0;font-size:13px}
+.status.error{color:#fecdd3;border-color:#873747;background:#321720}
+.status.success{color:#bbf7d0;border-color:#286443;background:#10251b}
+.hidden{display:none!important}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.panel{background:var(--panel);border:1px solid var(--border);border-radius:17px;padding:18px;min-width:0}
+.panel h2{font-size:17px;margin:0 0 14px}
+.field{display:block;margin:12px 0}
+.field span{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}
+.field input,.field textarea,.field select{width:100%;background:#0c0b13;border:1px solid var(--border);color:var(--text);border-radius:10px;padding:11px;outline:none}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--purple)}
+.field textarea{min-height:95px;resize:vertical}
+.hint{font-size:11px;color:var(--muted)}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.list{display:grid;gap:12px;margin-top:14px}
+.item{background:#0d0c14;border:1px solid var(--border);border-radius:13px;padding:14px}
+.item h3{font-size:15px;margin:0 0 6px}
+.meta{font-size:11px;color:var(--muted);line-height:2}
+.options{display:grid;gap:6px;margin:12px 0}
+.option{display:flex;justify-content:space-between;gap:10px;padding:7px 10px;border-radius:8px;background:#191526;font-size:12px}
+.option.correct{border:1px solid #286443;color:#bbf7d0}
+.item-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.item-actions select{min-width:150px;flex:1;background:#0c0b13;border:1px solid var(--border);color:var(--text);padding:9px;border-radius:9px}
+.module-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:18px}
+.module{padding:15px;border:1px solid var(--border);background:#11101a;border-radius:13px}
+.module strong{display:block;font-size:13px}.module small{color:var(--muted);font-size:11px}
+footer{text-align:center;color:var(--muted);font-size:11px;padding:20px;border-top:1px solid var(--border)}
+@media(max-width:760px){.grid{grid-template-columns:1fr}.module-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.toprow{align-items:flex-start;flex-direction:column}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap toprow">
+    <a class="brand" href="/">GTA<span>VI</span>_VICE <small style="font-size:11px;color:#aaa7bd">/ مدیریت</small></a>
+    <div class="topmeta" id="account-label">در حال بررسی حساب کاربری...</div>
+    <a class="btn secondary" href="/">بازگشت به سایت</a>
+  </div>
+</header>
+<main class="wrap">
+  <section class="hero">
+    <span class="eyebrow">پنل مرکزی مدیریت</span>
+    <h1>مدیریت GTAVI_VICE</h1>
+    <p>دسترسی این صفحه مستقیماً از طریق Supabase بررسی می‌شود. مخفی بودن صفحه به‌تنهایی معیار امنیت نیست.</p>
+  </section>
+
+  <div id="main-status" class="status" role="status" aria-live="polite">در حال اتصال امن به سرویس...</div>
+
+  <section id="access-denied" class="panel hidden">
+    <h2>دسترسی مجاز نیست</h2>
+    <p>این حساب در فهرست مدیران GTAVI_VICE ثبت نشده است. اگر باید مدیر باشید، با حسابی وارد شوید که شناسه آن در جدول مدیران ثبت شده باشد.</p>
+    <div class="actions"><button class="btn secondary" id="retry-access" type="button">بررسی دوباره دسترسی</button><a class="btn secondary" href="/">رفتن به صفحه اصلی</a></div>
+  </section>
+
+  <section id="dashboard" class="hidden">
+    <div class="grid">
+      <section class="panel">
+        <h2>ساخت پیش‌بینی جدید</h2>
+        <form id="create-form">
+          <label class="field"><span>شناسه انگلیسی (Slug)</span><input id="slug" type="text" required minlength="3" maxlength="80" pattern="[a-z0-9-]{3,80}" dir="ltr" autocomplete="off"></label>
+          <label class="field"><span>عنوان / پرسش پیش‌بینی</span><input id="title" type="text" required maxlength="160" placeholder="مثلاً تریلر بعدی GTA VI چه زمانی منتشر می‌شود؟"></label>
+          <label class="field"><span>توضیحات (اختیاری)</span><textarea id="description" maxlength="1000" placeholder="توضیح کوتاه درباره این پیش‌بینی"></textarea></label>
+          <label class="field"><span>گزینه‌ها (هر گزینه در یک خط؛ ۲ تا ۸ گزینه)</span><textarea id="options" required placeholder="گزینه اول&#10;گزینه دوم"></textarea></label>
+          <p class="hint">هر گزینه حداکثر ۱۲۰ کاراکتر باشد. شناسه فقط شامل حروف کوچک انگلیسی، عدد و خط تیره باشد.</p>
+          <label class="field"><span>زمان پایان (اختیاری)</span><input id="closes" type="datetime-local" dir="ltr"></label>
+          <label class="field"><span>ترتیب نمایش</span><input id="sort" type="number" value="100" step="1"></label>
+          <div class="actions"><button class="btn" id="create-button" type="submit">ساخت پیش‌بینی</button></div>
+        </form>
+        <div id="create-status" class="status" role="status" aria-live="polite"></div>
+      </section>
+      <section class="panel">
+        <h2>پیش‌بینی‌های ثبت‌شده</h2>
+        <div class="actions"><button class="btn secondary" id="refresh-button" type="button">به‌روزرسانی آمار</button></div>
+        <div id="list-status" class="status" role="status" aria-live="polite">در انتظار دریافت اطلاعات...</div>
+        <div id="prediction-list" class="list"></div>
+      </section>
+    </div>
+    <section class="panel" style="margin-top:16px">
+      <h2>سایر بخش‌های داشبورد</h2>
+      <div class="module-grid">
+        <div class="module"><strong>📰 مدیریت اخبار</strong><small>در مرحله بعد فعال می‌شود</small></div>
+        <div class="module"><strong>📊 نظرسنجی‌ها</strong><small>در مرحله بعد فعال می‌شود</small></div>
+        <div class="module"><strong>🎮 راهنماها</strong><small>در مرحله بعد فعال می‌شود</small></div>
+        <div class="module"><strong>🛒 فروشگاه</strong><small>در مرحله بعد فعال می‌شود</small></div>
+        <div class="module"><strong>📦 سفارش‌ها</strong><small>در مرحله بعد فعال می‌شود</small></div>
+        <div class="module"><strong>👥 کاربران</strong><small>در مرحله بعد فعال می‌شود</small></div>
+        <div class="module"><strong>💬 نظرات و گفتگو</strong><small>در مرحله بعد فعال می‌شود</small></div>
+        <div class="module"><strong>⚙️ تنظیمات سایت</strong><small>در مرحله بعد فعال می‌شود</small></div>
+        <div class="module"><strong>🛡 مدیران</strong><small>در مرحله بعد فعال می‌شود</small></div>
+      </div>
+    </section>
+  </section>
+</main>
+<footer>GTAVI_VICE · پنل مدیریت مستقل · دسترسی‌ها توسط Supabase کنترل می‌شوند</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function(){
+  "use strict";
+  const SUPABASE_URL = "https://catompmbsdnlnlfgvlpn.supabase.co";
+  const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_OgPjM0gGhoL3mApUIF_Unw_O9n1yHK-";
+  const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+  const $ = id => document.getElementById(id);
+  const status = $("main-status");
+  const dashboard = $("dashboard");
+  const denied = $("access-denied");
+  const accountLabel = $("account-label");
+  let isAdmin = false;
+  let busy = false;
+  let rows = [];
+
+  function setStatus(el, message, type){
+    if(!el) return;
+    el.textContent = message || "";
+    el.className = "status" + (type ? " " + type : "");
+  }
+  function escapeHtml(value){
+    return String(value == null ? "" : value).replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+  }
+  function formatNumber(value){return new Intl.NumberFormat("fa-IR").format(Number(value)||0);}
+  function setBusy(value){
+    busy = value;
+    $("create-button").disabled = value;
+    $("refresh-button").disabled = value;
+  }
+  function groupRows(data){
+    const map = new Map();
+    data.forEach(row => {
+      const id = String(row.prediction_id);
+      if(!map.has(id)){
+        map.set(id,{id,title:row.title||"",description:row.description||"",status:row.status||"",closesAt:row.closes_at||null,correctOptionId:row.correct_option_id==null?null:String(row.correct_option_id),sortOrder:row.prediction_sort_order,totalVotes:Number(row.total_votes)||0,options:[]});
+      }
+      if(row.option_id!=null) map.get(id).options.push({id:String(row.option_id),label:row.option_label||"",sortOrder:Number(row.option_sort_order)||0,votes:Number(row.vote_count)||0});
+    });
+    return Array.from(map.values()).sort((a,b)=>(Number(a.sortOrder)||0)-(Number(b.sortOrder)||0));
+  }
+  function render(data){
+    rows = data;
+    const list = $("prediction-list");
+    if(!data.length){list.innerHTML='<div class="hint">هنوز پیش‌بینی‌ای ثبت نشده است.</div>';return;}
+    list.innerHTML = data.map(item => {
+      const resolved = item.status==="resolved";
+      const closed = item.status==="closed"||resolved;
+      const statusText = resolved?"نتیجه اعلام شده":closed?"بسته شده":"در حال رأی‌گیری";
+      const options = item.options.map(option => {
+        const correct = item.correctOptionId===option.id;
+        return '<div class="option'+(correct?' correct':'')+'"><span>'+(correct?'✓ ':'')+escapeHtml(option.label)+'</span><span>'+formatNumber(option.votes)+' رأی</span></div>';
+      }).join("");
+      let actions = "";
+      if(!closed) actions = '<button type="button" class="btn danger" data-action="close" data-id="'+escapeHtml(item.id)+'">بستن پیش‌بینی</button>';
+      else if(!resolved&&item.options.length) actions = '<select aria-label="انتخاب پاسخ صحیح" data-choice="'+escapeHtml(item.id)+'"><option value="">پاسخ صحیح را انتخاب کن</option>'+item.options.map(o=>'<option value="'+escapeHtml(o.id)+'">'+escapeHtml(o.label)+'</option>').join("")+'</select><button type="button" class="btn" data-action="resolve" data-id="'+escapeHtml(item.id)+'">اعلام نتیجه</button>';
+      return '<article class="item"><h3>'+escapeHtml(item.title)+'</h3><div class="meta">شناسه: '+escapeHtml(item.id)+' · وضعیت: '+statusText+' · مجموع رأی‌ها: '+formatNumber(item.totalVotes)+(item.closesAt?' · پایان: '+escapeHtml(new Date(item.closesAt).toLocaleString("fa-IR")):'')+(item.description?'<br>'+escapeHtml(item.description):'')+'</div><div class="options">'+options+'</div>'+(actions?'<div class="item-actions">'+actions+'</div>':'')+'</article>';
+    }).join("");
+  }
+  async function loadPredictions(){
+    if(!isAdmin) return;
+    setStatus($("list-status"),"در حال دریافت آمار پیش‌بینی‌ها...");
+    $("refresh-button").disabled = true;
+    try{
+      const result = await client.rpc("get_gta_admin_predictions");
+      if(result.error) throw result.error;
+      render(groupRows(Array.isArray(result.data)?result.data:[]));
+      setStatus($("list-status"),"اطلاعات مدیریتی به‌روز است.","success");
+    }catch(error){
+      console.error(error);
+      setStatus($("list-status"),"دریافت آمار انجام نشد: "+(error.message||"خطای نامشخص"),"error");
+    }finally{$("refresh-button").disabled=false;}
+  }
+  async function checkAccess(){
+    setStatus(status,"در حال بررسی نشست کاربری و مجوز مدیر...");
+    denied.classList.add("hidden");
+    dashboard.classList.add("hidden");
+    try{
+      let sessionResult = await client.auth.getSession();
+      if(sessionResult.error) throw sessionResult.error;
+      if(!sessionResult.data.session){
+        const signIn = await client.auth.signInAnonymously();
+        if(signIn.error) throw signIn.error;
+      }
+      const userResult = await client.auth.getUser();
+      if(userResult.error) throw userResult.error;
+      const user = userResult.data.user;
+      accountLabel.textContent = user ? ("شناسه حساب: "+user.id.slice(0,8)+"…") : "حساب کاربری نامشخص";
+      const result = await client.rpc("is_gta_prediction_admin");
+      if(result.error) throw result.error;
+      isAdmin = result.data === true;
+      if(!isAdmin){
+        setStatus(status,"این حساب مجوز مدیریت ندارد.","error");
+        denied.classList.remove("hidden");
+        return;
+      }
+      setStatus(status,"ورود مدیر تأیید شد. داشبورد آماده استفاده است.","success");
+      dashboard.classList.remove("hidden");
+      $("slug").value = "prediction-"+Date.now();
+      await loadPredictions();
+    }catch(error){
+      console.error("Admin access check failed:",error);
+      isAdmin=false;
+      setStatus(status,"بررسی دسترسی انجام نشد: "+(error.message||"خطای ارتباط با Supabase"),"error");
+    }
+  }
+
+  $("retry-access").addEventListener("click",checkAccess);
+  $("refresh-button").addEventListener("click",loadPredictions);
+  $("create-form").addEventListener("submit",async event=>{
+    event.preventDefault();
+    if(!isAdmin||busy) return;
+    const slug=$("slug").value.trim();
+    const title=$("title").value.trim();
+    const description=$("description").value.trim();
+    const options=$("options").value.split(/\r?\n/).map(v=>v.trim()).filter(Boolean);
+    const closesValue=$("closes").value;
+    const sortValue=$("sort").value;
+    if(!/^[a-z0-9-]{3,80}$/.test(slug)){setStatus($("create-status"),"شناسه باید ۳ تا ۸۰ کاراکتر و فقط شامل حروف کوچک انگلیسی، عدد و خط تیره باشد.","error");return;}
+    if(!title||title.length>160){setStatus($("create-status"),"عنوان پیش‌بینی را وارد کن؛ حداکثر ۱۶۰ کاراکتر.","error");return;}
+    if(options.length<2||options.length>8||options.some(o=>o.length>120)){setStatus($("create-status"),"باید بین ۲ تا ۸ گزینه وارد کنی و هر گزینه حداکثر ۱۲۰ کاراکتر باشد.","error");return;}
+    let closesAt=null;
+    if(closesValue){const date=new Date(closesValue);if(Number.isNaN(date.getTime())){setStatus($("create-status"),"زمان پایان معتبر نیست.","error");return;}closesAt=date.toISOString();}
+    const sortOrder=sortValue===""?100:Number.parseInt(sortValue,10);
+    if(!Number.isInteger(sortOrder)){setStatus($("create-status"),"ترتیب نمایش باید عدد صحیح باشد.","error");return;}
+    setBusy(true);setStatus($("create-status"),"در حال ساخت پیش‌بینی...");
+    try{
+      const result=await client.rpc("create_gta_prediction",{p_slug:slug,p_title:title,p_description:description,p_options:options,p_closes_at:closesAt,p_sort_order:sortOrder});
+      if(result.error) throw result.error;
+      $("create-form").reset();$("sort").value="100";$("slug").value="prediction-"+Date.now();
+      setStatus($("create-status"),"پیش‌بینی با شناسه "+formatNumber(result.data)+" با موفقیت ساخته شد.","success");
+      await loadPredictions();
+    }catch(error){
+      console.error(error);
+      const message=String(error.message||"");
+      const friendly=message.includes("duplicate")?"این شناسه قبلاً استفاده شده است؛ شناسه دیگری انتخاب کن.":message.includes("admin_required")?"دسترسی مدیر تأیید نشد.":message.includes("invalid_slug")?"شناسه انگلیسی معتبر نیست.":message.includes("invalid_title")?"عنوان پیش‌بینی معتبر نیست.":message.includes("options_must_be_2_to_8")?"تعداد گزینه‌ها باید بین ۲ تا ۸ باشد.":message.includes("invalid_option_label")?"یکی از گزینه‌ها خالی یا بیش از حد طولانی است.":"ساخت پیش‌بینی انجام نشد: "+message;
+      setStatus($("create-status"),friendly,"error");
+    }finally{setBusy(false);}
+  });
+  $("prediction-list").addEventListener("click",async event=>{
+    const button=event.target.closest("button[data-action]");
+    if(!button||!isAdmin||busy) return;
+    const action=button.dataset.action,id=button.dataset.id;
+    let rpcName,params;
+    if(action==="close"){rpcName="close_gta_prediction";params={p_prediction_id:id};}
+    else if(action==="resolve"){
+      const select=Array.from($("prediction-list").querySelectorAll("select[data-choice]")).find(el=>el.dataset.choice===id);
+      const correctOptionId=select?select.value:"";
+      if(!correctOptionId){setStatus($("list-status"),"برای اعلام نتیجه ابتدا پاسخ صحیح را انتخاب کن.","error");return;}
+      rpcName="resolve_gta_prediction";params={p_prediction_id:id,p_correct_option_id:correctOptionId};
+    }else return;
+    setBusy(true);setStatus($("list-status"),action==="close"?"در حال بستن پیش‌بینی...":"در حال ثبت پاسخ صحیح...");
+    try{
+      const result=await client.rpc(rpcName,params);
+      if(result.error) throw result.error;
+      setStatus($("list-status"),action==="close"?"پیش‌بینی بسته شد.":"نتیجه با موفقیت اعلام شد.","success");
+      await loadPredictions();
+    }catch(error){console.error(error);setStatus($("list-status"),"عملیات انجام نشد: "+(error.message||"خطای نامشخص"),"error");}
+    finally{setBusy(false);}
+  });
+
+  checkAccess();
+})();
+</script>
+</body>
+</html>
