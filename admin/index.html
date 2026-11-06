@@ -92,6 +92,12 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:20px;border-t
 "use strict";
 const SUPABASE_URL="https://catompmbsdnlnlfgvlpn.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY="sb_publishable_OgPjM0gGhoL3mApUIF_Unw_O9n1yHK-";
+if(!window.supabase || typeof window.supabase.createClient!=="function"){
+ const box=document.getElementById("main-status");
+ box.textContent="خطا: کتابخانه Supabase بارگذاری نشده است. اتصال CDN برقرار نیست.";
+ box.classList.add("error");
+ return;
+}
 const client=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
 const $=id=>document.getElementById(id);
 const status=$("main-status"),dashboard=$("dashboard"),denied=$("access-denied"),accountLabel=$("account-label");
