@@ -144,7 +144,7 @@ $("predictions-list").addEventListener("click",async function(event){
 const button=event.target.closest("button");if(!button)return;
 const closeId=button.getAttribute("data-pred-close"),resolveId=button.getAttribute("data-pred-resolve");
 if(closeId){if(!confirm("رأی‌گیری این پیش‌بینی بسته شود؟"))return;const result=await client.rpc("close_gta_prediction",{p_prediction_id:closeId});if(result.error)alert("خطا در بستن رأی‌گیری: "+errorText(result.error));else{alert("رأی‌گیری بسته شد.");await loadPredictions();}}
-if(resolveId){const answer=prompt("شناسه گزینه برنده را از فهرست گزینه‌های همین پیش‌بینی وارد کنید:");if(!answer)return;const result=await client.rpc("resolve_gta_prediction",{p_prediction_id:resolveId,p_option_id:answer.trim()});if(result.error)alert("اعلام نتیجه ناموفق بود: "+errorText(result.error));else{alert("نتیجه ثبت شد.");await loadPredictions();}}
+if(resolveId){const answer=prompt("شناسه گزینه برنده را از فهرست گزینه‌های همین پیش‌بینی وارد کنید:");if(!answer)return;const result=await client.rpc("resolve_gta_prediction",{p_prediction_id:resolveId,p_correct_option_id:answer.trim()});if(result.error)alert("اعلام نتیجه ناموفق بود: "+errorText(result.error));else{alert("نتیجه ثبت شد.");await loadPredictions();}}
 });
 
 function resetNewsForm(){$("news-form").reset();$("news-id").value="";$("news-image").value="";currentImageUrl="";$("news-preview").src="";show($("news-preview"),false);$("news-status").value="draft";$("news-order").value="100";$("news-form-status").textContent="فرم برای افزودن خبر جدید آماده است.";}
