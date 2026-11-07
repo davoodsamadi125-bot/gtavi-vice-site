@@ -1,510 +1,187 @@
 <!doctype html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#090910">
-  <title>مدیریت | GTAVI_VICE</title>
-  <style>
-    :root{color-scheme:dark;--bg:#090910;--panel:#12121d;--panel2:#191927;--line:#2a2940;--text:#f4f1ff;--muted:#aaa5bd;--purple:#8b5cf6;--purple2:#6d3be8;--green:#36c98f;--red:#ff647c;--gold:#e8bd65}
-    *{box-sizing:border-box}
-    body{margin:0;background:radial-gradient(ellipse at top,#19132d 0,#090910 48%);color:var(--text);font-family:Tahoma,Arial,sans-serif;line-height:1.8}
-    .wrap{width:min(1100px,94%);margin:28px auto 60px}
-    header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:22px}
-    .brand{font-weight:900;font-size:22px;letter-spacing:.5px}.brand span{color:#b79aff}
-    .sub{color:var(--muted);font-size:13px}
-    .panel{background:rgba(18,18,29,.96);border:1px solid var(--line);border-radius:18px;padding:20px;margin:16px 0;box-shadow:0 12px 35px #0005}
-    h1,h2,h3{margin:0 0 12px;line-height:1.5}h1{font-size:23px}h2{font-size:18px}h3{font-size:15px}
-    p{margin:5px 0 12px}.muted{color:var(--muted);font-size:13px}
-    .status{padding:12px 14px;border:1px solid var(--line);background:#0e0e18;border-radius:12px;margin:12px 0;color:var(--muted);font-size:14px;white-space:pre-wrap}
-    .status.error{border-color:#713344;color:#ff9aaa;background:#28131b}.status.success{border-color:#245d4b;color:#8be2bd;background:#10251f}
-    .hidden{display:none!important}
-    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
-    label{display:block;font-size:13px;color:#d8d2e8;margin:10px 0 5px}
-    input,textarea,select{width:100%;border:1px solid #39364f;background:#0c0c15;color:var(--text);border-radius:10px;padding:12px;font:inherit;font-size:14px;outline:none}
-    input:focus,textarea:focus,select:focus{border-color:var(--purple);box-shadow:0 0 0 3px #8b5cf622}
-    textarea{min-height:95px;resize:vertical}
-    button{border:0;border-radius:10px;padding:10px 16px;background:linear-gradient(135deg,var(--purple),var(--purple2));color:white;font:inherit;font-size:14px;font-weight:700;cursor:pointer}
-    button.secondary{background:#29263a;border:1px solid #45405e;color:#eee}
-    button.danger{background:#642b3b}button:disabled{opacity:.5;cursor:not-allowed}
-    .actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-    .item{padding:14px;border:1px solid var(--line);border-radius:13px;background:#10101a;margin:10px 0}
-    .item-title{font-weight:800}.item-meta{font-size:12px;color:var(--muted);margin-top:4px}
-    .tag{display:inline-block;border-radius:20px;padding:2px 9px;background:#28213e;color:#c9b5ff;font-size:11px;margin-right:5px}
-    .preview{display:block;max-width:220px;max-height:150px;object-fit:cover;border-radius:10px;margin-top:10px;border:1px solid var(--line)}
-    .topline{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-    .option-row{display:grid;grid-template-columns:1fr auto;gap:8px;margin:7px 0}
-    .small{font-size:12px}.divider{height:1px;background:var(--line);margin:16px 0}
-    @media(max-width:700px){.grid{grid-template-columns:1fr}.panel{padding:15px}.wrap{width:94%;margin-top:18px}header{align-items:flex-start;flex-direction:column}.brand{font-size:20px}}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090910">
+<title>مدیریت | GTAVI_VICE</title>
+<style>
+:root{color-scheme:dark;--bg:#090910;--panel:#12121d;--line:#2a2940;--text:#f4f1ff;--muted:#aaa5bd;--purple:#8b5cf6;--purple2:#6d3be8}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#19132d 0,#090910 48%);color:var(--text);font-family:Tahoma,Arial,sans-serif;line-height:1.8}
+.wrap{width:min(1100px,94%);margin:28px auto 60px}header,.topline{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.brand{font-weight:900;font-size:22px}.brand span{color:#b79aff}.sub,.muted{color:var(--muted);font-size:13px}
+.panel{background:rgba(18,18,29,.96);border:1px solid var(--line);border-radius:18px;padding:20px;margin:16px 0;box-shadow:0 12px 35px #0005}
+h1,h2{margin:0 0 12px;line-height:1.5}h1{font-size:23px}h2{font-size:18px}p{margin:5px 0 12px}
+.status{padding:12px 14px;border:1px solid var(--line);background:#0e0e18;border-radius:12px;margin:12px 0;color:var(--muted);font-size:14px;white-space:pre-wrap}
+.status.error{border-color:#713344;color:#ff9aaa;background:#28131b}.status.success{border-color:#245d4b;color:#8be2bd;background:#10251f}.hidden{display:none!important}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}label{display:block;font-size:13px;color:#d8d2e8;margin:10px 0 5px}
+input,textarea,select{width:100%;border:1px solid #39364f;background:#0c0c15;color:var(--text);border-radius:10px;padding:12px;font:inherit;font-size:14px;outline:none}
+textarea{min-height:95px;resize:vertical}button{border:0;border-radius:10px;padding:10px 16px;background:linear-gradient(135deg,var(--purple),var(--purple2));color:white;font:inherit;font-size:14px;font-weight:700;cursor:pointer}
+button.secondary{background:#29263a;border:1px solid #45405e;color:#eee}button.danger{background:#642b3b}button:disabled{opacity:.5;cursor:not-allowed}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.item{padding:14px;border:1px solid var(--line);border-radius:13px;background:#10101a;margin:10px 0}
+.item-title{font-weight:800}.item-meta{font-size:12px;color:var(--muted);margin-top:4px}.tag{display:inline-block;border-radius:20px;padding:2px 9px;background:#28213e;color:#c9b5ff;font-size:11px;margin-right:5px}
+.preview{display:block;max-width:220px;max-height:150px;object-fit:cover;border-radius:10px;margin-top:10px;border:1px solid var(--line)}
+.option-row{display:grid;grid-template-columns:1fr auto;gap:8px;margin:7px 0}.prediction-options-list{margin:10px 0;padding:10px 14px;background:#0c0c15;border:1px solid var(--line);border-radius:10px}
+.prediction-options-list li{margin:4px 0;font-size:13px}.small{font-size:12px}
+@media(max-width:700px){.grid{grid-template-columns:1fr}.panel{padding:15px}.wrap{width:94%;margin-top:18px}header{align-items:flex-start;flex-direction:column}.brand{font-size:20px}}
+</style>
 </head>
 <body>
 <div class="wrap">
-  <header>
-    <div>
-      <div class="brand">GTA<span>VI</span>_VICE</div>
-      <div class="sub">پنل مرکزی مدیریت وب‌سایت</div>
-    </div>
-    <div class="sub">نسخه مدیریت محتوا</div>
-  </header>
-
-  <div id="main-status" class="status" role="status" aria-live="polite">در حال اتصال امن به سرویس...</div>
-
-  <section id="login-panel" class="panel hidden">
-    <h1>ورود مدیر</h1>
-    <p class="muted">برای ورود به پنل، با حساب کاربری مدیر وارد شوید.</p>
-    <label for="login-email">ایمیل</label>
-    <input id="login-email" type="email" autocomplete="username" placeholder="ایمیل حساب مدیر">
-    <label for="login-password">رمز عبور</label>
-    <input id="login-password" type="password" autocomplete="current-password" placeholder="رمز عبور">
-    <div class="actions">
-      <button id="login-button">ورود به پنل</button>
-      <button id="anonymous-button" class="secondary">ادامه با نشست مهمان</button>
-    </div>
-    <div id="login-status" class="status">پس از ورود، دسترسی مدیر بررسی می‌شود.</div>
-  </section>
-
-  <main id="dashboard" class="hidden">
-    <section class="panel">
-      <div class="topline">
-        <div><h1>پنل مرکزی مدیریت</h1><div class="muted" id="admin-user"></div></div>
-        <button id="logout-button" class="secondary">خروج</button>
-      </div>
-      <div class="status success">دسترسی مدیر تأیید شد. تغییرات از طریق Supabase ذخیره می‌شوند.</div>
-    </section>
-
-    <section class="panel">
-      <h2>ساخت پیش‌بینی جدید</h2>
-      <form id="prediction-form">
-        <div class="grid">
-          <div><label for="prediction-title">عنوان پیش‌بینی</label><input id="prediction-title" required maxlength="180" placeholder="مثلاً کدام شخصیت...؟"></div>
-          <div><label for="prediction-slug">شناسه انگلیسی (Slug)</label><input id="prediction-slug" required placeholder="prediction-name"></div>
-          <div><label for="prediction-close">زمان پایان رأی‌گیری</label><input id="prediction-close" type="datetime-local"></div>
-          <div><label for="prediction-order">ترتیب نمایش</label><input id="prediction-order" type="number" value="100"></div>
-        </div>
-        <label for="prediction-description">توضیحات</label><textarea id="prediction-description" placeholder="توضیح کوتاه درباره پیش‌بینی..."></textarea>
-        <label>گزینه‌های رأی‌گیری (حداقل ۲ و حداکثر ۸ گزینه)</label>
-        <div id="prediction-options">
-          <div class="option-row"><input class="prediction-option" required placeholder="گزینه اول"><button type="button" class="secondary remove-option">حذف</button></div>
-          <div class="option-row"><input class="prediction-option" required placeholder="گزینه دوم"><button type="button" class="secondary remove-option">حذف</button></div>
-        </div>
-        <div class="actions"><button type="button" id="add-option" class="secondary">افزودن گزینه</button><button type="submit">ثبت پیش‌بینی</button></div>
-      </form>
-      <div id="prediction-form-status" class="status">اطلاعات پیش‌بینی را وارد کنید.</div>
-    </section>
-
-    <section class="panel">
-      <div class="topline"><h2>پیش‌بینی‌های ثبت‌شده</h2><button id="refresh-predictions" class="secondary">به‌روزرسانی</button></div>
-      <div id="predictions-list" class="muted">در انتظار دریافت اطلاعات...</div>
-    </section>
-
-    <section class="panel">
-      <h2>مدیریت اخبار سایت</h2>
-      <p class="muted">خبرها ابتدا می‌توانند به‌صورت پیش‌نویس ذخیره شوند و پس از انتشار در سایت نمایش داده می‌شوند.</p>
-      <form id="news-form">
-        <input id="news-id" type="hidden">
-        <div class="grid">
-          <div><label for="news-title">عنوان خبر</label><input id="news-title" required maxlength="220"></div>
-          <div><label for="news-slug">شناسه انگلیسی (Slug)</label><input id="news-slug" required placeholder="news-title"></div>
-          <div><label for="news-category">دسته‌بندی</label><select id="news-category"><option value="news">اخبار</option><option value="rumor">شایعات</option><option value="analysis">تحلیل</option><option value="official">رسمی</option><option value="other">سایر</option></select></div>
-          <div><label for="news-status">وضعیت انتشار</label><select id="news-status"><option value="draft">پیش‌نویس</option><option value="published">منتشرشده</option></select></div>
-          <div><label for="news-order">ترتیب نمایش</label><input id="news-order" type="number" value="100"></div>
-          <div><label for="news-source">لینک منبع خبر</label><input id="news-source" type="url" placeholder="https://..."></div>
-        </div>
-        <label for="news-summary">خلاصه خبر</label><textarea id="news-summary" maxlength="500"></textarea>
-        <label for="news-content">متن کامل خبر</label><textarea id="news-content" style="min-height:180px"></textarea>
-        <label for="news-image">تصویر خبر (حداکثر ۸ مگابایت)</label><input id="news-image" type="file" accept="image/*">
-        <img id="news-preview" class="preview hidden" alt="پیش‌نمایش تصویر خبر">
-        <div class="actions"><button type="submit" id="news-save">ذخیره خبر</button><button type="button" id="news-reset" class="secondary">پاک‌کردن فرم</button></div>
-      </form>
-      <div id="news-form-status" class="status">برای افزودن خبر جدید، فرم را تکمیل کنید.</div>
-    </section>
-
-    <section class="panel">
-      <div class="topline"><h2>فهرست اخبار</h2><button id="refresh-news" class="secondary">به‌روزرسانی</button></div>
-      <div id="news-list" class="muted">در انتظار دریافت اخبار...</div>
-    </section>
-  </main>
-</div>
-
+<header><div><div class="brand">GTA<span>VI</span>_VICE</div><div class="sub">پنل مرکزی مدیریت وب‌سایت</div></div><div class="sub">نسخه مدیریت محتوا</div></header>
+<div id="main-status" class="status" role="status" aria-live="polite">در حال اتصال امن به سرویس...</div>
+<section id="login-panel" class="panel hidden">
+<h1>ورود مدیر</h1><p class="muted">برای ورود به پنل، با حساب کاربری مدیر وارد شوید.</p>
+<label for="login-email">ایمیل</label><input id="login-email" type="email" autocomplete="username" placeholder="ایمیل حساب مدیر">
+<label for="login-password">رمز عبور</label><input id="login-password" type="password" autocomplete="current-password" placeholder="رمز عبور">
+<div class="actions"><button id="login-button">ورود به پنل</button><button id="anonymous-button" class="secondary">ادامه با نشست مهمان</button></div>
+<div id="login-status" class="status">پس از ورود، دسترسی مدیر بررسی می‌شود.</div>
+</section>
+<main id="dashboard" class="hidden">
+<section class="panel"><div class="topline"><div><h1>پنل مرکزی مدیریت</h1><div class="muted" id="admin-user"></div></div><button id="logout-button" class="secondary">خروج</button></div><div class="status success">دسترسی مدیر تأیید شد. تغییرات از طریق Supabase ذخیره می‌شوند.</div></section>
+<section class="panel"><h2>ساخت پیش‌بینی جدید</h2>
+<form id="prediction-form"><div class="grid">
+<div><label for="prediction-title">عنوان پیش‌بینی</label><input id="prediction-title" required maxlength="180" placeholder="مثلاً کدام شخصیت...؟"></div>
+<div><label for="prediction-slug">شناسه انگلیسی (Slug)</label><input id="prediction-slug" required placeholder="prediction-name"></div>
+<div><label for="prediction-close">زمان پایان رأی‌گیری</label><input id="prediction-close" type="datetime-local"></div>
+<div><label for="prediction-order">ترتیب نمایش</label><input id="prediction-order" type="number" value="100"></div></div>
+<label for="prediction-description">توضیحات</label><textarea id="prediction-description" placeholder="توضیح کوتاه درباره پیش‌بینی..."></textarea>
+<label>گزینه‌های رأی‌گیری (حداقل ۲ و حداکثر ۸ گزینه)</label>
+<div id="prediction-options"><div class="option-row"><input class="prediction-option" required placeholder="گزینه اول"><button type="button" class="secondary remove-option">حذف</button></div><div class="option-row"><input class="prediction-option" required placeholder="گزینه دوم"><button type="button" class="secondary remove-option">حذف</button></div></div>
+<div class="actions"><button type="button" id="add-option" class="secondary">افزودن گزینه</button><button type="submit">ثبت پیش‌بینی</button></div></form>
+<div id="prediction-form-status" class="status">اطلاعات پیش‌بینی را وارد کنید.</div></section>
+<section class="panel"><div class="topline"><h2>پیش‌بینی‌های ثبت‌شده</h2><button id="refresh-predictions" class="secondary">به‌روزرسانی</button></div><div id="predictions-list" class="muted">در انتظار دریافت اطلاعات...</div></section>
+<section class="panel"><h2>مدیریت اخبار سایت</h2><p class="muted">خبرها ابتدا می‌توانند به‌صورت پیش‌نویس ذخیره شوند و پس از انتشار در سایت نمایش داده می‌شوند.</p>
+<form id="news-form"><input id="news-id" type="hidden"><div class="grid">
+<div><label for="news-title">عنوان خبر</label><input id="news-title" required maxlength="220"></div>
+<div><label for="news-slug">شناسه انگلیسی (Slug)</label><input id="news-slug" required placeholder="news-title"></div>
+<div><label for="news-category">دسته‌بندی</label><select id="news-category"><option value="news">اخبار</option><option value="rumor">شایعات</option><option value="analysis">تحلیل</option><option value="official">رسمی</option><option value="other">سایر</option></select></div>
+<div><label for="news-status">وضعیت انتشار</label><select id="news-status"><option value="draft">پیش‌نویس</option><option value="published">منتشرشده</option></select></div>
+<div><label for="news-order">ترتیب نمایش</label><input id="news-order" type="number" value="100"></div>
+<div><label for="news-source">لینک منبع خبر</label><input id="news-source" type="url" placeholder="https://..."></div></div>
+<label for="news-summary">خلاصه خبر</label><textarea id="news-summary" maxlength="500"></textarea>
+<label for="news-content">متن کامل خبر</label><textarea id="news-content" style="min-height:180px"></textarea>
+<label for="news-image">تصویر خبر (حداکثر ۸ مگابایت)</label><input id="news-image" type="file" accept="image/*">
+<img id="news-preview" class="preview hidden" alt="پیش‌نمایش تصویر خبر">
+<div class="actions"><button type="submit" id="news-save">ذخیره خبر</button><button type="button" id="news-reset" class="secondary">پاک‌کردن فرم</button></div></form>
+<div id="news-form-status" class="status">برای افزودن خبر جدید، فرم را تکمیل کنید.</div></section>
+<section class="panel"><div class="topline"><h2>فهرست اخبار</h2><button id="refresh-news" class="secondary">به‌روزرسانی</button></div><div id="news-list" class="muted">در انتظار دریافت اخبار...</div></section>
+</main></div>
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 <script>
-(function () {
-  "use strict";
+(function(){
+"use strict";
+const SUPABASE_URL="https://catompmbsdnlnlfgvlpn.supabase.co";
+const SUPABASE_KEY="sb_publishable_OgPjM0gGhoL3mApUIF_Unw_O9n1yHK-";
+const $=id=>document.getElementById(id);
+let client=null,currentUser=null,currentImageUrl="";
+function setStatus(el,message,type){if(!el)return;el.textContent=message;el.className="status"+(type?" "+type:"");}
+function show(el,yes){if(el)el.classList.toggle("hidden",!yes);}
+function escapeHtml(value){return String(value==null?"":value).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function errorText(error){return error&&(error.message||error.details||error.hint)?(error.message||error.details||error.hint):String(error||"خطای نامشخص");}
+function makeSlug(value){return String(value||"").trim().toLowerCase().replace(/[^\w\-]+/g,"-").replace(/-+/g,"-").replace(/^-|-$/g,"");}
+async function checkAccess(){
+setStatus($("main-status"),"در حال بررسی نشست کاربری و سطح دسترسی...");
+if(!window.supabase||!window.supabase.createClient)throw new Error("کتابخانه Supabase بارگذاری نشد. اتصال اینترنت یا دسترسی به unpkg را بررسی کنید.");
+client=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+let sessionResult=await client.auth.getSession();if(sessionResult.error)throw sessionResult.error;
+if(!sessionResult.data.session){const signIn=await client.auth.signInAnonymously();if(signIn.error){show($("login-panel"),true);setStatus($("main-status"),"نشست مهمان ساخته نشد. با ایمیل و رمز عبور حساب مدیر وارد شوید.","error");return;}}
+const userResult=await client.auth.getUser();if(userResult.error||!userResult.data.user){show($("login-panel"),true);setStatus($("main-status"),"نشست کاربری معتبر نیست. لطفاً وارد شوید.","error");return;}
+currentUser=userResult.data.user;const adminResult=await client.rpc("is_gta_prediction_admin");
+if(adminResult.error)throw new Error("بررسی دسترسی مدیر ناموفق بود: "+errorText(adminResult.error));
+if(adminResult.data!==true){show($("login-panel"),true);setStatus($("main-status"),"کاربر واردشده است، اما دسترسی مدیر برای این حساب تأیید نشد. با حسابی وارد شوید که شناسه آن در gta_prediction_admins ثبت شده است.","error");return;}
+show($("login-panel"),false);show($("dashboard"),true);$("admin-user").textContent="شناسه کاربر: "+currentUser.id;
+setStatus($("main-status"),"اتصال برقرار است و دسترسی مدیر تأیید شد.","success");await Promise.allSettled([loadPredictions(),loadNews()]);
+}
+$("login-button").addEventListener("click",async function(){const email=$("login-email").value.trim(),password=$("login-password").value;if(!email||!password){setStatus($("login-status"),"ایمیل و رمز عبور را وارد کنید.","error");return;}setStatus($("login-status"),"در حال ورود...");const result=await client.auth.signInWithPassword({email,password});if(result.error){setStatus($("login-status"),"ورود ناموفق بود: "+errorText(result.error),"error");return;}setStatus($("login-status"),"ورود انجام شد؛ در حال بررسی دسترسی...");try{await checkAccess();}catch(e){setStatus($("main-status"),errorText(e),"error");}});
+$("anonymous-button").addEventListener("click",async function(){setStatus($("login-status"),"در حال ایجاد نشست مهمان...");const result=await client.auth.signInAnonymously();if(result.error){setStatus($("login-status"),"ساخت نشست مهمان ناموفق بود: "+errorText(result.error),"error");return;}try{await checkAccess();}catch(e){setStatus($("main-status"),errorText(e),"error");}});
+$("logout-button").addEventListener("click",async function(){if(client)await client.auth.signOut();location.reload();});
 
-  const SUPABASE_URL = "https://catompmbsdnlnlfgvlpn.supabase.co";
-  const SUPABASE_KEY = "sb_publishable_OgPjM0gGhoL3mApUIF_Unw_O9n1yHK-";
-  const $ = (id) => document.getElementById(id);
-  let client = null;
-  let currentUser = null;
-  let currentImageUrl = "";
+/* اصلاح اصلی: خروجی تابع برای هر گزینه یک ردیف دارد؛ ردیف‌ها را بر اساس prediction_id گروه‌بندی می‌کنیم. */
+function renderPredictions(rows){
+const target=$("predictions-list");if(!rows||!rows.length){target.textContent="هنوز پیش‌بینی‌ای ثبت نشده است.";return;}
+const grouped=new Map();
+rows.forEach(row=>{
+const id=String(row.prediction_id??row.id??"");
+if(!id)return;
+if(!grouped.has(id)){grouped.set(id,{id,title:row.title,description:row.description,status:row.status,closes_at:row.closes_at,correct_option_id:row.correct_option_id,sort_order:row.prediction_sort_order, total_votes:Number(row.total_votes||0),options:[]});}
+const item=grouped.get(id);
+if(row.option_id!=null){item.options.push({id:String(row.option_id),label:row.option_label||"گزینه بدون عنوان",sort_order:Number(row.option_sort_order||0),votes:Number(row.vote_count||0)});}
+});
+const predictions=Array.from(grouped.values());
+if(!predictions.length){target.textContent="داده‌ای با شناسه معتبر از تابع دریافت نشد.";return;}
+target.innerHTML=predictions.map(p=>{
+const options=p.options.sort((a,b)=>a.sort_order-b.sort_order).map(o=>"<li>"+escapeHtml(o.label)+" — شناسه گزینه: <b>"+escapeHtml(o.id)+"</b> — رأی: "+o.votes+"</li>").join("");
+const winner=p.correct_option_id==null?"اعلام نشده":String(p.correct_option_id);
+return '<article class="item"><div class="item-title">'+escapeHtml(p.title||"بدون عنوان")+' <span class="tag">'+escapeHtml(p.status||"نامشخص")+'</span></div>'+
+'<div class="item-meta">شناسه پیش‌بینی: <b>'+escapeHtml(p.id)+'</b> | پایان رأی‌گیری: '+escapeHtml(p.closes_at||"تعیین نشده")+' | مجموع رأی‌ها: '+p.total_votes+'</div>'+
+(p.description?'<p class="muted">'+escapeHtml(p.description)+'</p>':'')+
+'<div class="small">گزینه‌ها:</div><ul class="prediction-options-list">'+(options||"<li>هنوز گزینه‌ای ثبت نشده است.</li>")+'</ul>'+
+'<div class="item-meta">شناسه گزینه برنده: '+escapeHtml(winner)+'</div>'+
+'<div class="actions"><button class="secondary" data-pred-close="'+escapeHtml(p.id)+'">بستن رأی‌گیری</button><button class="secondary" data-pred-resolve="'+escapeHtml(p.id)+'">اعلام نتیجه</button></div></article>';
+}).join("");
+}
+async function loadPredictions(){
+$("predictions-list").textContent="در حال دریافت پیش‌بینی‌ها...";
+const result=await client.rpc("get_gta_admin_predictions");if(result.error){$("predictions-list").textContent="خطا در دریافت پیش‌بینی‌ها: "+errorText(result.error);return;}
+let rows=result.data||[];if(!Array.isArray(rows)&&rows.predictions)rows=rows.predictions;renderPredictions(rows);
+}
+$("refresh-predictions").addEventListener("click",loadPredictions);
+$("add-option").addEventListener("click",function(){const holder=$("prediction-options");if(holder.querySelectorAll(".prediction-option").length>=8){setStatus($("prediction-form-status"),"حداکثر ۸ گزینه مجاز است.","error");return;}const row=document.createElement("div");row.className="option-row";row.innerHTML='<input class="prediction-option" required placeholder="گزینه جدید"><button type="button" class="secondary remove-option">حذف</button>';holder.appendChild(row);});
+$("prediction-options").addEventListener("click",function(event){if(event.target.classList.contains("remove-option")){const rows=$("prediction-options").querySelectorAll(".option-row");if(rows.length<=2){setStatus($("prediction-form-status"),"هر پیش‌بینی باید حداقل ۲ گزینه داشته باشد.","error");return;}event.target.closest(".option-row").remove();}});
+$("prediction-form").addEventListener("submit",async function(event){
+event.preventDefault();const options=Array.from(document.querySelectorAll(".prediction-option")).map(input=>input.value.trim()).filter(Boolean);
+if(options.length<2||options.length>8){setStatus($("prediction-form-status"),"تعداد گزینه‌ها باید بین ۲ تا ۸ باشد.","error");return;}
+const title=$("prediction-title").value.trim(),slug=$("prediction-slug").value.trim()||makeSlug(title),closesValue=$("prediction-close").value,closesAt=closesValue?new Date(closesValue).toISOString():null;
+const payload={p_slug:slug,p_title:title,p_description:$("prediction-description").value.trim(),p_options:options,p_closes_at:closesAt,p_sort_order:Number($("prediction-order").value||100)};
+setStatus($("prediction-form-status"),"در حال ثبت پیش‌بینی...");const result=await client.rpc("create_gta_prediction",payload);
+if(result.error){setStatus($("prediction-form-status"),"ثبت پیش‌بینی ناموفق بود: "+errorText(result.error),"error");return;}
+setStatus($("prediction-form-status"),"پیش‌بینی با موفقیت ثبت شد.","success");$("prediction-form").reset();
+$("prediction-options").innerHTML='<div class="option-row"><input class="prediction-option" required placeholder="گزینه اول"><button type="button" class="secondary remove-option">حذف</button></div><div class="option-row"><input class="prediction-option" required placeholder="گزینه دوم"><button type="button" class="secondary remove-option">حذف</button></div>';
+$("prediction-order").value="100";await loadPredictions();
+});
+$("predictions-list").addEventListener("click",async function(event){
+const button=event.target.closest("button");if(!button)return;
+const closeId=button.getAttribute("data-pred-close"),resolveId=button.getAttribute("data-pred-resolve");
+if(closeId){if(!confirm("رأی‌گیری این پیش‌بینی بسته شود؟"))return;const result=await client.rpc("close_gta_prediction",{p_prediction_id:closeId});if(result.error)alert("خطا در بستن رأی‌گیری: "+errorText(result.error));else{alert("رأی‌گیری بسته شد.");await loadPredictions();}}
+if(resolveId){const answer=prompt("شناسه گزینه برنده را از فهرست گزینه‌های همین پیش‌بینی وارد کنید:");if(!answer)return;const result=await client.rpc("resolve_gta_prediction",{p_prediction_id:resolveId,p_option_id:answer.trim()});if(result.error)alert("اعلام نتیجه ناموفق بود: "+errorText(result.error));else{alert("نتیجه ثبت شد.");await loadPredictions();}}
+});
 
-  function setStatus(el, message, type) {
-    if (!el) return;
-    el.textContent = message;
-    el.className = "status" + (type ? " " + type : "");
-  }
-  function show(el, yes) { if (el) el.classList.toggle("hidden", !yes); }
-  function escapeHtml(value) {
-    return String(value == null ? "" : value).replace(/[&<>"']/g, (c) => ({
-      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-    }[c]));
-  }
-  function errorText(error) {
-    return error && (error.message || error.details || error.hint) ? (error.message || error.details || error.hint) : String(error || "خطای نامشخص");
-  }
-  function makeSlug(value) {
-    return String(value || "").trim().toLowerCase()
-      .replace(/[^\w\-]+/g, "-").replace(/-+/g, "-").replace(/^-|-$/g, "");
-  }
-
-  async function checkAccess() {
-    setStatus($("main-status"), "در حال بررسی نشست کاربری و سطح دسترسی...");
-    if (!window.supabase || !window.supabase.createClient) {
-      throw new Error("کتابخانه Supabase بارگذاری نشد. اتصال اینترنت یا دسترسی به unpkg را بررسی کنید.");
-    }
-    client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
-      auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
-    });
-
-    let sessionResult = await client.auth.getSession();
-    if (sessionResult.error) throw sessionResult.error;
-
-    if (!sessionResult.data.session) {
-      const signIn = await client.auth.signInAnonymously();
-      if (signIn.error) {
-        show($("login-panel"), true);
-        setStatus($("main-status"), "نشست مهمان ساخته نشد. با ایمیل و رمز عبور حساب مدیر وارد شوید.", "error");
-        return;
-      }
-    }
-
-    const userResult = await client.auth.getUser();
-    if (userResult.error || !userResult.data.user) {
-      show($("login-panel"), true);
-      setStatus($("main-status"), "نشست کاربری معتبر نیست. لطفاً وارد شوید.", "error");
-      return;
-    }
-    currentUser = userResult.data.user;
-
-    const adminResult = await client.rpc("is_gta_prediction_admin");
-    if (adminResult.error) {
-      throw new Error("بررسی دسترسی مدیر ناموفق بود: " + errorText(adminResult.error));
-    }
-    if (adminResult.data !== true) {
-      show($("login-panel"), true);
-      setStatus($("main-status"), "کاربر واردشده است، اما دسترسی مدیر برای این حساب تأیید نشد. با حسابی وارد شوید که شناسه آن در gta_prediction_admins ثبت شده است.", "error");
-      return;
-    }
-
-    show($("login-panel"), false);
-    show($("dashboard"), true);
-    $("admin-user").textContent = "شناسه کاربر: " + currentUser.id;
-    setStatus($("main-status"), "اتصال برقرار است و دسترسی مدیر تأیید شد.", "success");
-    await Promise.allSettled([loadPredictions(), loadNews()]);
-  }
-
-  $("login-button").addEventListener("click", async function () {
-    const email = $("login-email").value.trim();
-    const password = $("login-password").value;
-    if (!email || !password) {
-      setStatus($("login-status"), "ایمیل و رمز عبور را وارد کنید.", "error");
-      return;
-    }
-    setStatus($("login-status"), "در حال ورود...");
-    const result = await client.auth.signInWithPassword({ email, password });
-    if (result.error) {
-      setStatus($("login-status"), "ورود ناموفق بود: " + errorText(result.error), "error");
-      return;
-    }
-    setStatus($("login-status"), "ورود انجام شد؛ در حال بررسی دسترسی...");
-    try { await checkAccess(); }
-    catch (e) { setStatus($("main-status"), errorText(e), "error"); }
-  });
-
-  $("anonymous-button").addEventListener("click", async function () {
-    setStatus($("login-status"), "در حال ایجاد نشست مهمان...");
-    const result = await client.auth.signInAnonymously();
-    if (result.error) {
-      setStatus($("login-status"), "ساخت نشست مهمان ناموفق بود: " + errorText(result.error), "error");
-      return;
-    }
-    try { await checkAccess(); }
-    catch (e) { setStatus($("main-status"), errorText(e), "error"); }
-  });
-
-  $("logout-button").addEventListener("click", async function () {
-    if (client) await client.auth.signOut();
-    location.reload();
-  });
-
-  function renderPredictions(rows) {
-    const target = $("predictions-list");
-    if (!rows || !rows.length) {
-      target.textContent = "هنوز پیش‌بینی‌ای ثبت نشده است.";
-      return;
-    }
-    target.innerHTML = rows.map((row) => {
-      const status = row.status || "نامشخص";
-      return '<article class="item">' +
-        '<div class="item-title">' + escapeHtml(row.title || row.slug || "بدون عنوان") + ' <span class="tag">' + escapeHtml(status) + '</span></div>' +
-        '<div class="item-meta">شناسه: ' + escapeHtml(row.slug || "-") + ' | پایان: ' + escapeHtml(row.closes_at || "تعیین نشده") + '</div>' +
-        '<div class="actions">' +
-        '<button class="secondary" data-pred-close="' + escapeHtml(row.id) + '">بستن رأی‌گیری</button>' +
-        '<button class="secondary" data-pred-resolve="' + escapeHtml(row.id) + '">اعلام نتیجه</button>' +
-        '</div></article>';
-    }).join("");
-  }
-
-  async function loadPredictions() {
-    $("predictions-list").textContent = "در حال دریافت پیش‌بینی‌ها...";
-    const result = await client.rpc("get_gta_admin_predictions");
-    if (result.error) {
-      $("predictions-list").textContent = "خطا در دریافت پیش‌بینی‌ها: " + errorText(result.error);
-      return;
-    }
-    let rows = result.data || [];
-    if (!Array.isArray(rows) && rows.predictions) rows = rows.predictions;
-    renderPredictions(rows);
-  }
-
-  $("refresh-predictions").addEventListener("click", loadPredictions);
-
-  $("add-option").addEventListener("click", function () {
-    const holder = $("prediction-options");
-    if (holder.querySelectorAll(".prediction-option").length >= 8) {
-      setStatus($("prediction-form-status"), "حداکثر ۸ گزینه مجاز است.", "error");
-      return;
-    }
-    const row = document.createElement("div");
-    row.className = "option-row";
-    row.innerHTML = '<input class="prediction-option" required placeholder="گزینه جدید"><button type="button" class="secondary remove-option">حذف</button>';
-    holder.appendChild(row);
-  });
-
-  $("prediction-options").addEventListener("click", function (event) {
-    if (event.target.classList.contains("remove-option")) {
-      const rows = $("prediction-options").querySelectorAll(".option-row");
-      if (rows.length <= 2) {
-        setStatus($("prediction-form-status"), "هر پیش‌بینی باید حداقل ۲ گزینه داشته باشد.", "error");
-        return;
-      }
-      event.target.closest(".option-row").remove();
-    }
-  });
-
-  $("prediction-form").addEventListener("submit", async function (event) {
-    event.preventDefault();
-    const options = Array.from(document.querySelectorAll(".prediction-option"))
-      .map((input) => input.value.trim()).filter(Boolean);
-    if (options.length < 2 || options.length > 8) {
-      setStatus($("prediction-form-status"), "تعداد گزینه‌ها باید بین ۲ تا ۸ باشد.", "error");
-      return;
-    }
-    const title = $("prediction-title").value.trim();
-    const slug = $("prediction-slug").value.trim() || makeSlug(title);
-    const closesValue = $("prediction-close").value;
-    const closesAt = closesValue ? new Date(closesValue).toISOString() : null;
-    const payload = {
-      p_slug: slug,
-      p_title: title,
-      p_description: $("prediction-description").value.trim(),
-      p_options: options,
-      p_closes_at: closesAt,
-      p_sort_order: Number($("prediction-order").value || 100)
-    };
-    setStatus($("prediction-form-status"), "در حال ثبت پیش‌بینی...");
-    const result = await client.rpc("create_gta_prediction", payload);
-    if (result.error) {
-      setStatus($("prediction-form-status"), "ثبت پیش‌بینی ناموفق بود: " + errorText(result.error), "error");
-      return;
-    }
-    setStatus($("prediction-form-status"), "پیش‌بینی با موفقیت ثبت شد.", "success");
-    $("prediction-form").reset();
-    $("prediction-options").innerHTML =
-      '<div class="option-row"><input class="prediction-option" required placeholder="گزینه اول"><button type="button" class="secondary remove-option">حذف</button></div>' +
-      '<div class="option-row"><input class="prediction-option" required placeholder="گزینه دوم"><button type="button" class="secondary remove-option">حذف</button></div>';
-    $("prediction-order").value = "100";
-    await loadPredictions();
-  });
-
-  $("predictions-list").addEventListener("click", async function (event) {
-    const closeId = event.target.getAttribute("data-pred-close");
-    const resolveId = event.target.getAttribute("data-pred-resolve");
-    if (closeId) {
-      if (!confirm("رأی‌گیری این پیش‌بینی بسته شود؟")) return;
-      const result = await client.rpc("close_gta_prediction", { p_prediction_id: closeId });
-      if (result.error) alert("خطا در بستن رأی‌گیری: " + errorText(result.error));
-      else { alert("رأی‌گیری بسته شد."); await loadPredictions(); }
-    }
-    if (resolveId) {
-      const answer = prompt("شناسه گزینه برنده را وارد کنید:");
-      if (!answer) return;
-      const result = await client.rpc("resolve_gta_prediction", { p_prediction_id: resolveId, p_option_id: answer.trim() });
-      if (result.error) alert("اعلام نتیجه ناموفق بود: " + errorText(result.error));
-      else { alert("نتیجه ثبت شد."); await loadPredictions(); }
-    }
-  });
-
-  function resetNewsForm() {
-    $("news-form").reset();
-    $("news-id").value = "";
-    $("news-image").value = "";
-    currentImageUrl = "";
-    $("news-preview").src = "";
-    show($("news-preview"), false);
-    $("news-status").value = "draft";
-    $("news-order").value = "100";
-    $("news-form-status").textContent = "فرم برای افزودن خبر جدید آماده است.";
-  }
-
-  function previewSelectedFile(file) {
-    if (!file) {
-      if (currentImageUrl) {
-        $("news-preview").src = currentImageUrl;
-        show($("news-preview"), true);
-      } else show($("news-preview"), false);
-      return;
-    }
-    if (!file.type.startsWith("image/")) {
-      setStatus($("news-form-status"), "فایل انتخاب‌شده تصویر نیست.", "error");
-      $("news-image").value = "";
-      return;
-    }
-    if (file.size > 8 * 1024 * 1024) {
-      setStatus($("news-form-status"), "حجم تصویر باید کمتر از ۸ مگابایت باشد.", "error");
-      $("news-image").value = "";
-      return;
-    }
-    const reader = new FileReader();
-    reader.onload = () => {
-      $("news-preview").src = reader.result;
-      show($("news-preview"), true);
-    };
-    reader.readAsDataURL(file);
-  }
-
-  async function uploadNewsImage(file) {
-    const clean = (file.name || "image").normalize("NFKD")
-      .replace(/[^a-zA-Z0-9._-]/g, "-").replace(/-+/g, "-").slice(-80) || "image";
-    const path = "news/" + Date.now() + "-" + Math.random().toString(36).slice(2, 8) + "-" + clean;
-    const uploaded = await client.storage.from("gta-news-images").upload(path, file, {
-      cacheControl: "3600", upsert: false, contentType: file.type
-    });
-    if (uploaded.error) throw uploaded.error;
-    const publicResult = client.storage.from("gta-news-images").getPublicUrl(path);
-    return publicResult.data.publicUrl;
-  }
-
-  $("news-image").addEventListener("change", () => previewSelectedFile($("news-image").files[0]));
-  $("news-reset").addEventListener("click", resetNewsForm);
-
-  async function loadNews() {
-    $("news-list").textContent = "در حال دریافت اخبار...";
-    const result = await client.from("gta_news")
-      .select("id,slug,title,summary,category,image_url,source_url,status,sort_order,created_at")
-      .order("created_at", { ascending: false });
-    if (result.error) {
-      $("news-list").textContent = "خطا در دریافت اخبار: " + errorText(result.error);
-      return;
-    }
-    const rows = result.data || [];
-    if (!rows.length) {
-      $("news-list").textContent = "هنوز خبری ثبت نشده است.";
-      return;
-    }
-    $("news-list").innerHTML = rows.map((row) =>
-      '<article class="item">' +
-      '<div class="item-title">' + escapeHtml(row.title) + ' <span class="tag">' + escapeHtml(row.status) + '</span></div>' +
-      '<div class="item-meta">' + escapeHtml(row.category || "بدون دسته") + ' | ' + escapeHtml(row.slug) + '</div>' +
-      (row.image_url ? '<img class="preview" src="' + escapeHtml(row.image_url) + '" alt="تصویر خبر">' : '') +
-      '<div class="actions"><button class="secondary" data-news-edit="' + escapeHtml(row.id) + '">ویرایش</button>' +
-      '<button class="danger" data-news-delete="' + escapeHtml(row.id) + '">حذف</button></div></article>'
-    ).join("");
-  }
-
-  $("refresh-news").addEventListener("click", loadNews);
-
-  $("news-list").addEventListener("click", async function (event) {
-    const editId = event.target.getAttribute("data-news-edit");
-    const deleteId = event.target.getAttribute("data-news-delete");
-    if (editId) {
-      const result = await client.from("gta_news").select("*").eq("id", editId).single();
-      if (result.error) {
-        setStatus($("news-form-status"), "دریافت خبر برای ویرایش ناموفق بود: " + errorText(result.error), "error");
-        return;
-      }
-      const row = result.data;
-      $("news-id").value = row.id;
-      $("news-title").value = row.title || "";
-      $("news-slug").value = row.slug || "";
-      $("news-category").value = row.category || "news";
-      $("news-status").value = row.status || "draft";
-      $("news-order").value = row.sort_order == null ? 100 : row.sort_order;
-      $("news-source").value = row.source_url || "";
-      $("news-summary").value = row.summary || "";
-      $("news-content").value = row.content || "";
-      currentImageUrl = row.image_url || "";
-      previewSelectedFile(null);
-      setStatus($("news-form-status"), "خبر برای ویرایش بارگذاری شد. پس از تغییر، ذخیره خبر را بزنید.", "success");
-      $("news-form").scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-    if (deleteId) {
-      if (!confirm("این خبر برای همیشه حذف شود؟")) return;
-      const result = await client.from("gta_news").delete().eq("id", deleteId);
-      if (result.error) {
-        alert("حذف خبر ناموفق بود: " + errorText(result.error));
-      } else {
-        setStatus($("news-form-status"), "خبر حذف شد.", "success");
-        await loadNews();
-      }
-    }
-  });
-
-  $("news-form").addEventListener("submit", async function (event) {
-    event.preventDefault();
-    const id = $("news-id").value;
-    const title = $("news-title").value.trim();
-    const slug = $("news-slug").value.trim() || makeSlug(title);
-    const file = $("news-image").files[0];
-    setStatus($("news-form-status"), "در حال ذخیره خبر...");
-    try {
-      let imageUrl = currentImageUrl;
-      if (file) imageUrl = await uploadNewsImage(file);
-      const status = $("news-status").value;
-      const payload = {
-        title: title,
-        slug: slug,
-        summary: $("news-summary").value.trim(),
-        content: $("news-content").value.trim(),
-        category: $("news-category").value,
-        image_url: imageUrl || null,
-        source_url: $("news-source").value.trim() || null,
-        status: status,
-        sort_order: Number($("news-order").value || 100),
-        updated_at: new Date().toISOString()
-      };
-      if (status === "published") payload.published_at = new Date().toISOString();
-      if (!id) payload.created_by = currentUser ? currentUser.id : null;
-
-      const result = id
-        ? await client.from("gta_news").update(payload).eq("id", id)
-        : await client.from("gta_news").insert(payload);
-      if (result.error) throw result.error;
-
-      setStatus($("news-form-status"), id ? "خبر با موفقیت ویرایش شد." : "خبر با موفقیت ثبت شد.", "success");
-      resetNewsForm();
-      setStatus($("news-form-status"), "خبر ذخیره شد. فرم برای افزودن خبر جدید آماده است.", "success");
-      await loadNews();
-    } catch (error) {
-      setStatus($("news-form-status"), "ذخیره خبر ناموفق بود: " + errorText(error), "error");
-    }
-  });
-
-  checkAccess().catch((error) => {
-    setStatus($("main-status"), "خطا در راه‌اندازی پنل: " + errorText(error), "error");
-    show($("login-panel"), true);
-  });
+function resetNewsForm(){$("news-form").reset();$("news-id").value="";$("news-image").value="";currentImageUrl="";$("news-preview").src="";show($("news-preview"),false);$("news-status").value="draft";$("news-order").value="100";$("news-form-status").textContent="فرم برای افزودن خبر جدید آماده است.";}
+function previewSelectedFile(file){if(!file){if(currentImageUrl){$("news-preview").src=currentImageUrl;show($("news-preview"),true);}else show($("news-preview"),false);return;}
+if(!file.type.startsWith("image/")){setStatus($("news-form-status"),"فایل انتخاب‌شده تصویر نیست.","error");$("news-image").value="";return;}
+if(file.size>8*1024*1024){setStatus($("news-form-status"),"حجم تصویر باید کمتر از ۸ مگابایت باشد.","error");$("news-image").value="";return;}
+const reader=new FileReader();reader.onload=()=>{$("news-preview").src=reader.result;show($("news-preview"),true);};reader.readAsDataURL(file);}
+async function uploadNewsImage(file){const clean=(file.name||"image").normalize("NFKD").replace(/[^a-zA-Z0-9._-]/g,"-").replace(/-+/g,"-").slice(-80)||"image";
+const path="news/"+Date.now()+"-"+Math.random().toString(36).slice(2,8)+"-"+clean;
+const uploaded=await client.storage.from("gta-news-images").upload(path,file,{cacheControl:"3600",upsert:false,contentType:file.type});if(uploaded.error)throw uploaded.error;
+return client.storage.from("gta-news-images").getPublicUrl(path).data.publicUrl;}
+$("news-image").addEventListener("change",()=>previewSelectedFile($("news-image").files[0]));$("news-reset").addEventListener("click",resetNewsForm);
+async function loadNews(){
+$("news-list").textContent="در حال دریافت اخبار...";const result=await client.from("gta_news").select("id,slug,title,summary,category,image_url,source_url,status,sort_order,created_at").order("created_at",{ascending:false});
+if(result.error){$("news-list").textContent="خطا در دریافت اخبار: "+errorText(result.error);return;}const rows=result.data||[];
+if(!rows.length){$("news-list").textContent="هنوز خبری ثبت نشده است.";return;}
+$("news-list").innerHTML=rows.map(row=>'<article class="item"><div class="item-title">'+escapeHtml(row.title)+' <span class="tag">'+escapeHtml(row.status)+'</span></div><div class="item-meta">'+escapeHtml(row.category||"بدون دسته")+' | '+escapeHtml(row.slug)+'</div>'+
+(row.image_url?'<img class="preview" src="'+escapeHtml(row.image_url)+'" alt="تصویر خبر">':'')+
+'<div class="actions"><button class="secondary" data-news-edit="'+escapeHtml(row.id)+'">ویرایش</button><button class="danger" data-news-delete="'+escapeHtml(row.id)+'">حذف</button></div></article>').join("");
+}
+$("refresh-news").addEventListener("click",loadNews);
+$("news-list").addEventListener("click",async function(event){
+const button=event.target.closest("button");if(!button)return;const editId=button.getAttribute("data-news-edit"),deleteId=button.getAttribute("data-news-delete");
+if(editId){const result=await client.from("gta_news").select("*").eq("id",editId).single();if(result.error){setStatus($("news-form-status"),"دریافت خبر برای ویرایش ناموفق بود: "+errorText(result.error),"error");return;}
+const row=result.data;$("news-id").value=row.id;$("news-title").value=row.title||"";$("news-slug").value=row.slug||"";$("news-category").value=row.category||"news";$("news-status").value=row.status||"draft";$("news-order").value=row.sort_order==null?100:row.sort_order;$("news-source").value=row.source_url||"";$("news-summary").value=row.summary||"";$("news-content").value=row.content||"";currentImageUrl=row.image_url||"";previewSelectedFile(null);setStatus($("news-form-status"),"خبر برای ویرایش بارگذاری شد. پس از تغییر، ذخیره خبر را بزنید.","success");$("news-form").scrollIntoView({behavior:"smooth",block:"start"});}
+if(deleteId){if(!confirm("این خبر برای همیشه حذف شود؟"))return;const result=await client.from("gta_news").delete().eq("id",deleteId);if(result.error)alert("حذف خبر ناموفق بود: "+errorText(result.error));else{setStatus($("news-form-status"),"خبر حذف شد.","success");await loadNews();}}
+});
+$("news-form").addEventListener("submit",async function(event){
+event.preventDefault();const id=$("news-id").value,title=$("news-title").value.trim(),slug=$("news-slug").value.trim()||makeSlug(title),file=$("news-image").files[0];setStatus($("news-form-status"),"در حال ذخیره خبر...");
+try{let imageUrl=currentImageUrl;if(file)imageUrl=await uploadNewsImage(file);const status=$("news-status").value;
+const payload={title,slug,summary:$("news-summary").value.trim(),content:$("news-content").value.trim(),category:$("news-category").value,image_url:imageUrl||null,source_url:$("news-source").value.trim()||null,status,sort_order:Number($("news-order").value||100),updated_at:new Date().toISOString()};
+if(status==="published")payload.published_at=new Date().toISOString();if(!id)payload.created_by=currentUser?currentUser.id:null;
+const result=id?await client.from("gta_news").update(payload).eq("id",id):await client.from("gta_news").insert(payload);if(result.error)throw result.error;
+setStatus($("news-form-status"),id?"خبر با موفقیت ویرایش شد.":"خبر با موفقیت ثبت شد.","success");resetNewsForm();setStatus($("news-form-status"),"خبر ذخیره شد. فرم برای افزودن خبر جدید آماده است.","success");await loadNews();
+}catch(error){setStatus($("news-form-status"),"ذخیره خبر ناموفق بود: "+errorText(error),"error");}
+});
+checkAccess().catch(error=>{setStatus($("main-status"),"خطا در راه‌اندازی پنل: "+errorText(error),"error");show($("login-panel"),true);});
 })();
 </script>
 </body>
