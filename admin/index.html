@@ -50,7 +50,7 @@ button.secondary{background:#29263a;border:1px solid #45405e;color:#eee}button.d
 <div id="prediction-options"><div class="option-row"><input class="prediction-option" required placeholder="گزینه اول"><button type="button" class="secondary remove-option">حذف</button></div><div class="option-row"><input class="prediction-option" required placeholder="گزینه دوم"><button type="button" class="secondary remove-option">حذف</button></div></div>
 <div class="actions"><button type="button" id="add-option" class="secondary">افزودن گزینه</button><button type="submit">ثبت پیش‌بینی</button></div></form>
 <div id="prediction-form-status" class="status">اطلاعات پیش‌بینی را وارد کنید.</div></section>
-<section class="panel"><div class="topline"><h2>پیش‌بینی‌های ثبت‌شده</h2><button id="refresh-predictions" class="secondary">به‌روزرسانی</button></div><div id="predictions-list" class="muted">در انتظار دریافت اطلاعات...</div></section>
+<section class="panel"><div class="topline"><h2>پیش‌بینی‌های ثبت‌شده</h2><button id="refresh-predictions" class="secondary">به‌روزرسانی</button></div><p class="muted small">پیش‌بینی‌های بایگانی‌شده در این فهرست باقی می‌مانند و از سایت عمومی نمایش داده نمی‌شوند. بازگردانی، وضعیت قبلی را حفظ می‌کند.</p><div id="predictions-list" class="muted">در انتظار دریافت اطلاعات...</div></section>
 <section class="panel"><h2>مدیریت اخبار سایت</h2><p class="muted">خبرها ابتدا می‌توانند به‌صورت پیش‌نویس ذخیره شوند و پس از انتشار در سایت نمایش داده می‌شوند.</p>
 <form id="news-form"><input id="news-id" type="hidden"><div class="grid">
 <div><label for="news-title">عنوان خبر</label><input id="news-title" required maxlength="220"></div>
@@ -118,7 +118,12 @@ return '<article class="item"><div class="item-title">'+escapeHtml(p.title||"ب�
 (p.description?'<p class="muted">'+escapeHtml(p.description)+'</p>':'')+
 '<div class="small">گزینه‌ها:</div><ul class="prediction-options-list">'+(options||"<li>هنوز گزینه‌ای ثبت نشده است.</li>")+'</ul>'+
 '<div class="item-meta">شناسه گزینه برنده: '+escapeHtml(winner)+'</div>'+
-'<div class="actions"><button class="secondary" data-pred-close="'+escapeHtml(p.id)+'">بستن رأی‌گیری</button><button class="secondary" data-pred-resolve="'+escapeHtml(p.id)+'">اعلام نتیجه</button></div></article>';
+'<div class="actions">'+
+((p.status==="open"||p.status==="closed")?'<button class="danger" data-pred-archive="'+escapeHtml(p.id)+'">بایگانی</button>':'')+
+(p.status==="archived"?'<button class="secondary" data-pred-restore="'+escapeHtml(p.id)+'">بازگردانی</button>':'')+
+(p.status==="open"?'<button class="secondary" data-pred-close="'+escapeHtml(p.id)+'">بستن رأی‌گیری</button>':'')+
+(p.status==="closed"?'<button class="secondary" data-pred-resolve="'+escapeHtml(p.id)+'">اعلام نتیجه</button>':'')+
+'</div></article>';
 }).join("");
 }
 async function loadPredictions(){
@@ -143,8 +148,25 @@ $("prediction-order").value="100";await loadPredictions();
 $("predictions-list").addEventListener("click",async function(event){
 const button=event.target.closest("button");if(!button)return;
 const closeId=button.getAttribute("data-pred-close"),resolveId=button.getAttribute("data-pred-resolve");
+const archiveId=button.getAttribute("data-pred-archive"),restoreId=button.getAttribute("data-pred-restore");
+if(archiveId){
+if(!confirm("این پیش‌بینی به بایگانی منتقل شود؟ رأی‌ها و گزینه‌ها حفظ می‌شوند و پیش‌بینی از سایت عمومی پنهان خواهد شد."))return;
+button.disabled=true;
+const result=await client.rpc("archive_gta_prediction",{p_prediction_id:archiveId});
+if(result.error){alert("بایگانی ناموفق بود: "+errorText(result.error));button.disabled=false;}
+else{alert("پیش‌بینی با موفقیت بایگانی شد.");await loadPredictions();}
+return;
+}
+if(restoreId){
+if(!confirm("این پیش‌بینی به وضعیت قبلی خود بازگردد؟"))return;
+button.disabled=true;
+const result=await client.rpc("restore_gta_prediction",{p_prediction_id:restoreId});
+if(result.error){alert("بازگردانی ناموفق بود: "+errorText(result.error));button.disabled=false;}
+else{alert("پیش‌بینی به وضعیت قبلی بازگردانده شد.");await loadPredictions();}
+return;
+}
 if(closeId){if(!confirm("رأی‌گیری این پیش‌بینی بسته شود؟"))return;const result=await client.rpc("close_gta_prediction",{p_prediction_id:closeId});if(result.error)alert("خطا در بستن رأی‌گیری: "+errorText(result.error));else{alert("رأی‌گیری بسته شد.");await loadPredictions();}}
-if(resolveId){const answer=prompt("شناسه گزینه برنده را از فهرست گزینه‌های همین پیش‌بینی وارد کنید:");if(!answer)return;const result=await client.rpc("resolve_gta_prediction",{p_prediction_id:resolveId,p_correct_option_id:answer.trim()});if(result.error)alert("اعلام نتیجه ناموفق بود: "+errorText(result.error));else{alert("نتیجه ثبت شد.");await loadPredictions();}}
+if(resolveId){const answer=prompt("شناسه گزینه برنده را از فهرست گزینه‌های همین پیش‌بینی وارد کنید:");if(!answer)return;const result=await client.rpc("resolve_gta_prediction",{p_prediction_id:resolveId,p_correct_option_id:answer.trim()});if(result.error)alert("اعلام نتیجه ناموفق بود: "+errorText(result.error),"error");else{alert("نتیجه ثبت شد.");await loadPredictions();}}
 });
 
 function resetNewsForm(){$("news-form").reset();$("news-id").value="";$("news-image").value="";currentImageUrl="";$("news-preview").src="";show($("news-preview"),false);$("news-status").value="draft";$("news-order").value="100";$("news-form-status").textContent="فرم برای افزودن خبر جدید آماده است.";}
