@@ -790,6 +790,26 @@ img{max-width:100%}
 :root[data-theme="light"] .auth-account-card{background:#f7fafd;border-color:#c7d8df}
 :root[data-theme="light"] .auth-account-card small,:root[data-theme="light"] .auth-note{color:#587783}
 
+
+/* Dynamic community polls (separate from Jason/Lucia poll) */
+.general-polls-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+.general-poll-card{overflow:hidden;border:1px solid var(--border);border-radius:19px;background:radial-gradient(circle at 90% 0%,#7c3aed20,transparent 48%),var(--panel);box-shadow:0 12px 30px #0002}
+.general-poll-image{display:block;width:100%;max-height:230px;object-fit:cover;background:var(--panel2)}
+.general-poll-content{padding:16px}
+.general-poll-title{font-size:16px;font-weight:900;margin:0 0 5px}
+.general-poll-description{font-size:12px;color:var(--muted);margin:0 0 13px;white-space:pre-line}
+.general-poll-option{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;padding:11px 12px;margin:8px 0;border:1px solid var(--border);border-radius:12px;background:var(--panel2);color:var(--text);text-align:right;font-weight:700}
+.general-poll-option:disabled{opacity:.72;cursor:default}
+.general-poll-option:hover:not(:disabled){border-color:var(--purple)}
+.general-poll-option small{font-size:11px;color:var(--muted);white-space:nowrap}
+.general-poll-progress{height:6px;overflow:hidden;border-radius:20px;background:var(--panel2);margin-top:5px}
+.general-poll-progress span{display:block;height:100%;border-radius:20px;background:linear-gradient(90deg,var(--purple2),var(--pink));transition:width .3s}
+.general-poll-meta{display:flex;justify-content:space-between;gap:8px;color:var(--muted);font-size:10px;margin-top:12px}
+.general-poll-message{min-height:20px;color:var(--muted);font-size:11px;margin-top:9px}
+.general-poll-message.error{color:#ff8b8b}
+.general-polls-empty{padding:18px;border:1px dashed var(--border);border-radius:15px;color:var(--muted);text-align:center;font-size:12px}
+@media(max-width:700px){.general-polls-grid{grid-template-columns:1fr}.general-poll-image{max-height:210px}}
+
 </style>
 
 <style>
@@ -856,6 +876,7 @@ img{max-width:100%}
       <a href="#quick-access">⚡ دسترسی سریع</a>
       <a href="#guides">🗺️ راهنماها</a>
       <a href="#character-poll">🗳️ نظرسنجی جیسون و لوسیا</a>
+      <a href="#community-polls">📊 نظرسنجی‌های کاربران</a>
       <a href="#predictions">🎯 پیش‌بینی‌ها</a>
       <a href="#community">💬 جامعه گیمرها</a>
       <a href="#store">🛍️ فروشگاه</a>
@@ -973,7 +994,8 @@ img{max-width:100%}
         <a class="quick-item" href="#trailers"><span class="quick-symbol">🎬</span><span>تریلرها</span></a>
         <a class="quick-item" href="#guides"><span class="quick-symbol">🗺️</span><span>راهنماها</span></a>
         <a class="quick-item" href="#characters"><span class="quick-symbol">🧍</span><span>شخصیت‌ها</span></a>
-        <a class="quick-item" href="#character-poll"><span class="quick-symbol">🗳️</span><span>نظرسنجی</span></a>
+        <a class="quick-item" href="#character-poll"><span class="quick-symbol">🗳️</span><span>جیسون و لوسیا</span></a>
+        <a class="quick-item" href="#community-polls"><span class="quick-symbol">📊</span><span>نظرسنجی‌ها</span></a>
         <a class="quick-item" href="#predictions"><span class="quick-symbol">🎯</span><span>پیش‌بینی‌ها</span></a>
         <a class="quick-item" href="#community"><span class="quick-symbol">💬</span><span>جامعه گیمرها</span></a>
         <a class="quick-item" href="#store"><span class="quick-symbol">🛍️</span><span>فروشگاه</span></a>
@@ -1082,6 +1104,19 @@ img{max-width:100%}
         <div class="poll-message" id="poll-message" role="status" aria-live="polite"></div>
         <div class="poll-footnote">هر حساب ناشناس مرورگر یک رأی ثبت می‌کند. پاک‌کردن داده‌های مرورگر یا استفاده از دستگاه دیگر ممکن است امکان رأی مجدد ایجاد کند.</div>
       </div>
+    </div>
+  </section>
+
+
+  <section class="section" id="community-polls">
+    <div class="container">
+      <div class="section-head">
+        <div><h2>📊 نظرسنجی‌های جامعه GTAVI_VICE</h2><p>در موضوعات مختلف رأی بده و نتیجه انتخاب طرفداران را ببین.</p></div>
+        <span class="section-link">مشارکت کاربران</span>
+      </div>
+      <div id="general-polls-list" class="general-polls-grid" aria-live="polite"><div class="general-polls-empty">در حال دریافت نظرسنجی‌ها...</div></div>
+      <div id="general-polls-global-message" class="general-poll-message" role="status" aria-live="polite"></div>
+      <p class="prediction-footnote">برای هر نظرسنجی، هر حساب کاربری فقط یک رأی می‌تواند ثبت کند. برای رأی‌دادن از نشست مهمان خودکار سایت استفاده می‌شود.</p>
     </div>
   </section>
 
@@ -1803,6 +1838,61 @@ renderNews();
 })();
 </script>
 
+
+
+<!-- GTAVI_VICE dynamic general polls: reuses the existing Supabase client and anonymous session -->
+<script>
+(function(){
+  "use strict";
+  const list=document.getElementById("general-polls-list");
+  const globalMessage=document.getElementById("general-polls-global-message");
+  const client=window.gtaviSupabase;
+  if(!list||!client||typeof window.gtaviEnsureAnonymousSession!=="function")return;
+  const voted=new Set();
+  function esc(value){return String(value==null?"":value).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+  function num(value){return new Intl.NumberFormat("fa-IR").format(Number(value)||0);}
+  function optionsOf(value){if(Array.isArray(value))return value;if(typeof value==="string"){try{const x=JSON.parse(value);return Array.isArray(x)?x:[];}catch(e){return [];}}return [];}
+  function imageUrl(path){if(!path)return "";if(/^https?:\/\//i.test(String(path)))return String(path);return client.storage.from("gta-poll-images").getPublicUrl(String(path)).data.publicUrl;}
+  function setGlobal(text,isError){globalMessage.textContent=text||"";globalMessage.classList.toggle("error",Boolean(isError));}
+  function render(rows){
+    if(!Array.isArray(rows)||!rows.length){list.innerHTML='<div class="general-polls-empty">در حال حاضر نظرسنجی فعالی وجود ندارد. به‌زودی نظرسنجی‌های تازه منتشر می‌شوند.</div>';return;}
+    list.innerHTML=rows.map(p=>{
+      const opts=optionsOf(p.options);const total=Number(p.total_votes||0);const id=String(p.id||"");
+      const image=p.image_path?'<img class="general-poll-image" src="'+esc(imageUrl(p.image_path))+'" alt="تصویر '+esc(p.title||"نظرسنجی")+'" loading="lazy">':'';
+      const choices=opts.map(o=>{
+        const optionId=String(o.id??o.option_id??"");const label=o.label??o.title??o.name??"گزینه";
+        const votes=Number(o.votes??o.vote_count??o.total_votes??0);const percent=total?Math.round(votes*100/total):0;
+        const disabled=voted.has(id)?"disabled":"";
+        return '<div class="general-poll-choice"><button type="button" class="general-poll-option" data-general-poll-vote="'+esc(id)+'" data-general-option-id="'+esc(optionId)+'" '+disabled+'><span>'+esc(label)+'</span><small>'+num(votes)+' رأی · '+num(percent)+'٪</small></button><div class="general-poll-progress"><span style="width:'+percent+'%"></span></div></div>';
+      }).join("");
+      return '<article class="general-poll-card">'+image+'<div class="general-poll-content"><h3 class="general-poll-title">'+esc(p.title||"نظرسنجی GTAVI_VICE")+'</h3>'+
+        (p.description?'<p class="general-poll-description">'+esc(p.description)+'</p>':'')+choices+
+        '<div class="general-poll-meta"><span>مجموع رأی‌ها: '+num(total)+'</span><span>'+(voted.has(id)?'رأی شما ثبت شده 💜':'برای ثبت رأی یک گزینه را انتخاب کن')+'</span></div>'+
+        '<div class="general-poll-message" data-general-poll-message="'+esc(id)+'"></div></div></article>';
+    }).join("");
+  }
+  async function load(){
+    list.innerHTML='<div class="general-polls-empty">در حال دریافت نظرسنجی‌ها...</div>';
+    try{const result=await client.rpc("get_gta_polls");if(result.error)throw result.error;let rows=result.data||[];if(!Array.isArray(rows)&&Array.isArray(rows.polls))rows=rows.polls;render(rows);}
+    catch(error){console.error("General polls load error:",error);list.innerHTML='<div class="general-polls-empty">دریافت نظرسنجی‌ها با مشکل روبه‌رو شد. لطفاً صفحه را تازه‌سازی کن.</div>';}
+  }
+  list.addEventListener("click",async function(event){
+    const button=event.target.closest("[data-general-poll-vote]");if(!button||button.disabled)return;
+    const pollId=button.getAttribute("data-general-poll-vote");const optionId=button.getAttribute("data-general-option-id");
+    if(!pollId||!optionId)return;
+    const card=button.closest(".general-poll-card");const message=card&&card.querySelector('[data-general-poll-message="'+CSS.escape(pollId)+'"]');
+    card.querySelectorAll("[data-general-poll-vote]").forEach(b=>b.disabled=true);if(message)message.textContent="در حال ثبت رأی...";
+    try{
+      await window.gtaviEnsureAnonymousSession();
+      const result=await client.rpc("cast_gta_poll_vote",{p_poll_id:pollId,p_option_id:optionId});
+      if(result.error){const duplicate=result.error.code==="23505"||/already voted|duplicate|one vote/i.test(result.error.message||"");throw new Error(duplicate?"قبلاً با این حساب در این نظرسنجی رأی داده‌ای.":(result.error.message||"ثبت رأی انجام نشد."));}
+      voted.add(pollId);setGlobal("رأی تو با موفقیت ثبت شد. ممنون از مشارکتت 💜");await load();
+    }catch(error){if(message)message.textContent=error.message||"ثبت رأی ناموفق بود.";card.querySelectorAll("[data-general-poll-vote]").forEach(b=>b.disabled=false);if(/قبلاً/.test(error.message||""))card.querySelectorAll("[data-general-poll-vote]").forEach(b=>b.disabled=true);}
+  });
+  window.addEventListener("gtavi-general-polls-refresh",load);
+  load();
+})();
+</script>
 
 <!-- GTAVI_VICE predictions: shares the existing anonymous/member Supabase session -->
 <script>
