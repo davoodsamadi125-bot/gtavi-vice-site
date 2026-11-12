@@ -766,6 +766,25 @@ img{max-width:100%}
     border: none !important;
     box-shadow: none !important;
 }
+  /* FIX: SHOW FULL NEWS IMAGES */
+.news-image {
+    display: block;
+    width: 100%;
+    height: auto !important;
+    aspect-ratio: 16 / 9;
+    object-fit: contain !important;
+    object-position: center center !important;
+    background: #090910;
+}
+
+/* FIX: SHOW FULL FEATURED IMAGE */
+.featured-image {
+    min-height: 220px;
+    background-size: contain !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    background-color: #15101f;
+}
 </style>
 
 </head>
