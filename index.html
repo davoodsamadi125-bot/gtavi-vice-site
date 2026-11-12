@@ -26,7 +26,7 @@
   --pink:#f472b6;
   --text:#f5f3ff;
   --muted:#aaa7bd;
-  --border:#2b253b;
+  --border:#49364f;
   --radius:18px;
 }
 
@@ -158,7 +158,7 @@ img{max-width:100%}
 }
 
 /* Brand */
-.brand{
+.brand{display:flex;align-items:center;gap:8px;
   font-size:clamp(17px,4.5vw,26px);
   font-weight:900;
   white-space:nowrap;
@@ -166,9 +166,9 @@ img{max-width:100%}
   color:var(--text);
 }
 
-.brand span{
-  color:var(--purple);
-}
+.brand-word{color:var(--text)}
+.brand-word span{color:var(--purple)}
+.brand-mark{width:34px;height:34px;flex:0 0 34px;object-fit:cover;border-radius:9px;border:1px solid #a855f755;box-shadow:0 3px 12px #0004}
 
 /* Join button */
 .join-button{
@@ -276,21 +276,26 @@ img{max-width:100%}
   scrollbar-width:thin;scrollbar-color:var(--purple) var(--panel)
 }
 .news-card{
-  flex:0 0 78%;min-width:0;overflow:hidden;scroll-snap-align:start;
-  border:1px solid var(--border);border-radius:15px;background:var(--panel);
+  flex:0 0 76%;min-width:0;overflow:hidden;scroll-snap-align:start;
+  border:1px solid #57435f;border-radius:15px;background:radial-gradient(ellipse at 90% 0%,#a855f710,transparent 55%),var(--panel);
   display:flex;flex-direction:column
 }
 .news-image{
-  display:block;width:100%;height:155px;object-fit:cover;background:var(--panel2)
+  display:block;width:100%;height:142px;object-fit:cover;background:var(--panel2)
 }
-.news-content{display:flex;flex-direction:column;align-items:flex-start;gap:7px;padding:13px;flex:1}
+.news-content{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:11px 12px;flex:1}
 .news-category{color:#d8b4fe;font-size:10px;font-weight:800}
 .news-card time{color:var(--muted);font-size:10px}
 .news-card h3{font-size:14px;line-height:1.8;margin:0}
-.news-card p{font-size:11px;line-height:1.9;color:#d4d0dc;margin:0}
+.news-card p{font-size:12px;line-height:1.85;color:#e0dce8;font-weight:600;margin:0}
 .news-card .news-source{margin-top:auto;padding-top:8px;color:var(--pink);font-size:11px}
 .news-card:hover{border-color:var(--purple)}
 .news-error{color:var(--muted);font-size:12px;padding:12px}
+
+
+:root[data-theme="light"] .news-card p{color:#365763;font-weight:600}
+:root[data-theme="light"] .news-card{border-color:#d69ac2;background:linear-gradient(145deg,#fff,#fdf4fa)}
+:root[data-theme="light"] .quick-item{border-color:#d69ac2}
 
 /* News category filters */
 .news-filters{
@@ -332,12 +337,12 @@ img{max-width:100%}
   
 /* Quick access */
 .quick-item{
-  flex:0 0 100px;min-height:94px;display:flex;flex-direction:column;
+  flex:0 0 94px;min-height:88px;display:flex;flex-direction:column;
   align-items:center;justify-content:center;gap:5px;scroll-snap-align:start;
-  border:1px solid var(--border);border-radius:14px;background:var(--panel);
+  border:1px solid #57435f;border-radius:14px;background:radial-gradient(ellipse at 50% 0%,#a855f714,transparent 75%),var(--panel);
   text-align:center;font-size:11px;transition:border-color .2s
 }
-.quick-symbol{font-size:25px;line-height:1.4}
+.quick-symbol{font-size:29px;line-height:1.35}
 
 /* Main feature cards */
 .cards-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
@@ -387,9 +392,11 @@ img{max-width:100%}
 .footer-links a{font-size:11px;color:#d8d2e5}
 .footer-social{display:flex;flex-wrap:wrap;gap:8px}
 .footer-social a{
+  display:inline-flex;align-items:center;gap:7px;
   padding:7px 10px;border:1px solid var(--border);border-radius:10px;
   background:var(--panel);font-size:11px
 }
+.social-mark{width:17px;height:17px;display:inline-block;flex:0 0 17px}
 .footer-bottom{
   display:flex;flex-wrap:wrap;justify-content:space-between;gap:7px;
   border-top:1px solid var(--border);padding-top:13px;margin-top:18px;
@@ -397,11 +404,9 @@ img{max-width:100%}
 }
   
 @media(min-width:600px){
-  .hero-layout{
-  grid-template-columns:.95fr 1.05fr;
-  align-items:center;
-  }
-  .hero-art{min-height:290px}
+  .hero-layout{grid-template-columns:1.05fr .95fr;align-items:center;direction:ltr}
+  .hero-copy{grid-column:2;grid-row:1;direction:rtl}
+  .hero-art{grid-column:1;grid-row:1;min-height:330px}
   .featured-news{grid-template-columns:1fr 1fr}
   .featured-image{min-height:240px}
   .news-card{flex-basis:270px}
@@ -686,70 +691,6 @@ img{max-width:100%}
 
 
 
-/* GTAVI_VICE prediction system */
-.prediction-list{display:grid;gap:16px}
-.prediction-card{
-  overflow:hidden;border:1px solid var(--border);border-radius:20px;
-  background:radial-gradient(circle at 90% 0%,#7c3aed22,transparent 48%),var(--panel);
-  box-shadow:0 14px 38px #0002
-}
-.prediction-card-head{padding:18px 18px 10px}
-.prediction-status{
-  display:inline-flex;align-items:center;gap:6px;padding:4px 10px;
-  border:1px solid #a855f755;border-radius:30px;background:#a855f711;
-  color:#d8b4fe;font-size:10px;font-weight:800
-}
-.prediction-status.closed{border-color:#7772;background:#7771;color:var(--muted)}
-.prediction-card h3{font-size:17px;line-height:1.8;margin:10px 0 5px}
-.prediction-description{font-size:11px;color:var(--muted);line-height:1.9;margin:0}
-.prediction-options{display:grid;gap:9px;padding:8px 14px 12px}
-.prediction-option{
-  position:relative;overflow:hidden;width:100%;min-height:48px;padding:10px 13px;
-  border:1px solid var(--border);border-radius:12px;background:var(--panel2);
-  color:var(--text);font:inherit;text-align:right;cursor:pointer;
-  transition:border-color .2s,transform .2s,background .2s
-}
-.prediction-option:hover:not(:disabled){border-color:var(--purple);transform:translateY(-1px)}
-.prediction-option:disabled{cursor:default;opacity:1}
-.prediction-option.selected{border-color:var(--purple);background:#7c3aed22}
-.prediction-option-top{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12px;font-weight:800}
-.prediction-option-meta{color:var(--muted);font-size:10px;white-space:nowrap}
-.prediction-option-track{position:absolute;inset:0 auto 0 0;width:0;background:linear-gradient(90deg,#7c3aed20,#c026d320);transition:width .35s ease}
-.prediction-option.selected .prediction-option-track{background:linear-gradient(90deg,#7c3aed30,#c026d330)}
-.prediction-card-footer{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;padding:0 17px 15px;color:var(--muted);font-size:10px}
-.prediction-participants{font-weight:700}
-.prediction-message{min-height:22px;padding:0 14px 12px;text-align:center;color:var(--muted);font-size:11px}
-.prediction-message.error{color:#ff8b8b}
-.prediction-loading,.prediction-empty{
-  padding:18px;border:1px dashed var(--border);border-radius:15px;
-  color:var(--muted);background:var(--panel);text-align:center;font-size:12px
-}
-.prediction-footnote{margin:12px 4px 0;color:var(--muted);font-size:10px;line-height:1.9}
-:root[data-theme="light"] .prediction-card{background:radial-gradient(circle at 90% 0%,#e65d9e18,transparent 48%),var(--panel)}
-:root[data-theme="light"] .prediction-status{color:#a52f72;border-color:#e65d9e66;background:#e65d9e11}
-:root[data-theme="light"] .prediction-option{background:#f5f9fa;border-color:#c7e2e8;color:#193d4a}
-:root[data-theme="light"] .prediction-option.selected{background:#e65d9e12;border-color:#c83d87}
-:root[data-theme="light"] .prediction-option-track{background:linear-gradient(90deg,#e65d9e18,#c83d8718)}
-:root[data-theme="light"] .prediction-option.selected .prediction-option-track{background:linear-gradient(90deg,#e65d9e2a,#c83d872a)}
-
-
-/* GTAVI_VICE leaderboard */
-.leaderboard-panel{overflow:hidden;border:1px solid var(--border);border-radius:20px;background:radial-gradient(circle at 90% 0%,#7c3aed20,transparent 48%),var(--panel);box-shadow:0 14px 38px #0002}
-.leaderboard-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 18px;border-bottom:1px solid var(--border)}
-.leaderboard-head h3{margin:0;font-size:15px}
-.leaderboard-refresh{border:1px solid var(--border);border-radius:10px;background:var(--panel2);color:var(--text);padding:7px 11px;font:inherit;font-size:10px;font-weight:800}
-.leaderboard-refresh:disabled{opacity:.6;cursor:wait}
-.leaderboard-list{display:grid;gap:0}
-.leaderboard-row{display:grid;grid-template-columns:42px minmax(0,1fr) auto;align-items:center;gap:11px;padding:12px 16px;border-bottom:1px solid var(--border)}
-.leaderboard-row:last-child{border-bottom:0}
-.leaderboard-rank{display:grid;place-items:center;width:34px;height:34px;border-radius:11px;background:var(--panel2);font-weight:900;font-size:12px}
-.leaderboard-player{min-width:0;font-size:12px;font-weight:800;overflow-wrap:anywhere}
-.leaderboard-stats{display:flex;flex-wrap:wrap;gap:7px;margin-top:3px;color:var(--muted);font-size:9px}
-.leaderboard-points{color:#d8b4fe;font-size:13px;font-weight:900;white-space:nowrap}
-.leaderboard-points small{display:block;color:var(--muted);font-size:9px;font-weight:500;text-align:left}
-.leaderboard-empty{padding:20px;text-align:center;color:var(--muted);font-size:11px}
-:root[data-theme="light"] .leaderboard-points{color:#a52f72}
-
 /* Membership and authentication modal */
 .join-button{font-family:inherit;cursor:pointer}
 .auth-backdrop[hidden]{display:none!important}
@@ -791,6 +732,8 @@ img{max-width:100%}
 :root[data-theme="light"] .auth-account-card small,:root[data-theme="light"] .auth-note{color:#587783}
 
 
+.general-polls-footnote{margin:12px 4px 0;color:var(--muted);font-size:10px;line-height:1.9}
+
 /* Dynamic community polls (separate from Jason/Lucia poll) */
 .general-polls-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
 .general-poll-card{overflow:hidden;border:1px solid var(--border);border-radius:19px;background:radial-gradient(circle at 90% 0%,#7c3aed20,transparent 48%),var(--panel);box-shadow:0 12px 30px #0002}
@@ -813,42 +756,6 @@ img{max-width:100%}
 </style>
 
 <style>
-/* GTAVI_VICE secure prediction admin panel */
-.gtavi-admin-section{margin:28px auto;padding:0 16px;max-width:1100px}
-.gtavi-admin-panel{display:none;border:1px solid rgba(174,105,255,.38);border-radius:20px;padding:20px;background:linear-gradient(145deg,rgba(34,19,53,.94),rgba(13,13,24,.98));box-shadow:0 16px 45px rgba(0,0,0,.22)}
-.gtavi-admin-panel.is-visible{display:block}
-.gtavi-admin-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:18px}
-.gtavi-admin-head h2{margin:0;color:#f5eaff;font-size:22px}
-.gtavi-admin-tag{font-size:12px;color:#d8b8ff;background:rgba(159,94,220,.16);border:1px solid rgba(174,105,255,.3);padding:6px 10px;border-radius:30px}
-.gtavi-admin-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
-.gtavi-admin-box{min-width:0;padding:16px;border:1px solid rgba(255,255,255,.1);border-radius:15px;background:rgba(255,255,255,.035)}
-.gtavi-admin-box h3{margin:0 0 14px;color:#f0e4ff;font-size:17px}
-.gtavi-admin-field{display:block;margin:0 0 12px}
-.gtavi-admin-field span{display:block;margin-bottom:6px;color:#c9bfd6;font-size:13px}
-.gtavi-admin-field input,.gtavi-admin-field textarea,.gtavi-admin-field select{width:100%;box-sizing:border-box;border:1px solid rgba(210,180,245,.25);border-radius:10px;padding:11px 12px;background:#100d19;color:#fff;font:inherit;font-size:14px;outline:none}
-.gtavi-admin-field textarea{min-height:110px;resize:vertical;line-height:1.9}
-.gtavi-admin-hint{font-size:12px;line-height:1.8;color:#a99bb8;margin:6px 0 12px}
-.gtavi-admin-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.gtavi-admin-btn{border:1px solid rgba(193,143,255,.4);border-radius:10px;padding:10px 14px;background:#7437a6;color:#fff;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
-.gtavi-admin-btn.secondary{background:#21172d;color:#e6d8f3}
-.gtavi-admin-btn.danger{background:#542431;border-color:#9b5368}
-.gtavi-admin-btn:disabled{opacity:.5;cursor:not-allowed}
-.gtavi-admin-status{min-height:22px;margin:12px 0 0;font-size:13px;line-height:1.8;color:#d9c5f1}
-.gtavi-admin-status.error{color:#ffb5c1}
-.gtavi-admin-list{display:grid;gap:12px;margin-top:14px}
-.gtavi-admin-item{border:1px solid rgba(255,255,255,.1);border-radius:13px;padding:13px;background:rgba(0,0,0,.13)}
-.gtavi-admin-item h4{margin:0 0 6px;color:#fff;font-size:15px}
-.gtavi-admin-meta{font-size:12px;color:#b8a9c7;line-height:1.9;margin-bottom:10px}
-.gtavi-admin-options{display:grid;gap:6px;margin:10px 0}
-.gtavi-admin-option{display:flex;justify-content:space-between;gap:10px;padding:7px 9px;border-radius:8px;background:rgba(255,255,255,.045);font-size:13px;color:#e9e0f0}
-.gtavi-admin-option.correct{border:1px solid #4c9d75;background:rgba(47,132,91,.14)}
-.gtavi-admin-item-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-@media(max-width:700px){.gtavi-admin-grid{grid-template-columns:1fr}.gtavi-admin-panel{padding:14px}.gtavi-admin-head h2{font-size:19px}}
-:root[data-theme="light"] .gtavi-admin-panel{background:linear-gradient(145deg,#fff,#f4eafa);border-color:#d5b6eb}
-:root[data-theme="light"] .gtavi-admin-head h2,:root[data-theme="light"] .gtavi-admin-box h3,:root[data-theme="light"] .gtavi-admin-item h4{color:#38234a}
-:root[data-theme="light"] .gtavi-admin-field input,:root[data-theme="light"] .gtavi-admin-field textarea,:root[data-theme="light"] .gtavi-admin-field select{background:#fff;color:#251b30;border-color:#d6c5e2}
-:root[data-theme="light"] .gtavi-admin-meta,:root[data-theme="light"] .gtavi-admin-hint,:root[data-theme="light"] .gtavi-admin-field span{color:#655574}
-:root[data-theme="light"] .gtavi-admin-option{color:#382c43;background:#f5eff9}
 </style>
 
 </head>
@@ -860,7 +767,7 @@ img{max-width:100%}
       <button class="icon-button" id="menu-toggle" type="button"
         aria-label="باز کردن منو" aria-expanded="false" aria-controls="menu-panel">☰</button>
     </div>
-    <a class="brand" href="#home" aria-label="صفحه اصلی">GTA<span>VI</span>_VICE</a>
+    <a class="brand" href="#home" aria-label="صفحه اصلی"><img class="brand-mark" src="./@GTAVI_VICE.jpg" alt=""><span class="brand-word">GTA<span>VI</span>_VICE</span></a>
 <div class="header-side left">
   <button class="theme-toggle" id="theme-toggle"
     type="button" aria-label="فعال‌کردن حالت روز"
@@ -877,7 +784,6 @@ img{max-width:100%}
       <a href="#guides">🗺️ راهنماها</a>
       <a href="#character-poll">🗳️ نظرسنجی جیسون و لوسیا</a>
       <a href="#community-polls">📊 نظرسنجی‌های کاربران</a>
-      <a href="#predictions">🎯 پیش‌بینی‌ها</a>
       <a href="#community">💬 جامعه گیمرها</a>
       <a href="#store">🛍️ فروشگاه</a>
       <a href="#social">شبکه‌های اجتماعی</a>
@@ -890,10 +796,9 @@ img{max-width:100%}
     <div class="container hero-layout">
       <div class="hero-copy">
         <span class="eyebrow">✦ مرجع فارسی GTA VI و Rockstar</span>
-        <h1>به دنیای<br><span>Vice City</span> خوش آمدی.</h1>
+        <h1>به دنیای<br><span>Vice City</span> خوش آمدید</h1>
         <p class="hero-description">
-          اخبار تازه، تریلرها، تصاویر، جزئیات پنهان و تحلیل‌های GTA VI؛
-          همه در یک خانه برای طرفداران فارسی‌زبان.
+          همه‌چیز درباره GTA VI، در قلب لئونیدا. تازه‌ترین اخبار، تریلرها و تصاویر؛ همراه با جامعه طرفداران GTA VI و آخرین اطلاعات دنیای Rockstar Games.
         </p>
         <div class="hero-actions">
           <a class="btn" href="#latest-news">📰 آخرین اخبار</a>
@@ -996,7 +901,6 @@ img{max-width:100%}
         <a class="quick-item" href="#characters"><span class="quick-symbol">🧍</span><span>شخصیت‌ها</span></a>
         <a class="quick-item" href="#character-poll"><span class="quick-symbol">🗳️</span><span>جیسون و لوسیا</span></a>
         <a class="quick-item" href="#community-polls"><span class="quick-symbol">📊</span><span>نظرسنجی‌ها</span></a>
-        <a class="quick-item" href="#predictions"><span class="quick-symbol">🎯</span><span>پیش‌بینی‌ها</span></a>
         <a class="quick-item" href="#community"><span class="quick-symbol">💬</span><span>جامعه گیمرها</span></a>
         <a class="quick-item" href="#store"><span class="quick-symbol">🛍️</span><span>فروشگاه</span></a>
       </div>
@@ -1116,48 +1020,7 @@ img{max-width:100%}
       </div>
       <div id="general-polls-list" class="general-polls-grid" aria-live="polite"><div class="general-polls-empty">در حال دریافت نظرسنجی‌ها...</div></div>
       <div id="general-polls-global-message" class="general-poll-message" role="status" aria-live="polite"></div>
-      <p class="prediction-footnote">برای هر نظرسنجی، هر حساب کاربری فقط یک رأی می‌تواند ثبت کند. برای رأی‌دادن از نشست مهمان خودکار سایت استفاده می‌شود.</p>
-    </div>
-  </section>
-
-  <section class="section" id="predictions">
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <h2>🎯 پیش‌بینی‌های GTAVI_VICE</h2>
-          <p>حدس بزن، رأی ثبت کن و نتیجه انتخاب طرفداران را ببین.</p>
-        </div>
-        <span class="section-link">مشارکت کاربران</span>
-      </div>
-      <div id="prediction-list" class="prediction-list" aria-live="polite">
-        <div class="prediction-loading">در حال دریافت پیش‌بینی‌ها...</div>
-      </div>
-      <div id="prediction-message" class="prediction-message" role="status" aria-live="polite"></div>
-      <p class="prediction-footnote">برای هر پیش‌بینی فقط یک انتخاب از هر حساب کاربری پذیرفته می‌شود. برای ثبت رأی، حساب مهمان خودکار سایت استفاده می‌شود؛ عضویت با ایمیل برای شرکت در پیش‌بینی الزامی نیست.</p>
-    </div>
-  </section>
-
-
-
-  <section class="section" id="leaderboard">
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <h2>🏆 جدول رتبه‌بندی کاربران</h2>
-          <p>برترین پیش‌بینی‌کنندگان جامعه GTAVI_VICE</p>
-        </div>
-        <span class="section-link">۱۰ امتیاز برای هر پاسخ صحیح</span>
-      </div>
-      <div class="leaderboard-panel">
-        <div class="leaderboard-head">
-          <h3>رتبه‌بندی پیش‌بینی‌ها</h3>
-          <button class="leaderboard-refresh" id="leaderboard-refresh" type="button">↻ تازه‌سازی</button>
-        </div>
-        <div class="leaderboard-list" id="leaderboard-list" aria-live="polite">
-          <div class="leaderboard-empty">در حال دریافت جدول رتبه‌بندی...</div>
-        </div>
-      </div>
-      <p class="prediction-footnote">امتیاز هر کاربر بر اساس پیش‌بینی‌های حل‌شده محاسبه می‌شود. برای حفظ حریم خصوصی، نام واقعی کاربران نمایش داده نمی‌شود.</p>
+      <p class="general-polls-footnote">برای هر نظرسنجی، هر حساب کاربری فقط یک رأی می‌تواند ثبت کند. برای رأی‌دادن از نشست مهمان خودکار سایت استفاده می‌شود.</p>
     </div>
   </section>
 
@@ -1204,52 +1067,6 @@ img{max-width:100%}
   </section>
 
 
-  <section class="gtavi-admin-section" id="gtavi-admin-section" aria-label="مدیریت پیش‌بینی‌ها">
-    <div class="gtavi-admin-panel" id="gtavi-admin-panel">
-      <div class="gtavi-admin-head">
-        <h2>🛠 پنل مدیریت پیش‌بینی‌ها</h2>
-        <span class="gtavi-admin-tag">دسترسی مدیر تأیید شده</span>
-      </div>
-      <div class="gtavi-admin-grid">
-        <div class="gtavi-admin-box">
-          <h3>ساخت پیش‌بینی جدید</h3>
-          <form id="gtavi-admin-create-form">
-            <label class="gtavi-admin-field"><span>شناسه انگلیسی (Slug)</span>
-              <input id="gtavi-admin-slug" type="text" required minlength="3" maxlength="80" pattern="[a-z0-9-]{3,80}" dir="ltr" autocomplete="off">
-            </label>
-            <label class="gtavi-admin-field"><span>عنوان / پرسش پیش‌بینی</span>
-              <input id="gtavi-admin-title" type="text" required maxlength="160" placeholder="مثلاً تریلر بعدی GTA VI چه زمانی منتشر می‌شود؟">
-            </label>
-            <label class="gtavi-admin-field"><span>توضیحات (اختیاری)</span>
-              <textarea id="gtavi-admin-description" maxlength="1000" placeholder="توضیح کوتاه درباره این پیش‌بینی"></textarea>
-            </label>
-            <label class="gtavi-admin-field"><span>گزینه‌ها (هر گزینه در یک خط؛ ۲ تا ۸ گزینه)</span>
-              <textarea id="gtavi-admin-options-input" required placeholder="گزینه اول&#10;گزینه دوم"></textarea>
-            </label>
-            <p class="gtavi-admin-hint">هر گزینه حداکثر ۱۲۰ کاراکتر باشد. شناسه باید فقط شامل حروف کوچک انگلیسی، عدد و خط تیره باشد.</p>
-            <label class="gtavi-admin-field"><span>زمان پایان (اختیاری)</span>
-              <input id="gtavi-admin-closes" type="datetime-local" dir="ltr">
-            </label>
-            <label class="gtavi-admin-field"><span>ترتیب نمایش (اختیاری)</span>
-              <input id="gtavi-admin-sort" type="number" value="100" step="1">
-            </label>
-            <div class="gtavi-admin-actions"><button class="gtavi-admin-btn" id="gtavi-admin-create" type="submit">ساخت پیش‌بینی</button></div>
-          </form>
-          <p class="gtavi-admin-status" id="gtavi-admin-create-status" role="status" aria-live="polite"></p>
-        </div>
-        <div class="gtavi-admin-box">
-          <h3>پیش‌بینی‌های ثبت‌شده</h3>
-          <div class="gtavi-admin-actions">
-            <button class="gtavi-admin-btn secondary" id="gtavi-admin-refresh" type="button">به‌روزرسانی آمار</button>
-          </div>
-          <p class="gtavi-admin-status" id="gtavi-admin-list-status" role="status" aria-live="polite">در حال دریافت اطلاعات...</p>
-          <div class="gtavi-admin-list" id="gtavi-admin-list"></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-
   <div class="auth-backdrop" id="auth-modal" hidden>
     <section class="auth-dialog" role="dialog" aria-modal="true" aria-labelledby="auth-title" aria-describedby="auth-description">
       <div class="auth-dialog-head">
@@ -1278,9 +1095,9 @@ img{max-width:100%}
       <a href="#about">درباره ما</a>
     </nav>
     <div class="footer-social">
-      <a href="https://t.me/GTAVI_VICE" target="_blank" rel="noopener noreferrer">✈ تلگرام</a>
-      <a href="https://www.instagram.com/GTAVI_VICE/" target="_blank" rel="noopener noreferrer">◎ اینستاگرام</a>
-      <a href="https://www.youtube.com/@GTAVI_VICE" target="_blank" rel="noopener noreferrer">▶ یوتیوب</a>
+      <a href="https://t.me/GTAVI_VICE" target="_blank" rel="noopener noreferrer"><svg class="social-mark" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.8 4.2 18.6 20c-.2 1.1-.9 1.4-1.8.9l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.4-5.1 9.3-8.4c.4-.4-.1-.6-.6-.2L6 13.5 1.1 12c-1.1-.3-1.1-1 .2-1.5L20.4 3c.9-.3 1.7.2 1.4 1.2Z"/></svg> تلگرام</a>
+      <a href="https://www.instagram.com/GTAVI_VICE/" target="_blank" rel="noopener noreferrer"><svg class="social-mark" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.7" r="1.2" fill="currentColor"/></svg> اینستاگرام</a>
+      <a href="https://www.youtube.com/@GTAVI_VICE" target="_blank" rel="noopener noreferrer"><svg class="social-mark" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.6 3.6 12 3.6 12 3.6s-7.6 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.8.5 9.4.5 9.4.5s7.6 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.7V8.3l6.3 3.7-6.3 3.7Z"/></svg> یوتیوب</a>
     </div>
     <div class="footer-bottom">
       <span>© 2026 GTAVI_VICE</span>
@@ -1894,243 +1711,6 @@ renderNews();
 })();
 </script>
 
-<!-- GTAVI_VICE predictions: shares the existing anonymous/member Supabase session -->
-<script>
-(function(){
-  "use strict";
-
-  const list = document.getElementById("prediction-list");
-  const message = document.getElementById("prediction-message");
-  const client = window.gtaviSupabase;
-  if(!list || !client || typeof window.gtaviEnsureAnonymousSession !== "function") return;
-
-  let loading = false;
-  const submitting = new Set();
-
-  function escapeHTML(value){
-    return String(value == null ? "" : value).replace(/[&<>"']/g,function(ch){
-      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch];
-    });
-  }
-
-  function formatNumber(value){
-    return new Intl.NumberFormat("fa-IR").format(Number(value) || 0);
-  }
-
-  function setMessage(text,isError){
-    message.textContent = text || "";
-    message.classList.toggle("error",Boolean(isError));
-  }
-
-  function field(row,names,fallback){
-    for(const name of names){
-      if(row[name] !== undefined && row[name] !== null) return row[name];
-    }
-    return fallback;
-  }
-
-  function groupPredictions(rows){
-    const grouped = new Map();
-    rows.forEach(function(row){
-      const id = field(row,["prediction_id","id"],null);
-      if(id == null) return;
-      const key = String(id);
-      if(!grouped.has(key)){
-        grouped.set(key,{
-          id:id,
-          title:field(row,["title"],"پیش‌بینی GTA VI"),
-          description:field(row,["description"],""),
-          status:field(row,["status"],"open"),
-          closesAt:field(row,["closes_at"],null),
-          sortOrder:Number(field(row,["prediction_sort_order","sort_order"],0)) || 0,
-          myOptionId:field(row,["my_option_id"],null),
-          totalVotes:field(row,["total_votes"],null),
-          options:[]
-        });
-      }
-      const item = grouped.get(key);
-      if(item.myOptionId == null) item.myOptionId = field(row,["my_option_id"],null);
-      if(item.totalVotes == null) item.totalVotes = field(row,["total_votes"],null);
-      const optionId = field(row,["option_id"],null);
-      if(optionId != null){
-        item.options.push({
-          id:optionId,
-          label:field(row,["option_label","label"],"گزینه"),
-          sortOrder:Number(field(row,["option_sort_order","option_order","sort_order"],0)) || 0,
-          votes:Number(field(row,["vote_count","votes","option_votes"],0)) || 0
-        });
-      }
-    });
-    return Array.from(grouped.values()).sort((a,b)=>a.sortOrder-b.sortOrder).map(function(item){
-      item.options.sort((a,b)=>a.sortOrder-b.sortOrder);
-      if(item.totalVotes == null){
-        item.totalVotes = item.options.reduce((sum,option)=>sum+option.votes,0);
-      }else{
-        item.totalVotes = Number(item.totalVotes) || 0;
-      }
-      return item;
-    });
-  }
-
-  function renderPredictions(items){
-    if(!items.length){
-      list.innerHTML = '<div class="prediction-empty">در حال حاضر پیش‌بینی‌ای برای نمایش وجود ندارد.</div>';
-      return;
-    }
-
-    list.innerHTML = items.map(function(item){
-      const chosenId = item.myOptionId == null ? "" : String(item.myOptionId);
-      const expired = item.closesAt && new Date(item.closesAt).getTime() <= Date.now();
-      const closed = item.status !== "open" || expired;
-      const voted = Boolean(chosenId);
-      // رأی‌دهنده تا پیش از بسته‌شدن پیش‌بینی می‌تواند انتخاب خود را تغییر دهد.
-      const canVote = !closed;
-      const statusText = closed ? "پیش‌بینی بسته شده" : (voted ? "رأی تو ثبت شده؛ برای تغییر، گزینه دیگری را انتخاب کن" : "پیش‌بینی فعال");
-      const optionsHTML = item.options.map(function(option){
-        const percent = item.totalVotes ? Math.round(option.votes * 100 / item.totalVotes) : 0;
-        const selected = chosenId && chosenId === String(option.id);
-        const content = '<span class="prediction-option-track" style="width:' + percent + '%"></span>' +
-          '<span class="prediction-option-top"><span>' + escapeHTML(option.label) + (selected ? ' <span aria-label="انتخاب تو">✓</span>' : '') +
-          '</span><span class="prediction-option-meta">' + formatNumber(percent) + '٪ · ' + formatNumber(option.votes) + ' رأی</span></span>';
-        if(canVote){
-          return '<button class="prediction-option' + (selected ? ' selected' : '') + '" type="button" data-prediction-vote="' + escapeHTML(item.id) + '" data-option-id="' + escapeHTML(option.id) + '" aria-pressed="' + (selected ? 'true' : 'false') + '">' + content + '</button>';
-        }
-        return '<div class="prediction-option' + (selected ? ' selected' : '') + '" aria-label="' + escapeHTML(option.label) + '">' + content + '</div>';
-      }).join("");
-
-      return '<article class="prediction-card" data-prediction-card="' + escapeHTML(item.id) + '">' +
-        '<div class="prediction-card-head"><span class="prediction-status' + (closed ? ' closed' : '') + '">● ' + statusText + '</span>' +
-        '<h3>' + escapeHTML(item.title) + '</h3>' +
-        (item.description ? '<p class="prediction-description">' + escapeHTML(item.description) + '</p>' : '') +
-        '</div><div class="prediction-options">' + optionsHTML + '</div>' +
-        '<div class="prediction-card-footer"><span class="prediction-participants">👥 ' + formatNumber(item.totalVotes) + ' شرکت‌کننده</span>' +
-        (item.closesAt ? '<span>پایان: ' + escapeHTML(new Date(item.closesAt).toLocaleDateString("fa-IR")) + '</span>' : '') +
-        '</div></article>';
-    }).join("");
-  }
-
-  async function loadPredictions(){
-    if(loading) return;
-    loading = true;
-    try{
-      await window.gtaviEnsureAnonymousSession();
-      const result = await client.rpc("get_gta_predictions");
-      if(result.error) throw result.error;
-      const items = groupPredictions(Array.isArray(result.data) ? result.data : []);
-      renderPredictions(items);
-    }catch(error){
-      console.error("GTAVI_VICE predictions load error:",error);
-      list.innerHTML = '<div class="prediction-empty">دریافت پیش‌بینی‌ها با مشکل روبه‌رو شد. لطفاً صفحه را تازه‌سازی کن.</div>';
-    }finally{
-      loading = false;
-    }
-  }
-
-  list.addEventListener("click",async function(event){
-    const button = event.target.closest("button[data-prediction-vote]");
-    if(!button) return;
-    const predictionId = button.dataset.predictionVote;
-    const optionId = button.dataset.optionId;
-    if(!predictionId || !optionId || submitting.has(predictionId)) return;
-
-    submitting.add(predictionId);
-    Array.from(list.querySelectorAll("button[data-prediction-vote]")).filter(function(item){return item.dataset.predictionVote === predictionId;}).forEach(function(item){item.disabled = true;});
-    setMessage("در حال ثبت انتخاب تو...");
-
-    try{
-      await window.gtaviEnsureAnonymousSession();
-      const result = await client.rpc("cast_gta_prediction_vote",{
-        p_prediction_id:predictionId,
-        p_option_id:optionId
-      });
-      if(result.error) throw result.error;
-      const response = String(result.data == null ? "" : result.data).toLowerCase();
-      if(response.includes("already_selected")){
-        setMessage("این گزینه از قبل انتخاب تو بوده است.");
-      }else if(response.includes("updated")){
-        setMessage("رأی تو با موفقیت تغییر کرد 💜");
-      }else if(response.includes("closed") || response.includes("expired")){
-        setMessage("مهلت این پیش‌بینی به پایان رسیده است.",true);
-      }else if(response.includes("invalid_option") || response.includes("not_found")){
-        setMessage("این گزینه یا پیش‌بینی معتبر نیست.",true);
-      }else{
-        setMessage("انتخاب تو با موفقیت ثبت شد 💜");
-      }
-      await loadPredictions();
-    }catch(error){
-      console.error("GTAVI_VICE prediction vote error:",error);
-      const duplicate = error && (error.code === "23505" || /already.?voted|duplicate key/i.test(error.message || ""));
-      setMessage(duplicate ? "قبلاً برای این پیش‌بینی رأی داده‌ای." : "ثبت انتخاب انجام نشد. لطفاً اتصال را بررسی و دوباره تلاش کن.",true);
-      await loadPredictions();
-    }finally{
-      submitting.delete(predictionId);
-    }
-  });
-
-  loadPredictions();
-})();
-</script>
-
-
-
-
-<!-- GTAVI_VICE leaderboard: uses the existing Supabase session -->
-<script>
-(function(){
-  "use strict";
-  const list = document.getElementById("leaderboard-list");
-  const refreshButton = document.getElementById("leaderboard-refresh");
-  const client = window.gtaviSupabase;
-  if(!list || !client || typeof window.gtaviEnsureAnonymousSession !== "function") return;
-
-  let loading = false;
-  function formatNumber(value){
-    return new Intl.NumberFormat("fa-IR").format(Number(value) || 0);
-  }
-  function escapeHTML(value){
-    return String(value == null ? "" : value).replace(/[&<>"']/g,function(ch){
-      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch];
-    });
-  }
-  function render(rows){
-    if(!rows.length){
-      list.innerHTML = '<div class="leaderboard-empty">هنوز امتیازی برای نمایش ثبت نشده است.</div>';
-      return;
-    }
-    list.innerHTML = rows.map(function(row){
-      const rank = Number(row.player_rank) || 0;
-      const medal = rank === 1 ? "🥇" : rank === 2 ? "🥈" : rank === 3 ? "🥉" : formatNumber(rank);
-      return '<div class="leaderboard-row">' +
-        '<div class="leaderboard-rank" aria-label="رتبه ' + formatNumber(rank) + '">' + medal + '</div>' +
-        '<div><div class="leaderboard-player">' + escapeHTML(row.player_name || "بازیکن") + '</div>' +
-        '<div class="leaderboard-stats"><span>✔ ' + formatNumber(row.correct_predictions) + ' پاسخ صحیح</span>' +
-        '<span>🗳️ ' + formatNumber(row.answered_predictions) + ' پیش‌بینی پاسخ‌داده‌شده</span></div></div>' +
-        '<div class="leaderboard-points">' + formatNumber(row.points) + '<small>امتیاز</small></div>' +
-        '</div>';
-    }).join("");
-  }
-  async function loadLeaderboard(){
-    if(loading) return;
-    loading = true;
-    if(refreshButton) refreshButton.disabled = true;
-    try{
-      await window.gtaviEnsureAnonymousSession();
-      const result = await client.rpc("get_gta_prediction_leaderboard");
-      if(result.error) throw result.error;
-      render(Array.isArray(result.data) ? result.data : []);
-    }catch(error){
-      console.error("GTAVI_VICE leaderboard load error:",error);
-      list.innerHTML = '<div class="leaderboard-empty">دریافت جدول رتبه‌بندی انجام نشد. لطفاً دوباره تلاش کن.</div>';
-    }finally{
-      loading = false;
-      if(refreshButton) refreshButton.disabled = false;
-    }
-  }
-  if(refreshButton) refreshButton.addEventListener("click",loadLeaderboard);
-  loadLeaderboard();
-})();
-</script>
-
 <!-- GTAVI_VICE membership: uses the same Supabase client/session as the poll -->
 <script>
 (function(){
@@ -2512,226 +2092,6 @@ renderNews();
 </script>
 
 
-<!-- GTAVI_VICE secure prediction administration -->
-<script>
-(function(){
-  "use strict";
-  const client = window.gtaviSupabase;
-  const panel = document.getElementById("gtavi-admin-panel");
-  if(!client || !panel) return;
-
-  const createForm = document.getElementById("gtavi-admin-create-form");
-  const createButton = document.getElementById("gtavi-admin-create");
-  const createStatus = document.getElementById("gtavi-admin-create-status");
-  const listStatus = document.getElementById("gtavi-admin-list-status");
-  const list = document.getElementById("gtavi-admin-list");
-  const refreshButton = document.getElementById("gtavi-admin-refresh");
-  let isAdmin = false;
-  let busy = false;
-  let currentRows = [];
-
-  function esc(value){
-    return String(value == null ? "" : value).replace(/[&<>"']/g,function(ch){
-      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch];
-    });
-  }
-  function number(value){
-    return new Intl.NumberFormat("fa-IR").format(Number(value) || 0);
-  }
-  function setStatus(element,message,error){
-    if(!element) return;
-    element.textContent = message || "";
-    element.classList.toggle("error",Boolean(error));
-  }
-  function setBusy(value){
-    busy = value;
-    if(createButton) createButton.disabled = value;
-    if(refreshButton) refreshButton.disabled = value;
-  }
-  function groupRows(rows){
-    const map = new Map();
-    rows.forEach(function(row){
-      const id = String(row.prediction_id);
-      if(!map.has(id)){
-        map.set(id,{
-          id:id,title:row.title || "",description:row.description || "",
-          status:row.status || "",closesAt:row.closes_at || null,
-          correctOptionId:row.correct_option_id == null ? null : String(row.correct_option_id),
-          sortOrder:row.prediction_sort_order,
-          totalVotes:Number(row.total_votes) || 0,options:[]
-        });
-      }
-      if(row.option_id != null){
-        map.get(id).options.push({
-          id:String(row.option_id),label:row.option_label || "",
-          sortOrder:Number(row.option_sort_order) || 0,
-          votes:Number(row.vote_count) || 0
-        });
-      }
-    });
-    return Array.from(map.values()).sort(function(a,b){
-      return (Number(a.sortOrder)||0)-(Number(b.sortOrder)||0);
-    });
-  }
-  function render(rows){
-    currentRows = rows;
-    if(!rows.length){
-      list.innerHTML = '<div class="gtavi-admin-hint">هنوز پیش‌بینی‌ای ثبت نشده است.</div>';
-      return;
-    }
-    list.innerHTML = rows.map(function(item){
-      const resolved = item.status === "resolved";
-      const closed = item.status === "closed" || resolved;
-      const statusText = resolved ? "نتیجه اعلام شده" : closed ? "بسته شده" : "در حال رأی‌گیری";
-      const options = item.options.map(function(option){
-        const correct = item.correctOptionId === option.id;
-        return '<div class="gtavi-admin-option' + (correct ? ' correct' : '') + '"><span>' +
-          (correct ? '✓ ' : '') + esc(option.label) + '</span><span>' +
-          number(option.votes) + ' رأی</span></div>';
-      }).join("");
-      let actions = "";
-      if(!closed){
-        actions += '<button type="button" class="gtavi-admin-btn danger" data-admin-action="close" data-prediction-id="' + esc(item.id) + '">بستن پیش‌بینی</button>';
-      }else if(!resolved && item.options.length){
-        actions += '<select aria-label="انتخاب پاسخ صحیح" data-correct-choice="' + esc(item.id) + '" class="gtavi-admin-field" style="margin:0;min-width:160px;flex:1"><option value="">پاسخ صحیح را انتخاب کن</option>' +
-          item.options.map(function(option){return '<option value="' + esc(option.id) + '">' + esc(option.label) + '</option>';}).join("") +
-          '</select><button type="button" class="gtavi-admin-btn" data-admin-action="resolve" data-prediction-id="' + esc(item.id) + '">اعلام نتیجه</button>';
-      }
-      return '<article class="gtavi-admin-item"><h4>' + esc(item.title) + '</h4>' +
-        '<div class="gtavi-admin-meta">شناسه: ' + esc(item.id) + ' · وضعیت: ' + statusText +
-        ' · مجموع رأی‌ها: ' + number(item.totalVotes) +
-        (item.closesAt ? ' · پایان: ' + esc(new Date(item.closesAt).toLocaleString("fa-IR")) : '') +
-        (item.description ? '<br>' + esc(item.description) : '') + '</div>' +
-        '<div class="gtavi-admin-options">' + options + '</div>' +
-        (actions ? '<div class="gtavi-admin-item-actions">' + actions + '</div>' : '') +
-        '</article>';
-    }).join("");
-  }
-  async function loadAdminRows(){
-    if(!isAdmin) return;
-    setStatus(listStatus,"در حال دریافت آمار پیش‌بینی‌ها...");
-    if(refreshButton) refreshButton.disabled = true;
-    try{
-      const result = await client.rpc("get_gta_admin_predictions");
-      if(result.error) throw result.error;
-      render(groupRows(Array.isArray(result.data) ? result.data : []));
-      setStatus(listStatus,"اطلاعات مدیریتی به‌روز است.");
-    }catch(error){
-      console.error("GTAVI_VICE admin list error:",error);
-      setStatus(listStatus,"دریافت آمار انجام نشد: " + (error.message || "خطای نامشخص"),true);
-    }finally{
-      if(refreshButton) refreshButton.disabled = false;
-    }
-  }
-  async function initialize(){
-    try{
-      if(typeof window.gtaviEnsureAnonymousSession === "function"){
-        await window.gtaviEnsureAnonymousSession();
-      }
-      const result = await client.rpc("is_gta_prediction_admin");
-      if(result.error) throw result.error;
-      isAdmin = result.data === true;
-      if(!isAdmin) return;
-      panel.classList.add("is-visible");
-      const slugInput = document.getElementById("gtavi-admin-slug");
-      if(slugInput) slugInput.value = "prediction-" + Date.now();
-      await loadAdminRows();
-    }catch(error){
-      console.warn("GTAVI_VICE admin access check failed:",error);
-    }
-  }
-
-  createForm.addEventListener("submit",async function(event){
-    event.preventDefault();
-    if(!isAdmin || busy) return;
-    const slug = document.getElementById("gtavi-admin-slug").value.trim();
-    const title = document.getElementById("gtavi-admin-title").value.trim();
-    const description = document.getElementById("gtavi-admin-description").value.trim();
-    const options = document.getElementById("gtavi-admin-options-input").value
-      .split(/\r?\n/).map(function(value){return value.trim();}).filter(Boolean);
-    const closesValue = document.getElementById("gtavi-admin-closes").value;
-    const sortValue = document.getElementById("gtavi-admin-sort").value;
-    if(!/^[a-z0-9-]{3,80}$/.test(slug)){
-      setStatus(createStatus,"شناسه باید ۳ تا ۸۰ کاراکتر و فقط شامل حروف کوچک انگلیسی، عدد و خط تیره باشد.",true);return;
-    }
-    if(!title || title.length > 160){
-      setStatus(createStatus,"عنوان پیش‌بینی را وارد کن؛ حداکثر ۱۶۰ کاراکتر.",true);return;
-    }
-    if(options.length < 2 || options.length > 8 || options.some(function(option){return option.length > 120;})){
-      setStatus(createStatus,"باید بین ۲ تا ۸ گزینه وارد کنی و هر گزینه حداکثر ۱۲۰ کاراکتر باشد.",true);return;
-    }
-    let closesAt = null;
-    if(closesValue){
-      const date = new Date(closesValue);
-      if(Number.isNaN(date.getTime())){setStatus(createStatus,"زمان پایان معتبر نیست.",true);return;}
-      closesAt = date.toISOString();
-    }
-    const sortOrder = sortValue === "" ? 100 : Number.parseInt(sortValue,10);
-    if(!Number.isInteger(sortOrder)){setStatus(createStatus,"ترتیب نمایش باید عدد صحیح باشد.",true);return;}
-    setBusy(true);
-    setStatus(createStatus,"در حال ساخت پیش‌بینی...");
-    try{
-      const result = await client.rpc("create_gta_prediction",{
-        p_slug:slug,p_title:title,p_description:description,
-        p_options:options,p_closes_at:closesAt,p_sort_order:sortOrder
-      });
-      if(result.error) throw result.error;
-      createForm.reset();
-      document.getElementById("gtavi-admin-sort").value = "100";
-      document.getElementById("gtavi-admin-slug").value = "prediction-" + Date.now();
-      setStatus(createStatus,"پیش‌بینی با شناسه " + number(result.data) + " با موفقیت ساخته شد.");
-      await loadAdminRows();
-    }catch(error){
-      console.error("GTAVI_VICE admin create error:",error);
-      const message = String(error.message || "");
-      const friendly = message.includes("duplicate") ? "این شناسه قبلاً استفاده شده است؛ شناسه دیگری انتخاب کن." :
-        message.includes("admin_required") ? "دسترسی مدیر تأیید نشد." :
-        message.includes("invalid_slug") ? "شناسه انگلیسی معتبر نیست." :
-        message.includes("invalid_title") ? "عنوان پیش‌بینی معتبر نیست." :
-        message.includes("options_must_be_2_to_8") ? "تعداد گزینه‌ها باید بین ۲ تا ۸ باشد." :
-        message.includes("invalid_option_label") ? "یکی از گزینه‌ها خالی یا بیش از حد طولانی است." :
-        "ساخت پیش‌بینی انجام نشد: " + message;
-      setStatus(createStatus,friendly,true);
-    }finally{
-      setBusy(false);
-    }
-  });
-
-  refreshButton.addEventListener("click",loadAdminRows);
-  list.addEventListener("click",async function(event){
-    const button = event.target.closest("button[data-admin-action]");
-    if(!button || !isAdmin || busy) return;
-    const action = button.dataset.adminAction;
-    const predictionId = button.dataset.predictionId;
-    if(!predictionId) return;
-    let rpcName,params;
-    if(action === "close"){
-      rpcName = "close_gta_prediction";
-      params = {p_prediction_id:predictionId};
-    }else if(action === "resolve"){
-      const select = Array.from(list.querySelectorAll("select[data-correct-choice]")).find(function(item){return item.dataset.correctChoice === predictionId;});
-      const correctOptionId = select ? select.value : "";
-      if(!correctOptionId){setStatus(listStatus,"برای اعلام نتیجه ابتدا پاسخ صحیح را انتخاب کن.",true);return;}
-      rpcName = "resolve_gta_prediction";
-      params = {p_prediction_id:predictionId,p_correct_option_id:correctOptionId};
-    }else{return;}
-    setBusy(true);
-    setStatus(listStatus,action === "close" ? "در حال بستن پیش‌بینی..." : "در حال ثبت پاسخ صحیح...");
-    try{
-      const result = await client.rpc(rpcName,params);
-      if(result.error) throw result.error;
-      setStatus(listStatus,action === "close" ? "پیش‌بینی بسته شد." : "نتیجه با موفقیت اعلام شد.");
-      await loadAdminRows();
-    }catch(error){
-      console.error("GTAVI_VICE admin action error:",error);
-      setStatus(listStatus,"عملیات انجام نشد: " + (error.message || "خطای نامشخص"),true);
-    }finally{
-      setBusy(false);
-    }
-  });
-
-  initialize();
-})();
 </script>
 
 </body>
