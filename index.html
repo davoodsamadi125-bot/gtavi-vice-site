@@ -212,32 +212,17 @@ img{max-width:100%}
 .menu-links a:hover{
   border-color:var(--purple);
 }
-/* Hero */
-.hero{
-  position:relative;overflow:hidden;padding:26px 0 24px;
-  background:
-    radial-gradient(ellipse at 85% 10%,#7928ca35,transparent 45%),
-    radial-gradient(ellipse at 5% 90%,#be185d20,transparent 45%)
-}
-.hero-layout{display:grid;grid-template-columns:1fr;gap:18px}
-.hero-copy{min-width:0}
+/* Hero: full-width artwork with Persian copy layered over the image */
+.hero{position:relative;overflow:hidden;padding:18px 0 22px;background:radial-gradient(ellipse at 85% 10%,#7928ca35,transparent 45%),radial-gradient(ellipse at 5% 90%,#be185d20,transparent 45%)}
+.hero-layout{position:relative;display:block;min-height:clamp(390px,43vw,540px)}
+.hero-copy{position:relative;z-index:2;width:min(58%,640px);min-width:0;margin-right:0;padding:58px 28px 58px 14px;text-shadow:0 2px 14px #0008}
 .hero h1{font-size:clamp(29px,7vw,52px);line-height:1.45;margin:13px 0 8px;font-weight:900}
 .hero h1 span{color:var(--pink)}
-.hero-description{max-width:600px;color:#c2bdcf;font-size:13px;margin:0}
+.hero-description{max-width:600px;color:#f1edf7;font-size:14px;font-weight:600;margin:0;text-shadow:0 2px 10px #000}
 .hero-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:16px}
-.hero-art{
-  position:relative;min-height:185px;overflow:hidden;
-  border:1px solid #6b399055;border-radius:20px;
-  background: #15101f url("./hero-vice-city.png") center 35%/cover no-repeat;
-}
-.hero-art:after{
-  content:"";position:absolute;inset:0;
-  background:linear-gradient(0deg,#090910e8 0%,transparent 70%)
-}
-.hero-art-label{
-  position:absolute;z-index:1;right:14px;bottom:10px;
-  font-weight:800;font-size:13px;text-shadow:0 2px 10px #000
-}
+.hero-art{position:absolute;z-index:0;inset:0;min-height:100%;overflow:hidden;border:1px solid #9b65c877;border-radius:20px;background:#15101f url("./hero-vice-city.png") center 38%/cover no-repeat}
+.hero-art:after{content:"";position:absolute;inset:0;background:linear-gradient(to left,#090910f2 0%,#090910d9 34%,#09091070 62%,#09091018 100%),linear-gradient(0deg,#09091080 0%,transparent 48%)}
+.hero-art-label{position:absolute;z-index:1;left:16px;bottom:12px;font-weight:800;font-size:12px;color:#fff;text-shadow:0 2px 10px #000}
   /* Countdown */
 .countdown{
   margin-top:19px;padding:15px;border:1px solid #a855f755;
@@ -391,12 +376,12 @@ img{max-width:100%}
 .footer-links{display:flex;flex-wrap:wrap;gap:9px 17px;margin-bottom:16px}
 .footer-links a{font-size:11px;color:#d8d2e5}
 .footer-social{display:flex;flex-wrap:wrap;gap:8px}
-.footer-social a{
-  display:inline-flex;align-items:center;gap:7px;
-  padding:7px 10px;border:1px solid var(--border);border-radius:10px;
-  background:var(--panel);font-size:11px
-}
-.social-mark{width:17px;height:17px;display:inline-block;flex:0 0 17px}
+.footer-social a{display:inline-flex;align-items:center;gap:9px;padding:6px 8px;border:0;border-radius:10px;background:transparent;color:var(--text);font-size:12px;font-weight:700;transition:transform .2s,opacity .2s}
+.footer-social a:hover{transform:translateY(-2px);opacity:.9}
+.social-mark{width:29px;height:29px;display:inline-block;flex:0 0 29px;padding:6px;color:#fff}
+.social-link.telegram .social-mark{background:#229ED9;border-radius:50%}
+.social-link.instagram .social-mark{background:linear-gradient(135deg,#833AB4 0%,#C13584 48%,#FCAF45 100%);border-radius:9px}
+.social-link.youtube .social-mark{background:#FF0033;border-radius:8px;padding:5px}
 .footer-bottom{
   display:flex;flex-wrap:wrap;justify-content:space-between;gap:7px;
   border-top:1px solid var(--border);padding-top:13px;margin-top:18px;
@@ -404,15 +389,21 @@ img{max-width:100%}
 }
   
 @media(min-width:600px){
-  .hero-layout{grid-template-columns:1.05fr .95fr;align-items:center;direction:ltr}
-  .hero-copy{grid-column:2;grid-row:1;direction:rtl}
-  .hero-art{grid-column:1;grid-row:1;min-height:330px}
+  .hero-layout{min-height:clamp(420px,42vw,540px)}
+  .hero-copy{width:min(58%,640px);padding-top:64px;padding-bottom:64px}
   .featured-news{grid-template-columns:1fr 1fr}
   .featured-image{min-height:240px}
   .news-card{flex-basis:270px}
   .content-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
   .cards-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
   .social-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:599px){
+  .hero-layout{min-height:490px}
+  .hero-copy{width:100%;padding:42px 18px 76px}
+  .hero-art{background-position:35% center}
+  .hero-art:after{background:linear-gradient(0deg,#090910f5 0%,#090910d8 43%,#09091065 78%,#09091028 100%)}
+  .hero-description{font-size:13px;line-height:2}
 }
 @media(max-width:380px){
   .brand{font-size:16px}
@@ -529,11 +520,7 @@ img{max-width:100%}
   color:#193d4a;
 }
 
-:root[data-theme="light"] .footer-social a{
-  background:#ffffff;
-  border-color:#c7e2e8;
-  color:#193d4a;
-}
+:root[data-theme="light"] .footer-social a{background:transparent;border-color:transparent;color:#193d4a}
 /* Live News Search */
 .news-search{
   margin:18px 0 12px;
@@ -868,9 +855,10 @@ img{max-width:100%}
 </div>
 <div class="news-filters" id="news-filters">
   <button class="news-filter active" type="button" data-category="all">همه خبرها</button>
-  <button class="news-filter" type="button" data-category="تاریخ انتشار">📢 تاریخ انتشار</button>
-  <button class="news-filter" type="button" data-category="شخصیت‌ها">👥 شخصیت‌ها</button>
-  <button class="news-filter" type="button" data-category="دنیای بازی">🌴 دنیای بازی</button>
+  <button class="news-filter" type="button" data-category="news">📰 اخبار</button>
+  <button class="news-filter" type="button" data-category="rumor">🕵️ شایعات</button>
+  <button class="news-filter" type="button" data-category="analysis">🔎 تحلیل</button>
+  <button class="news-filter" type="button" data-category="official">📢 رسمی</button>
 </div>
       <div class="saved-news-control">
   <button id="saved-news-toggle" type="button">
@@ -1095,9 +1083,9 @@ img{max-width:100%}
       <a href="#about">درباره ما</a>
     </nav>
     <div class="footer-social">
-      <a href="https://t.me/GTAVI_VICE" target="_blank" rel="noopener noreferrer"><svg class="social-mark" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.8 4.2 18.6 20c-.2 1.1-.9 1.4-1.8.9l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.4-5.1 9.3-8.4c.4-.4-.1-.6-.6-.2L6 13.5 1.1 12c-1.1-.3-1.1-1 .2-1.5L20.4 3c.9-.3 1.7.2 1.4 1.2Z"/></svg> تلگرام</a>
-      <a href="https://www.instagram.com/GTAVI_VICE/" target="_blank" rel="noopener noreferrer"><svg class="social-mark" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.7" r="1.2" fill="currentColor"/></svg> اینستاگرام</a>
-      <a href="https://www.youtube.com/@GTAVI_VICE" target="_blank" rel="noopener noreferrer"><svg class="social-mark" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.6 3.6 12 3.6 12 3.6s-7.6 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.8.5 9.4.5 9.4.5s7.6 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.7V8.3l6.3 3.7-6.3 3.7Z"/></svg> یوتیوب</a>
+      <a class="social-link telegram" href="https://t.me/GTAVI_VICE" target="_blank" rel="noopener noreferrer"><svg class="social-mark" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.8 4.2 18.6 20c-.2 1.1-.9 1.4-1.8.9l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.4-5.1 9.3-8.4c.4-.4-.1-.6-.6-.2L6 13.5 1.1 12c-1.1-.3-1.1-1 .2-1.5L20.4 3c.9-.3 1.7.2 1.4 1.2Z"/></svg> تلگرام</a>
+      <a class="social-link instagram" href="https://www.instagram.com/GTAVI_VICE/" target="_blank" rel="noopener noreferrer"><svg class="social-mark" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.7" r="1.2" fill="currentColor"/></svg> اینستاگرام</a>
+      <a class="social-link youtube" href="https://www.youtube.com/@GTAVI_VICE" target="_blank" rel="noopener noreferrer"><svg class="social-mark" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.6 3.6 12 3.6 12 3.6s-7.6 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.8.5 9.4.5 9.4.5s7.6 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.7V8.3l6.3 3.7-6.3 3.7Z"/></svg> یوتیوب</a>
     </div>
     <div class="footer-bottom">
       <span>© 2026 GTAVI_VICE</span>
@@ -1139,39 +1127,27 @@ img{max-width:100%}
   const featuredCategory = document.getElementById("featured-category");
   const featuredImage = document.getElementById("featured-image");
   const featuredLink = document.getElementById("featured-link");
+  const initialNews = (typeof news !== "undefined" && Array.isArray(news)) ? news.slice() : [];
+  let siteNews = initialNews.map(function(item){
+    const oldCategory = String(item.category || "");
+    const legacyCategoryMap = {"تاریخ انتشار":"official","شخصیت‌ها":"news","دنیای بازی":"analysis","اخبار":"news","شایعات":"rumor","تحلیل":"analysis","رسمی":"official"};
+    return Object.assign({},item,{category:legacyCategoryMap[oldCategory] || oldCategory,categoryLabel:item.categoryLabel || oldCategory});
+  });
 
-  if (typeof news !== "undefined" && Array.isArray(news) && news.length) {
-    const featured = news.slice().sort(function(a, b) {
+  function updateFeaturedNews(){
+    if(!siteNews.length) return;
+    const featured = siteNews.slice().sort(function(a,b){
       const dateA = Date.parse(a.date || "") || 0;
       const dateB = Date.parse(b.date || "") || 0;
-      return dateB - dateA || Number(b.id || 0) - Number(a.id || 0);
+      return dateB - dateA;
     })[0];
-
-    if (featuredTitle) {
-      featuredTitle.textContent = featured.title || "خبر GTA VI";
-    }
-
-    if (featuredSummary) {
-      featuredSummary.textContent = featured.summary || "";
-    }
-
-    if (featuredCategory) {
-      featuredCategory.textContent =
-        "GTAVI_VICE · " + (featured.category || "خبر ویژه");
-    }
-
-    if (featuredImage && featured.image) {
-      featuredImage.style.backgroundImage =
-        'linear-gradient(0deg,#09091045,transparent), url("' +
-        String(featured.image).replace(/["\\]/g, "") +
-        '")';
-    }
-
-    if (featuredLink) {
-      featuredLink.href = "./news.html?id=" +
-        encodeURIComponent(String(featured.id));
-    }
- }
+    if(featuredTitle) featuredTitle.textContent = featured.title || "خبر GTA VI";
+    if(featuredSummary) featuredSummary.textContent = featured.summary || "";
+    if(featuredCategory) featuredCategory.textContent = "GTAVI_VICE · " + (featured.categoryLabel || featured.category || "خبر ویژه");
+    if(featuredImage && featured.image) featuredImage.style.backgroundImage = 'linear-gradient(0deg,#09091045,transparent), url("' + String(featured.image).replace(/["\\]/g, "") + '")';
+    if(featuredLink) featuredLink.href = "./news.html?id=" + encodeURIComponent(String(featured.id));
+  }
+  updateFeaturedNews();
 
 // نمایش، جست‌وجو، فیلتر و علاقه‌مندی خبرها
 const newsContainer = document.getElementById("news-list");
@@ -1228,16 +1204,15 @@ function normalizeText(value){
 function renderNews(){
   if(!newsContainer) return;
 
-  if(typeof news === "undefined" || !Array.isArray(news)){
-    newsContainer.innerHTML =
-      '<p class="news-error">فایل اخبار بارگذاری نشد. فایل news.js را بررسی کن.</p>';
+  if(!Array.isArray(siteNews)){
+    newsContainer.innerHTML = '<p class="news-error">دریافت فهرست اخبار انجام نشد.</p>';
     return;
   }
 
   const favorites = getFavorites();
   const searchTerm = normalizeText(searchInput ? searchInput.value : "");
 
-  const filteredNews = news.filter(function(item){
+  const filteredNews = siteNews.filter(function(item){
     const categoryMatch =
       selectedCategory === "all" ||
       item.category === selectedCategory;
@@ -1273,7 +1248,7 @@ function renderNews(){
 
   newsContainer.innerHTML = visibleNews.map(function(item){
     const title = escapeHTML(item.title || "خبر GTA VI");
-    const category = escapeHTML(item.category || "اخبار GTA VI");
+    const category = escapeHTML(item.categoryLabel || item.category || "اخبار GTA VI");
     const date = escapeHTML(item.date || "");
     const summary = escapeHTML(item.summary || "");
     const image = escapeHTML(item.image || "");
@@ -1388,7 +1363,46 @@ if(savedNewsButton){
   });
 }
 
-// نمایش اولیه
+// Load published news created in the central admin panel.
+window.gtaviLoadPublishedNews = async function(client){
+  if(!client || !newsContainer) return;
+  try{
+    const result = await client.from("gta_news")
+      .select("id,slug,title,summary,content,category,image_url,source_url,status,sort_order,published_at,created_at")
+      .eq("status","published")
+      .order("published_at",{ascending:false})
+      .order("created_at",{ascending:false});
+    if(result.error) throw result.error;
+    const categoryLabels = {news:"اخبار",rumor:"شایعات",analysis:"تحلیل",official:"رسمی",other:"سایر"};
+    siteNews = (result.data || []).map(function(row){
+      const dateValue = row.published_at || row.created_at;
+      let dateLabel = "";
+      if(dateValue){
+        const parsed = new Date(dateValue);
+        if(!Number.isNaN(parsed.getTime())) dateLabel = new Intl.DateTimeFormat("fa-IR",{year:"numeric",month:"short",day:"numeric"}).format(parsed);
+      }
+      return {
+        id:row.slug || row.id,
+        title:row.title || "خبر GTA VI",
+        summary:row.summary || "",
+        content:row.content || "",
+        category:row.category || "other",
+        categoryLabel:categoryLabels[row.category] || "سایر",
+        date:dateLabel,
+        image:row.image_url || "",
+        source:row.source_url || ""
+      };
+    });
+    updateFeaturedNews();
+    visibleNewsCount = NEWS_PER_PAGE;
+    renderNews();
+  }catch(error){
+    console.error("GTAVI_VICE public news load error:",error);
+    // Keep the legacy local news list visible if public database access is not enabled yet.
+  }
+};
+
+// نمایش اولیه از داده محلی؛ پس از آماده‌شدن Supabase با خبرهای منتشرشده جایگزین می‌شود.
 renderNews();
   
   
@@ -1521,6 +1535,12 @@ renderNews();
     SUPABASE_URL,
     SUPABASE_PUBLISHABLE_KEY
   ));
+
+  if(window.gtaviLoadPublishedNews){
+    window.gtaviLoadPublishedNews(client).catch(function(error){
+      console.warn("Published news could not be loaded:",error);
+    });
+  }
 
   let currentSessionReady = false;
   let sessionPromise = null;
