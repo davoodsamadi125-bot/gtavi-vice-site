@@ -1,0 +1,33 @@
+/* GTAVI_VICE user profiles — black/purple, responsive */
+#gtavi-profile-app{margin-top:18px;color:var(--text)}
+#gtavi-profile-app .gvp-panel{background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:16px;margin:14px 0}
+#gtavi-profile-app .gvp-head{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+#gtavi-profile-app .gvp-avatar{width:76px;height:76px;flex:0 0 76px;border-radius:50%;object-fit:cover;background:var(--panel2);border:2px solid var(--purple)}
+#gtavi-profile-app .gvp-title{font-size:18px;font-weight:900;margin:0}
+#gtavi-profile-app .gvp-muted{color:var(--muted);font-size:12px}
+#gtavi-profile-app .gvp-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:14px}
+#gtavi-profile-app .gvp-stat{padding:11px 7px;text-align:center;background:var(--panel2);border:1px solid var(--border);border-radius:12px}
+#gtavi-profile-app .gvp-stat strong{display:block;font-size:20px;color:var(--purple);direction:ltr}
+#gtavi-profile-app .gvp-stat span{font-size:10px;color:var(--muted)}
+#gtavi-profile-app .gvp-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+#gtavi-profile-app label{display:block;font-size:12px;color:var(--muted);margin:9px 0 5px}
+#gtavi-profile-app input,#gtavi-profile-app select{width:100%;min-width:0;padding:10px 11px;border:1px solid var(--border);border-radius:10px;background:var(--bg);color:var(--text);font:inherit;font-size:13px}
+#gtavi-profile-app .gvp-platforms{display:flex;flex-wrap:wrap;gap:12px}
+#gtavi-profile-app .gvp-platforms label,#gtavi-profile-app .gvp-check{display:flex;align-items:center;gap:6px;margin:7px 0;font-size:12px}
+#gtavi-profile-app .gvp-platforms input,#gtavi-profile-app .gvp-check input{width:auto}
+#gtavi-profile-app .gvp-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+#gtavi-profile-app .gvp-btn{border:1px solid var(--border);border-radius:10px;padding:9px 14px;background:linear-gradient(120deg,#7c3aed,#c026d3);color:#fff;font:inherit;font-size:12px;font-weight:800;cursor:pointer}
+#gtavi-profile-app .gvp-btn.secondary{background:var(--panel2);color:var(--text)}
+#gtavi-profile-app .gvp-btn:disabled{opacity:.55;cursor:wait}
+#gtavi-profile-app .gvp-message{margin:10px 0;padding:10px;border-radius:10px;background:var(--panel2);font-size:12px;color:var(--muted);white-space:pre-wrap}
+#gtavi-profile-app .gvp-message.error{color:#ff9baf;border:1px solid #713344}
+#gtavi-profile-app .gvp-message.success{color:#8be2bd;border:1px solid #245d4b}
+#gtavi-profile-app .gvp-list{display:grid;gap:8px}
+#gtavi-profile-app .gvp-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px;border:1px solid var(--border);border-radius:11px;background:var(--panel2)}
+#gtavi-profile-app .gvp-row-main{display:flex;align-items:center;gap:9px;min-width:0}
+#gtavi-profile-app .gvp-mini-avatar{width:38px;height:38px;border-radius:50%;object-fit:cover;background:var(--bg)}
+#gtavi-profile-app .gvp-row small{display:block;color:var(--muted);font-size:10px}
+#gtavi-profile-app .gvp-history{font-size:12px}
+#gtavi-profile-app .gvp-link{color:#d8b4fe;text-decoration:underline;overflow-wrap:anywhere}
+#gtavi-profile-app .gvp-hidden{display:none!important}
+@media(max-width:560px){#gtavi-profile-app .gvp-form-grid{grid-template-columns:1fr}#gtavi-profile-app .gvp-stats{grid-template-columns:repeat(3,minmax(0,1fr))}#gtavi-profile-app .gvp-stat strong{font-size:17px}}
